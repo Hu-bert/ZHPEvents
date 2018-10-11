@@ -1,0 +1,114 @@
+﻿@model ZHPEvents.Models.Event
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tittle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tittle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastDayOfEntries)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastDayOfEntries)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfSeats)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfSeats)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contact)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistrationMail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationMail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Organizaer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Organizaer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ForWhom)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ForWhom)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Thumbnail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Thumbnail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Poster)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Poster)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AdditionTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdditionTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AddingPerson)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddingPerson)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfirmingPerson)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConfirmingPerson)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

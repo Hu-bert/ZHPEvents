@@ -1,0 +1,125 @@
+﻿@model IEnumerable<ZHPEvents.Models.Event>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tittle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastDayOfEntries)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegistrationMail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Organizaer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ForWhom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Thumbnail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Poster)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdditionTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddingPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConfirmingPerson)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tittle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastDayOfEntries)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationMail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Organizaer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ForWhom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Thumbnail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Poster)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdditionTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddingPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConfirmingPerson)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ZHPEvents.Models;
 
 namespace ZHPEvents.Data
 {
@@ -12,5 +13,6 @@ namespace ZHPEvents.Data
             : base(options)
         {
         }
+        public DbSet<ZHPEvents.Models.Event> Event { get; set; }
     }
 }
