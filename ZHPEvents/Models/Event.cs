@@ -63,7 +63,7 @@ namespace ZHPEvents.Models
         //public string Poster { get; set; }
 
         [Display(Name = "Czas dodania")]
-        public System.DateTime AdditionTime { get; set; }
+        public DateTime AdditionTime { get; set; }
 
         [Display(Name = "Osoba dodaj¹ca")]
         public string AddingPerson { get; set; }

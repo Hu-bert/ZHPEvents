@@ -16,5 +16,6 @@ namespace ZHPEvents.Data
         {
         }
         public DbSet<ZHPEvents.Models.Event> Event { get; set; }
+        public DbSet<ZHPEvents.Models.Raport> Raport { get; set; }
     }
 }

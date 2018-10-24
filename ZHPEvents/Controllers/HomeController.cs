@@ -4,15 +4,28 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ZHPEvents.Data;
 using ZHPEvents.Models;
 
 namespace ZHPEvents.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Event
+                .Where(e => e.Status == EventStatus.Approved)
+                .OrderByDescending(e => e.AdditionTime)
+                .Take(5)
+                .ToListAsync());
         }
 
         public IActionResult About()

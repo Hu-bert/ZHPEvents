@@ -11,6 +11,7 @@ using ZHPEvents.Models;
 
 namespace ZHPEvents
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;

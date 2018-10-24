@@ -1,0 +1,49 @@
+﻿@model ZHPEvents.Models.Raport
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Raport</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tittle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tittle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AdditionTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdditionTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AddingPerson)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddingPerson)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfirmingPerson)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConfirmingPerson)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
