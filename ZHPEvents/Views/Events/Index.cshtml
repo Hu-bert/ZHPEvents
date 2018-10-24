@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_Dashboard";
+
 }
 
 <h2>Index</h2>
@@ -15,42 +17,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Tittle)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastDayOfEntries)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfSeats)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contact)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegistrationMail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Organizaer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ForWhom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Thumbnail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Poster)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.AdditionTime)
             </th>
@@ -68,42 +35,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Tittle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastDayOfEntries)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfSeats)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contact)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationMail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Organizaer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ForWhom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Thumbnail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Poster)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AdditionTime)

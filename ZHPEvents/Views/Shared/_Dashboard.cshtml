@@ -1,0 +1,112 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ZHPEvents.Models.Identity
+
+@inject SignInManager<ZHPEventsUser> SignInManager
+@inject UserManager<ZHPEventsUser> UserManager
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="~/favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/Font-Awesome/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+
+    <link href="~/css/dashboard.css" rel="stylesheet" />
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand col-sm-3 col-md-2 mr-0">
+            <i class="fas fa-campground"></i>&nbsp;&nbsp;
+            <strong>ZHPEvents</strong>
+        </a>
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+
+        <ul class="nav justify-content-end px-3">
+            <li>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="btn btn-link btn-sm text-white">Hello @UserManager.GetUserName(User)!</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link btn-sm text-white">Logout</button>
+            </li>
+        </ul>
+        </form>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <i class="fas fa-tachometer-alt"></i>
+                                Dashboard <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("EventEditor") || User.IsInRole("EventAuthor"))
+                        {
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Events" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Wydarzenia
+                                </a>
+                                <ol class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Events" asp-action="Create" class="nav-link">
+                                            &nbsp;&nbsp;&nbsp;
+                                            <i class="fas fa-calendar-alt"></i>
+                                            Dodaj nowe
+                                        </a>
+                                    </li>
+                                </ol>
+                            </li>
+                        }
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("RaportEditor") || User.IsInRole("RaportAuthor"))
+                        {
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Raport" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-chart-bar"></i>
+                                    Raporty
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Users" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-user-circle"></i>
+                                    Użytkownicy
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="~/vendor/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

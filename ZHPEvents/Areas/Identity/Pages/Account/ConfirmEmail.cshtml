@@ -1,12 +1,46 @@
 ﻿@page
 @model ConfirmEmailModel
+
 @{
     ViewData["Title"] = "Confirm email";
+    Layout = null;
 }
 
-<h2>@ViewData["Title"]</h2>
-<div>
-    <p>
-        Thank you for confirming your email.
-    </p>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/Font-Awesome/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/floating-labels.css" rel="stylesheet" />
+</head>
+
+<body>
+    <form class="form-signin" method="post">
+        <div class="text-center mb-4">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="text-dark">
+                <h1>
+                    <i class="fas fa-campground"></i>
+                </h1><h1 class="h3 mb-3 font-weight-normal">ZHPEvents</h1></a>
+                <p>Thank you for confirming your email.</p>
+                <a class="btn btn-lg btn-primary btn-block" asp-area="Identity" asp-page="/Account/Login">Login</a>
 </div>
+
+    </form>
+</body>
+</html>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
