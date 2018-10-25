@@ -14,7 +14,7 @@ using ZHPEvents.Models.Identity;
 namespace ZHPEvents
 {
 
-    [Authorize(Roles = "Administrator, Editor, Autho, EventEditor, EventAuthor")]
+    [Authorize(Roles = "Administrator, Editor, Author, EventEditor, EventAuthor")]
     public class EventsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -32,7 +32,7 @@ namespace ZHPEvents
         {
             var user = await _userManager.GetUserAsync(User);
 
-            if (User.IsInRole("Admin") || User.IsInRole("Editor") )
+            if (User.IsInRole("Administrator") || User.IsInRole("Editor") )
             {
                 return View(await _context.Event.ToListAsync());
             }
@@ -60,6 +60,44 @@ namespace ZHPEvents
             return View(@event);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(int? id, bool status)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var singleEvent = _context.Event.FirstOrDefault(e => e.Id == id);
+
+            if (singleEvent == null)
+            {
+                return NotFound();
+            }
+            if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
+            {
+                try
+                {
+                    singleEvent.Status = (status == true) ? EventStatus.Approved : EventStatus.Rejected;
+                    singleEvent.ConfirmingPerson = user.Id;
+                    _context.Update(singleEvent);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EventExists(singleEvent.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+            return View(singleEvent);
+        }
         // GET: Events/Create
 
         public IActionResult Create()
@@ -72,12 +110,13 @@ namespace ZHPEvents
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Tittle")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,Title")] Event @event)
         {
             var user = await _userManager.GetUserAsync(User);
 
             @event.AdditionTime = DateTime.Now;
             @event.AddingPerson = user.Id;
+            @event.Status = EventStatus.Rejected;
 
             if (ModelState.IsValid)
             {
@@ -123,34 +162,36 @@ namespace ZHPEvents
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tittle")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] Event eventFromForm)
         {
             var user = await _userManager.GetUserAsync(User);
+            var singleEvent = _context.Event.FirstOrDefault(e => e.Id == eventFromForm.Id);
 
-            if (id != @event.Id)
+            if (id != eventFromForm.Id)
             {
                 return NotFound();
             }
 
             if (!User.IsInRole("Admin") || !User.IsInRole("Editor"))
             {
-                return NotFound();
+                if (singleEvent.AddingPerson != user.Id)
+                {
+                    return NotFound();
+                }
             }
-            else if (@event.AddingPerson != user.Id)
-            {
-                return NotFound();
-            }
+            
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(@event);
+                    singleEvent.Title = !string.IsNullOrEmpty(eventFromForm.Title) ? eventFromForm.Title : singleEvent.Title;
+                    _context.Update(singleEvent);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(@event.Id))
+                    if (!EventExists(eventFromForm.Id))
                     {
                         return NotFound();
                     }
@@ -161,7 +202,7 @@ namespace ZHPEvents
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(@event);
+            return View(eventFromForm);
         }
 
         // GET: Events/Delete/5

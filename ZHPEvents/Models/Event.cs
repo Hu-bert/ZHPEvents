@@ -10,7 +10,7 @@ namespace ZHPEvents.Models
         [Display(Name = "Tytu³")]
         [StringLength(60, MinimumLength = 3)]
         [Required(ErrorMessage ="Proszê podaæ tytu³.")]
-        public string Tittle { get; set; }
+        public string Title { get; set; }
 
         //[Display(Name = "Kategoria")]
         //[Required(ErrorMessage = "Proszê podaæ pierwsz¹ kategoriê.")]

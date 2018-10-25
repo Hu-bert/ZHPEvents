@@ -7,9 +7,10 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/Font-Awesome/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet" />
     <link href="~/css/album.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
+    <header id="top">
         <div class="collapse bg-dark" id="navbarHeader">
             <div class="container">
                 <div class="row">
@@ -51,7 +52,7 @@
     <footer class="text-muted">
         <div class="container">
             <p class="float-right">
-                <a href="#">Back to top</a>
+                <a href="#top">Back to top</a>
             </p>
             <p>&copy; 2018 - ZHPEvents</p>
         </div>
@@ -61,7 +62,7 @@
     <script src="~/vendor/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/vendor/holder.min.js"></script>
-
+    <script src="~/js/smooth-scroll.polyfills.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

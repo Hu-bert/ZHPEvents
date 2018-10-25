@@ -1,0 +1,29 @@
+﻿@using ZHPEvents.Models.Identity;
+@model ZHPEventsUser
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_Dashboard";
+}
+
+
+<h5>Jesteś pewny, że chcesz usunąć tego użytkownika?</h5>
+<div>
+    <h6>Dane użytkownika: <br />@Model.FristName @Model.LastName</h6>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FristName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+    </dl>
+
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

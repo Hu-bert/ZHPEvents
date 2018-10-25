@@ -1,0 +1,25 @@
+﻿@using ZHPEvents.Models.Identity;
+@model ZHPEventsUser
+
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Dashboard";
+}
+
+<div>
+    <h6>Dane użytkownika: <br />@Model.FristName @Model.LastName</h6>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FristName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

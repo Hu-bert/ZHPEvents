@@ -1,0 +1,138 @@
+﻿@using ZHPEvents.Models.Identity;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ZHPEventsUser> ZHPEventsUser;
+@model ZHPEventsUser
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_Dashboard";
+    bool administrator = await ZHPEventsUser.IsInRoleAsync(Model, "Administrator");
+    bool editor = await ZHPEventsUser.IsInRoleAsync(Model, "Editor");
+    bool author = await ZHPEventsUser.IsInRoleAsync(Model, "Author");
+    bool eventEditor = await ZHPEventsUser.IsInRoleAsync(Model, "EventEditor");
+    bool eventAuthor = await ZHPEventsUser.IsInRoleAsync(Model, "EventAuthor");
+    bool raportEditor = await ZHPEventsUser.IsInRoleAsync(Model, "RaportEditor");
+    bool raportAuthor = await ZHPEventsUser.IsInRoleAsync(Model, "RaportAuthor");
+    bool user = await ZHPEventsUser.IsInRoleAsync(Model, "User");
+
+}
+<h6>Edycja danych użytkownika: <br />@Model.FristName @Model.LastName</h6>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FristName" class="control-label"></label>
+                <input asp-for="FristName" class="form-control" placeholder="@Model.FristName" />
+                <span asp-validation-for="FristName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" placeholder="@Model.LastName" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="custom-control custom-checkbox">
+                @if (administrator)
+                {
+                    <input type="checkbox" class="custom-control-input" id="Administrator" name="Administrator" value="true" checked>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="Administrator" name="Administrator" value="true">
+                }
+                <label class="custom-control-label" for="Administrator">Administrator</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                @if (editor)
+                {
+                    <input type="checkbox" class="custom-control-input" id="Editor" name="Editor" value="true" checked>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="Editor" name="Editor" value="true">
+                }
+                <label class="custom-control-label" for="Editor">Edytor</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                @if (author)
+                {
+                    <input type="checkbox" class="custom-control-input" id="Author" name="Author" value="true" checked>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="Author" name="Author" value="true">
+                }
+                <label class="custom-control-label" for="Author">Autor</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                @if (eventEditor)
+                {
+                    <input type="checkbox" class="custom-control-input" id="EventEditor" name="EventEditor" value="true" checked>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="EventEditor" name="EventEditor" value="true">
+                }
+                <label class="custom-control-label" for="EventEditor">Edytor wydarzeń</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                @if (eventAuthor)
+                {
+                    <input type="checkbox" class="custom-control-input" id="EventAuthor" name="EventAuthor" value="true" checked>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="EventAuthor" name="EventAuthor" value="true">
+                }
+                <label class="custom-control-label" for="EventAuthor">Autor wydarzeń</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                @if (raportEditor)
+                {
+                    <input type="checkbox" class="custom-control-input" id="RaportEditor" name="RaportEditor" value="true" checked>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="RaportEditor" name="RaportEditor" value="true">
+                }
+                <label class="custom-control-label" for="RaportEditor">Edytor raportów</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                @if (raportAuthor)
+                {
+                    <input type="checkbox" class="custom-control-input" id="RaportAuthor" name="RaportAuthor" value="true" checked>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="RaportAuthor" name="RaportAuthor" value="true">
+                }
+                <label class="custom-control-label" for="RaportAuthor">Autor raportów</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                @if (user)
+                {
+                    <input type="checkbox" class="custom-control-input" id="User" name="User" value="true" checked>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="User" name="User" value="true">
+                }
+                <label class="custom-control-label" for="User">Zwykły użytkownik</label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

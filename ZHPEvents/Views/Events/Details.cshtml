@@ -4,18 +4,15 @@
     ViewData["Title"] = "Details";
     Layout = "_Dashboard";
 }
-
-<h2>Details</h2>
-
 <div>
-    <h4>Event</h4>
+    <h6>Szczegóły wydarzenia o nazwie: <br />@Model.Title</h6>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Tittle)
+            @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Tittle)
+            @Html.DisplayFor(model => model.Title)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.AdditionTime)
@@ -35,7 +32,26 @@
         <dd>
             @Html.DisplayFor(model => model.ConfirmingPerson)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
     </dl>
+</div>
+<div class="ui buttons">
+    <form asp-action="Details">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" class="custom-control-input" id="Status" name="Status" value="false">
+        <button type="submit" class="btn btn-default">&nbsp;&nbsp;&nbsp;Odrzuć wydarzenie&nbsp;&nbsp;&nbsp;</button>
+    </form>
+    <div class="or" data-text="lub"></div>
+    <form asp-action="Details">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" class="custom-control-input" id="Status" name="Status" value="true">
+        <button type="submit" class="btn btn-success">&nbsp;&nbsp;&nbsp;Zatwierdź wydarzenie&nbsp;&nbsp;&nbsp;</button>
+    </form>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

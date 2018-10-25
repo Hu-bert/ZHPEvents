@@ -3,7 +3,48 @@
 
 @inject SignInManager<ZHPEventsUser> SignInManager
 @inject UserManager<ZHPEventsUser> UserManager
-
+@{
+    var _controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    var _actionName = this.ViewContext.RouteData.Values["action"].ToString();
+    string idName = null;
+    if (this.ViewContext.RouteData.Values["id"] != null)
+    {
+        idName = this.ViewContext.RouteData.Values["id"].ToString();
+    }
+    string controllerName = "";
+    string actionName = "";
+    switch (_controllerName)
+    {
+        case "Events":
+            controllerName = "Wydarzenia";
+            break;
+        case "Raports":
+            controllerName = ("Raporty");
+            break; 
+       case "Users":
+            controllerName = ("Użytkownicy");
+            break; 
+        default:
+            break;
+    }
+    switch (_actionName)
+    {
+        case "Create":
+            actionName = "Utwórz";
+            break;
+        case "Edit":
+            actionName = "Edytuj";
+            break;
+        case "Delete":
+            actionName = "Usuń";
+            break;
+        case "Details":
+            actionName = "Szczegóły";
+            break;
+        default:
+            break;
+    }
+}
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,7 +60,7 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/Font-Awesome/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
-
+    <link href="~/lib/semantic/dist/components/button.min.css" rel="stylesheet" />
     <link href="~/css/dashboard.css" rel="stylesheet" />
 </head>
 
@@ -29,16 +70,16 @@
             <i class="fas fa-campground"></i>&nbsp;&nbsp;
             <strong>ZHPEvents</strong>
         </a>
-            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
 
-        <ul class="nav justify-content-end px-3">
-            <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="btn btn-link btn-sm text-white">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link btn-sm text-white">Logout</button>
-            </li>
-        </ul>
+            <ul class="nav justify-content-end px-3">
+                <li>
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="btn btn-link btn-sm text-white">Hello @UserManager.GetUserName(User)!</a>
+                </li>
+                <li>
+                    <button type="submit" class="btn btn-link btn-sm text-white">Logout</button>
+                </li>
+            </ul>
         </form>
     </nav>
 
@@ -53,6 +94,7 @@
                                 Dashboard <span class="sr-only">(current)</span>
                             </a>
                         </li>
+
                         @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("EventEditor") || User.IsInRole("EventAuthor"))
                         {
                             <li class="nav-item">
@@ -94,6 +136,47 @@
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        @if (_controllerName == "Dashboard")
+                        {
+                            <li class="breadcrumb-item">
+                                <a asp-area="" asp-controller="Dashboard" asp-action="Index">
+                                    Dashboard
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item">
+                                <a asp-area="" asp-controller="Dashboard" asp-action="Index">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a asp-area="" asp-controller=@_controllerName asp-action="Index">
+                                    @controllerName
+                                </a>
+                            </li>
+                            @if (_actionName != "Index")
+                            {
+                                <li class="breadcrumb-item">
+                                    <a asp-area="" asp-controller=@_controllerName asp-action=@_actionName>
+                                        @actionName
+                                    </a>
+                                </li>
+                            }
+                            @if (idName != null)
+                            {
+                                <li class="breadcrumb-item">
+                                    <a asp-area="" asp-controller=@_controllerName asp-action=@_actionName>
+                                        @idName
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ol>
+                </nav>
                 @RenderBody()
             </main>
         </div>

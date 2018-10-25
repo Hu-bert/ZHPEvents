@@ -24,7 +24,7 @@ namespace ZHPEvents.Controllers
             return View(await _context.Event
                 .Where(e => e.Status == EventStatus.Approved)
                 .OrderByDescending(e => e.AdditionTime)
-                .Take(5)
+                .Take(3)
                 .ToListAsync());
         }
 
