@@ -54,8 +54,8 @@ donten run
 ```
 > The application will compile if everything is okey, it will display the domain of the site, e.g. https://localhost:5001.
 
-6. Getting to know the roles.
-In the Application, we have already created users with roles
+6. Getting to know the roles.<br/>
+In the Application, we have already created users with roles<br/>
 | Role          | Login                  | Password        |
 | --------------|:----------------------:| ---------------:|
 | User          | User@gmai.com          | User!1          |
