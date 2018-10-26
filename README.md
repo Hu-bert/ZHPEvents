@@ -75,7 +75,6 @@ Site for regular users
 - displaying events
 - filtering events
 - information about the application and other minor things
-<br/>
 Dashboard to manage the application
 - event management, reports for authentication users by role
 <br/>
