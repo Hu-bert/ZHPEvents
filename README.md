@@ -19,7 +19,7 @@ Związek Harcerstwa Polskiego (English: The Polish Scouting and Guiding Associat
 Wikipedia: [ZHP](https://en.wikipedia.org/wiki/Polish_Scouting_and_Guiding_Association)
 ***
 ###### Technologies
-Project is created with:
+Project is created with:<br/>
 [ASP.NET Core](https://www.microsoft.com/net) v2.0<br/>
 [Boostrap](https://getbootstrap.com/) v4.1<br/>
 [SEmentic Ui](https://semantic-ui.com/) v2.4.2<br/>
@@ -79,8 +79,8 @@ Site for regular users
 Dashboard to manage the application
 - event management, reports for authentication users by role
 <br/>
-The user roles are available in the application:__
-User:
+The user roles are available in the application
+User
 - może wejść w dashboard
 RaportAuthor
 - can create and edit your reports
@@ -90,8 +90,8 @@ RaportEditor
 - can create and edit your events
 EventEditor
 - can create reports and edit your and each user's events
- - approves the event, approved events are displayed on the site
- Author
+- approves the event, approved events are displayed on the site
+Author
 - has features such as RaportAuthor and EventAuthor
  Editor
 - has features such as RaportAuthor and EventAuthor
@@ -101,14 +101,14 @@ Administrator
 - manage users
 ***
 ######  Project status
-The application is in a creation state. Executed key application elements:
+The application is in a creation state. Executed key application elements
 - user roles
 - CRUD report and event
 - user management by the administrator
 - sending e-mails to users
 ***
 ###### Things to do
-More important things to do:
+More important things to do
 - full models of reports
 - full models of events
 - full page for search, search, filing events
