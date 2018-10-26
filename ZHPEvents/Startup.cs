@@ -50,13 +50,13 @@ namespace ZHPEvents
 
             services.Configure<IdentityOptions>(options =>
             {
-                // Password settings.
-                //options.Password.RequireDigit = true;
-                //options.Password.RequireLowercase = true;
-               // options.Password.RequireNonAlphanumeric = true;
-                //options.Password.RequireUppercase = true;
-                //options.Password.RequiredLength = 6;
-               // options.Password.RequiredUniqueChars = 1;
+                //Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
 
                 // Lockout settings.
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
@@ -133,10 +133,117 @@ namespace ZHPEvents
                 }
             }
 
-            ZHPEventsUser user = await UserManager.FindByEmailAsync("hub.grzesiak@gmail.com");
-            if (user != null)
-                await UserManager.AddToRoleAsync(user, "Administrator");
+            ZHPEventsUser administrator = await UserManager.FindByEmailAsync("administrator@gmail.com");
 
+            if (administrator == null)
+            {
+                administrator = new ZHPEventsUser()
+                {
+                    UserName = "administrator@gmail.com",
+                    Email = "administrator@gmail.com",
+                    EmailConfirmed = true,
+                };
+                await UserManager.CreateAsync(administrator, "Administrator!1");
+            }
+            await UserManager.AddToRoleAsync(administrator, "Administrator");
+
+            ZHPEventsUser editor = await UserManager.FindByEmailAsync("editor@gmail.com");
+
+            if (editor == null)
+            {
+                editor = new ZHPEventsUser()
+                {
+                    UserName = "editor@gmail.com",
+                    Email = "editor@gmail.com",
+                    EmailConfirmed = true,
+                };
+                await UserManager.CreateAsync(editor, "Editor!1");
+            }
+            await UserManager.AddToRoleAsync(editor, "Editor");
+
+            ZHPEventsUser author = await UserManager.FindByEmailAsync("author@gmail.com");
+
+            if (author == null)
+            {
+                author = new ZHPEventsUser()
+                {
+                    UserName = "author@gmail.com",
+                    Email = "author@gmail.com",
+                    EmailConfirmed = true,
+                };
+                await UserManager.CreateAsync(author, "Author!1");
+            }
+            await UserManager.AddToRoleAsync(author, "Author");
+
+            ZHPEventsUser eventEditor = await UserManager.FindByEmailAsync("eventEditor@gmail.com");
+
+            if (eventEditor == null)
+            {
+                eventEditor = new ZHPEventsUser()
+                {
+                    UserName = "eventEditor@gmail.com",
+                    Email = "eventEditor@gmail.com",
+                    EmailConfirmed = true,
+                };
+                await UserManager.CreateAsync(eventEditor, "EventEditor!1");
+            }
+            await UserManager.AddToRoleAsync(eventEditor, "EventEditor");
+
+            ZHPEventsUser eventAuthor = await UserManager.FindByEmailAsync("eventAuthor@gmail.com");
+
+            if (eventAuthor == null)
+            {
+                eventAuthor = new ZHPEventsUser()
+                {
+                    UserName = "eventAuthor@gmail.com",
+                    Email = "eventAuthor@gmail.com",
+                    EmailConfirmed = true,
+                };
+                await UserManager.CreateAsync(eventAuthor, "EventAuthor!1");
+            }
+            await UserManager.AddToRoleAsync(eventAuthor, "EventAuthor");
+
+            ZHPEventsUser raportEditor = await UserManager.FindByEmailAsync("raportEditor@gmail.com");
+
+            if (raportEditor == null)
+            {
+                raportEditor = new ZHPEventsUser()
+                {
+                    UserName = "raportEditor@gmail.com",
+                    Email = "raportEditor@gmail.com",
+                    EmailConfirmed = true,
+                };
+                await UserManager.CreateAsync(raportEditor, "RaportEditor!1");
+            }
+            await UserManager.AddToRoleAsync(raportEditor, "RaportEditor");
+
+            ZHPEventsUser raportAuthor = await UserManager.FindByEmailAsync("raportAuthor@gmail.com");
+
+            if (raportAuthor == null)
+            {
+                raportAuthor = new ZHPEventsUser()
+                {
+                    UserName = "raportAuthor@gmail.com",
+                    Email = "raportAuthor@gmail.com",
+                    EmailConfirmed = true,
+                };
+                await UserManager.CreateAsync(raportAuthor, "RaportAuthor!1");
+            }
+            await UserManager.AddToRoleAsync(raportAuthor, "RaportAuthor");
+
+            ZHPEventsUser user = await UserManager.FindByEmailAsync("user@gmail.com");
+
+            if (user == null)
+            {
+                user = new ZHPEventsUser()
+                {
+                    UserName = "user@gmail.com",
+                    Email = "user@gmail.com",
+                    EmailConfirmed = true,
+                };
+                await UserManager.CreateAsync(user, "User!1");
+            }
+            await UserManager.AddToRoleAsync(user, "User");
         }
     }
 }
