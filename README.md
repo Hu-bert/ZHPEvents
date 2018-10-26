@@ -1,42 +1,42 @@
 # ZHP Events
 ***
 ### Table of Contents
-[General Information](#general-Information)__
-[Technologies](#technologies)__
-[Installation](#installation)__
-[Features](#features)__
-[Project status](#project-status)__
-[Things to do](#things-to-do)__
-[Sources](#sources)__
-[Other informations](#other-informations)__
+[General Information](#general-Information)<br/>
+[Technologies](#technologies)<br/>
+[Installation](#installation)<br/>
+[Features](#features)<br/>
+[Project status](#project-status)<br/>
+[Things to do](#things-to-do)<br/>
+[Sources](#sources)<br/>
+[Other informations](#other-informations)<br/>
 ***
 ###### General Information
-ZHPEvents is a web application made in C # and ASP.NET Core 2.0. The application is used for publishing, viewing events and posting internal reports in the ZHP organization.__
-ZHPEvents is created for the Chorągwi Dolnośląskiej ZHP.__
-ZHPEvents is engineering work.__
-What is ZHP?__
-Związek Harcerstwa Polskiego (English: The Polish Scouting and Guiding Association) in brief ZHP is the coeducational Polish Scouting organization.__
+ZHPEvents is a web application made in C # and ASP.NET Core 2.0. The application is used for publishing, viewing events and posting internal reports in the ZHP organization.<br/>
+ZHPEvents is created for the Chorągwi Dolnośląskiej ZHP.<br/>
+ZHPEvents is engineering work.<br/>
+What is ZHP?<br/>
+Związek Harcerstwa Polskiego (English: The Polish Scouting and Guiding Association) in brief ZHP is the coeducational Polish Scouting organization.<br/>
 Wikipedia: [ZHP](https://en.wikipedia.org/wiki/Polish_Scouting_and_Guiding_Association)
 ***
 ###### Technologies
 Project is created with:
-[ASP.NET Core](https://www.microsoft.com/net) v2.0__
-[Boostrap](https://getbootstrap.com/) v4.1__
-[SEmentic Ui](https://semantic-ui.com/) v2.4.2__
-[Font Awesome](https://fontawesome.com/) v4.7__
-[Pace](https://github.hubspot.com/pace/) v1.0.2__
-[jQuery](https://jquery.com/) v3.2.1__
+[ASP.NET Core](https://www.microsoft.com/net) v2.0<br/>
+[Boostrap](https://getbootstrap.com/) v4.1<br/>
+[SEmentic Ui](https://semantic-ui.com/) v2.4.2<br/>
+[Font Awesome](https://fontawesome.com/) v4.7<br/>
+[Pace](https://github.hubspot.com/pace/) v1.0.2<br/>
+[jQuery](https://jquery.com/) v3.2.1<br/>
 [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll) v14.2.1
 ***
 ###### Installation
-1. Installing ASP.NET Core 2.0.__ 
-We can download ASP.NET Core 2.0 from [microsoft.com]](https://www.microsoft.com/net/download) (click button "Download .NET Core SDK".__ Why "Download .NET Core SDK", because the application is in developer state.__ 
-After downloading, we install the program.__ 
+1. Installing ASP.NET Core 2.0.<br/>
+We can download ASP.NET Core 2.0 from [microsoft.com]](https://www.microsoft.com/net/download) (click button "Download .NET Core SDK".<br/> Why "Download .NET Core SDK", because the application is in developer state.<br/> 
+After downloading, we install the program.<br/>
 
-2. Downloading repository.__
+2. Downloading repository.<br/>
 We need download ZHPEvents repository.
 
-3. Finding repository.__
+3. Finding repository.<br/>
 In Command Prompt (cmd) we enter the path where we can find the unpacked repository.
 ```
 cd Downloads\ZHPEvents\ZHPEvents
@@ -75,10 +75,10 @@ Site for regular users
 - displaying events
 - filtering events
 - information about the application and other minor things
-
+<br/>
 Dashboard to manage the application
 - event management, reports for authentication users by role
-
+<br/>
 The user roles are available in the application:__
 User:
 - może wejść w dashboard
