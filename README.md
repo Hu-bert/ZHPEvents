@@ -1,13 +1,13 @@
 # ZHP Events 
 ### Table of Contents
-[General Information](#general-Information)
-[Technologies](#technologies)
-[Installation](#installation)
-[Features](#features)
-[Project status](#project-status)
-[Things to do](#things-to-do)
-[Sources](#sources)
-[Other informations](#other-informations)
+- [General Information](#general-Information)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Features](#features)
+- [Project status](#project-status)
+- [Things to do](#things-to-do)
+- [Sources](#sources)
+- [Other informations](#other-informations)
 ***
 #### General Information
 ZHPEvents is a web application made in C # and ASP.NET Core 2.0. The application is used for publishing, viewing events and posting internal reports in the ZHP organization.<br/>
