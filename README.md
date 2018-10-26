@@ -11,12 +11,12 @@
 [Other informations](#other-informations)
 ***
 ###### General Information
-    ZHPEvents is a web application made in C # and ASP.NET Core 2.0. The application is used for publishing, viewing events and posting internal reports in the ZHP organization.
-    ZHPEvents is created for the Chorągwi Dolnośląskiej ZHP.
-    ZHPEvents is engineering work.
-    What is ZHP?
-    Związek Harcerstwa Polskiego (English: The Polish Scouting and Guiding Association) in brief ZHP is the coeducational Polish Scouting organization.
-    Wikipedia: [ZHP](https://en.wikipedia.org/wiki/Polish_Scouting_and_Guiding_Association)
+ZHPEvents is a web application made in C # and ASP.NET Core 2.0. The application is used for publishing, viewing events and posting internal reports in the ZHP organization.
+ZHPEvents is created for the Chorągwi Dolnośląskiej ZHP.
+ZHPEvents is engineering work.
+What is ZHP?
+Związek Harcerstwa Polskiego (English: The Polish Scouting and Guiding Association) in brief ZHP is the coeducational Polish Scouting organization.
+Wikipedia: [ZHP](https://en.wikipedia.org/wiki/Polish_Scouting_and_Guiding_Association)
 ***
 ###### Technologies
 Project is created with:
