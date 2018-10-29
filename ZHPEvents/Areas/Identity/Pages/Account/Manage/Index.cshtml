@@ -2,11 +2,9 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
-    Layout = "_Dashboard";
 }
 
 <h4>@ViewData["Title"]</h4>
-@Html.Partial("_StatusMessage", Model.StatusMessage)
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
@@ -40,23 +38,7 @@
         </form>
     </div>
 </div>
-<ul class="nav nav-pills flex-column">
-    <li class="@ManageNavPages.IndexNavClass(ViewContext) nav-item">
-        <a asp-page="./Index" class="nav-link">Profile</a>
-    </li>
-    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) nav-item">
-        <a id="change-password" asp-page="./ChangePassword" class="nav-link">Password</a>
-    {
-        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext) nav-item">
-            <a id="external-login" asp-page="./ExternalLogins" class="nav-link">External logins</a>
-        </li>}
-    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) nav-item">
-        <a asp-page="./TwoFactorAuthentication" class="nav-link">Two-factor authentication</a>
-    </li>
-    <li class="@ManageNavPages.PersonalDataNavClass(ViewContext) nav-item">
-        <a asp-page="./PersonalData" class="nav-link">Personal data</a>
-    </li>
-</ul>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

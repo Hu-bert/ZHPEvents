@@ -1,0 +1,141 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ZHPEvents.Models.Identity
+
+@inject SignInManager<ZHPEventsUser> SignInManager
+@inject UserManager<ZHPEventsUser> UserManager
+
+@model PaginatedList<ZHPEvents.Models.Event>
+
+@{
+    ViewData["Title"] = "Home Page";
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <form asp-action="Events" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Szukaj" name="SearchString" value="@ViewData["currentFilter"]">
+                        <div class="input-group-append" id="button-addon4">
+                            <button class="btn btn-outline-secondary" type="submit" value="Search">Szukaj</button>
+                            <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Filtry
+                            </button>
+                            <a asp-action="Events" class="btn btn-outline-secondary" role="button">Wszystkie</a>
+                        </div>
+                    </div>
+                </p>
+            </div>
+        </form>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <a asp-action="Events" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Tytuł
+                </a>
+                    <a asp-action="Events" asp-route-sortOrder="@ViewData["AdditionTimeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                        Czas dodania
+                    </a>
+            </div>
+        </div>
+        <br />
+        <div class="row" id="events">
+            <div class="row mb-2">
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-6">
+                        <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+                            <div class="card-body d-flex flex-column align-items-start">
+                                <strong class="d-inline-block mb-2 text-primary">Kategoria</strong>
+                                <h3 class="mb-0">
+                                    <a class="text-dark" href="#">@item.Title</a>
+                                </h3>
+                                <div class="mb-1 text-muted">@item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
+                                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a asp-action="Event" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Zobacz</a>
+                                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
+                                        {
+                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                        }
+                                        else if (user != null && user.Id == item.AddingPerson)
+                                        {
+                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item  @prevDisabled">
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-page="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            if (Model.PageIndex == i)
+            {
+                <li class="page-item active">
+                    <a asp-action="Events"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-page="@i"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">
+                        @i
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item ">
+                    <a asp-action="Events"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-page="@i"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">
+                        @i
+                    </a>
+                </li>
+            }
+        }
+        <li class="page-item @nextDisabled">
+            <a asp-action="Events"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-page="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+@section Scripts {
+    <script>
+    </script>
+}

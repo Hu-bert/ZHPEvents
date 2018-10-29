@@ -142,6 +142,7 @@ namespace ZHPEvents
                     UserName = "administrator@gmail.com",
                     Email = "administrator@gmail.com",
                     EmailConfirmed = true,
+                    FristName = "Administrator"
                 };
                 await UserManager.CreateAsync(administrator, "Administrator!1");
             }
@@ -156,6 +157,7 @@ namespace ZHPEvents
                     UserName = "editor@gmail.com",
                     Email = "editor@gmail.com",
                     EmailConfirmed = true,
+                    FristName = "Editor"
                 };
                 await UserManager.CreateAsync(editor, "Editor!1");
             }
@@ -170,6 +172,7 @@ namespace ZHPEvents
                     UserName = "author@gmail.com",
                     Email = "author@gmail.com",
                     EmailConfirmed = true,
+                    FristName = "Author"
                 };
                 await UserManager.CreateAsync(author, "Author!1");
             }
@@ -184,6 +187,7 @@ namespace ZHPEvents
                     UserName = "eventEditor@gmail.com",
                     Email = "eventEditor@gmail.com",
                     EmailConfirmed = true,
+                    FristName = "EventEditor"
                 };
                 await UserManager.CreateAsync(eventEditor, "EventEditor!1");
             }
@@ -198,6 +202,7 @@ namespace ZHPEvents
                     UserName = "eventAuthor@gmail.com",
                     Email = "eventAuthor@gmail.com",
                     EmailConfirmed = true,
+                    FristName = "eventAuthor"
                 };
                 await UserManager.CreateAsync(eventAuthor, "EventAuthor!1");
             }
@@ -212,6 +217,7 @@ namespace ZHPEvents
                     UserName = "raportEditor@gmail.com",
                     Email = "raportEditor@gmail.com",
                     EmailConfirmed = true,
+                    FristName = "RaportEditor"
                 };
                 await UserManager.CreateAsync(raportEditor, "RaportEditor!1");
             }
@@ -226,6 +232,7 @@ namespace ZHPEvents
                     UserName = "raportAuthor@gmail.com",
                     Email = "raportAuthor@gmail.com",
                     EmailConfirmed = true,
+                    FristName = "RaportAuthor"
                 };
                 await UserManager.CreateAsync(raportAuthor, "RaportAuthor!1");
             }
@@ -240,6 +247,7 @@ namespace ZHPEvents
                     UserName = "user@gmail.com",
                     Email = "user@gmail.com",
                     EmailConfirmed = true,
+                    FristName = "User"
                 };
                 await UserManager.CreateAsync(user, "User!1");
             }

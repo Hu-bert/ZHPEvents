@@ -15,7 +15,7 @@ namespace ZHPEvents.Data
             : base(options)
         {
         }
-        public DbSet<ZHPEvents.Models.Event> Event { get; set; }
-        public DbSet<ZHPEvents.Models.Raport> Raport { get; set; }
+        public DbSet<Event> Event { get; set; }
+        public DbSet<Raport> Raport { get; set; }
     }
 }

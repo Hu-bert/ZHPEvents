@@ -16,11 +16,15 @@
         <h1 class="jumbotron-heading">Wydarzenia w ZHP</h1>
         <p class="lead text-muted">Witamy na stronie z wydarzeniami harcerskimi. Możesz poniżej zoabczyć trzy najnowższe wydarzenia lub: </p>
         <p>
-            <a href="#" class="btn btn-primary my-2 button-white-space">Zobacz wszystkie wydarzenia</a>
+            <a asp-area="" asp-controller="Home" asp-action="Events" class="btn btn-primary my-2 button-white-space">Zobacz wszystkie wydarzenia</a>
             <a href="#" class="btn btn-primary my-2 button-white-space">Dowiedz się jak opublikować wydarzenia</a>
             <br />
+            @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("EventEditor") || User.IsInRole("EventAuthor") || User.IsInRole("User"))
+            {
+                <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="btn btn-success my-2 button-white-space">&nbsp;Dashboard - panel sterowania&nbsp;&nbsp;</a>
+            }
             <br />
-            <a data-easing="linear" href="#events" class="btn btn-secondary my-2">Zobacz trzy ostatnie wydarzenia</a>
+            <a data-easing="linear" href="#events" class="btn btn-secondary my-2 button-white-space">Zobacz trzy ostatnie wydarzenia</a>
         </p>
     </div>
 </section>
@@ -43,15 +47,11 @@
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
                                     @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
                                     {
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">
-                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
-                                        </button>
+                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
                                     }
                                     else if (user != null && user.Id == item.AddingPerson)
                                     {
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">
-                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
-                                        </button>
+                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
                                     }
                                 </div>
                                 <small class="text-muted">@item.AdditionTime.Date.ToString("dd.mm.yyyy")</small>
@@ -65,15 +65,15 @@
 </div>
 
 @section Scripts {
-<script>
-    
-    var scroll = new SmoothScroll('a[href*="#"]:not([data-easing])');
+    <script>
 
-    var linear = new SmoothScroll('[data-easing="linear"]', { easing: 'linear' });
+        var scroll = new SmoothScroll('a[href*="#"]:not([data-easing])');
 
-    document.addEventListener('scrollStart', logScrollEvent, false);
-    document.addEventListener('scrollStop', logScrollEvent, false);
-    document.addEventListener('scrollCancel', logScrollEvent, false);
-</script>
+        var linear = new SmoothScroll('[data-easing="linear"]', { easing: 'linear' });
+
+        document.addEventListener('scrollStart', logScrollEvent, false);
+        document.addEventListener('scrollStop', logScrollEvent, false);
+        document.addEventListener('scrollCancel', logScrollEvent, false);
     </script>
-    }
+
+}

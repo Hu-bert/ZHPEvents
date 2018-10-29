@@ -4,13 +4,9 @@
 @inject SignInManager<ZHPEventsUser> SignInManager
 @inject UserManager<ZHPEventsUser> UserManager
 @{
-    var _controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
-    var _actionName = this.ViewContext.RouteData.Values["action"].ToString();
-    string idName = null;
-    if (this.ViewContext.RouteData.Values["id"] != null)
-    {
-        idName = this.ViewContext.RouteData.Values["id"].ToString();
-    }
+    var _controllerName = (this.ViewContext.RouteData.Values["controller"] != null) ? this.ViewContext.RouteData.Values["controller"].ToString(): "";
+    var _actionName = (this.ViewContext.RouteData.Values["action"] != null) ? this.ViewContext.RouteData.Values["action"].ToString() : "";
+
     string controllerName = "";
     string actionName = "";
     switch (_controllerName)
@@ -20,10 +16,10 @@
             break;
         case "Raports":
             controllerName = ("Raporty");
-            break; 
-       case "Users":
+            break;
+        case "Users":
             controllerName = ("Użytkownicy");
-            break; 
+            break;
         default:
             break;
     }
@@ -74,7 +70,7 @@
 
             <ul class="nav justify-content-end px-3">
                 <li>
-                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="btn btn-link btn-sm text-white">Hello @UserManager.GetUserName(User)!</a>
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Ustawienia konta" class="btn btn-link btn-sm text-white">Czuwaj @UserManager.GetUserName(User)!</a>
                 </li>
                 <li>
                     <button type="submit" class="btn btn-link btn-sm text-white">Logout</button>
@@ -97,6 +93,7 @@
 
                         @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("EventEditor") || User.IsInRole("EventAuthor"))
                         {
+
                             <li class="nav-item">
                                 <a asp-area="" asp-controller="Events" asp-action="Index" class="nav-link">
                                     <i class="fas fa-calendar-alt"></i>
@@ -166,14 +163,6 @@
                                     </a>
                                 </li>
                             }
-                            @if (idName != null)
-                            {
-                                <li class="breadcrumb-item">
-                                    <a asp-area="" asp-controller=@_controllerName asp-action=@_actionName>
-                                        @idName
-                                    </a>
-                                </li>
-                            }
                         }
                     </ol>
                 </nav>
@@ -189,6 +178,7 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="~/vendor/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/vendor/holder.min.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>

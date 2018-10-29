@@ -4,56 +4,131 @@
     ViewData["Title"] = "Details";
     Layout = "_Dashboard";
 }
-<div>
-    <h6>Szczegóły wydarzenia o nazwie: <br />@Model.Title</h6>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AdditionTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AdditionTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AddingPerson)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AddingPerson)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ConfirmingPerson)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ConfirmingPerson)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-    </dl>
+<h6>Szczegóły wydarzenia o nazwie: <br />@Model.Title</h6>
+<hr />
+<dl class="row">
+    <dt> </dt>
+    <dd class="col-sm-12">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AdditionTime)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.AdditionTime)
+            </dd>
+        </dl>
+    </dd>
+
+    <dd class="col-sm-12">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AddingPerson)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.AddingPerson)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ConfirmingPerson)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.ConfirmingPerson)
+            </dd>
+        </dl>
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.AddingPerson)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.AddingPerson)
+    </dd>
+
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.ConfirmingPerson)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.ConfirmingPerson)
+    </dd>
+
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.Status)
+    </dt>
+    <dd class="col-sm-9">
+        @if (Model.Status == EventStatus.Approved)
+        {
+            <span class="badge badge-pill badge-success">@Html.DisplayFor(model => model.Status)</span>
+        }
+        else
+        {
+            <span class="badge badge-pill badge-secondary">@Html.DisplayFor(model => model.Status)</span>
+        }
+    </dd>
+
+</dl>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+            <div class="card-body d-flex flex-column align-items-start">
+                <strong class="d-inline-block mb-2 text-primary">Kategoria</strong>
+                <h3 class="mb-0">
+                    <a class="text-dark" href="#">
+                        @Html.DisplayFor(model => model.Title)
+                    </a>
+                </h3>
+                <div class="mb-1 text-muted">
+                    @Model.AdditionTime.Date.ToString("dd.mm.yyyy")
+                </div>
+                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
+
+                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="text-black-50">Edytuj</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+        </div>
+    </div>
+    <div class="col-md">
+        <center>
+            <div class="ui buttons">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info" role="button">&nbsp;&nbsp;&nbsp;Edytuj wydarzenie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <div class="or" data-text="lub"></div>
+                <a asp-action="Index" class="btn btn-info" role="button">&nbsp;Powrót do listy wydarzeń&nbsp;&nbsp;&nbsp;</a>
+            </div>
+
+            <br /><br /><br />
+            @{
+                var rejectedDisabled = (Model.Status == EventStatus.Rejected) ? "disabled" : "";
+                var approvedDisabled = (Model.Status == EventStatus.Approved) ? "disabled" : "";
+            }
+            <div class="ui buttons">
+                <form asp-action="Details">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" class="custom-control-input" id="Status" name="Status" value="false">
+                    <button type="submit" class="btn btn-default" @rejectedDisabled>&nbsp;&nbsp;&nbsp;Odrzuć wydarzenie&nbsp;&nbsp;&nbsp;</button>
+                </form>
+                <div class="or" data-text="lub"></div>
+                <form asp-action="Details">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" class="custom-control-input" id="Status" name="Status" value="true">
+                    <button type="submit" class="btn btn-success" @approvedDisabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbspZatwierdź wydarzenie&nbsp;&nbsp&nbsp;&nbsp;&nbsp;</button>
+                </form>
+            </div>
+        </center>
+    </div>
 </div>
-<div class="ui buttons">
-    <form asp-action="Details">
-        <input type="hidden" asp-for="Id" />
-        <input type="hidden" class="custom-control-input" id="Status" name="Status" value="false">
-        <button type="submit" class="btn btn-default">&nbsp;&nbsp;&nbsp;Odrzuć wydarzenie&nbsp;&nbsp;&nbsp;</button>
-    </form>
-    <div class="or" data-text="lub"></div>
-    <form asp-action="Details">
-        <input type="hidden" asp-for="Id" />
-        <input type="hidden" class="custom-control-input" id="Status" name="Status" value="true">
-        <button type="submit" class="btn btn-success">&nbsp;&nbsp;&nbsp;Zatwierdź wydarzenie&nbsp;&nbsp;&nbsp;</button>
-    </form>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+

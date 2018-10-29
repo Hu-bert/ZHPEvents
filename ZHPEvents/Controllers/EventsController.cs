@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZHPEvents.Data;
 using ZHPEvents.Models;
@@ -28,20 +26,84 @@ namespace ZHPEvents
 
         // GET: Events
 
-        public async Task<IActionResult> Index()
-        {
-            var user = await _userManager.GetUserAsync(User);
+        //public async Task<IActionResult> Index()
+        //{
+        //    var user = await _userManager.GetUserAsync(User);
 
-            if (User.IsInRole("Administrator") || User.IsInRole("Editor") )
+        //    if (User.IsInRole("Administrator") || User.IsInRole("Editor") )
+        //    {
+        //        return View(await _context.Event.ToListAsync());
+        //    }
+        //    else
+        //    {
+        //        return View(await _context.Event.Where(e => e.AddingPerson == user.Id).ToListAsync());
+        //    }
+        //}
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            IQueryable<Event> events;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["AdditionTimeSortParm"] = sortOrder == "AdditionTime" ? "additionTime_desc" : "AdditionTime";
+            ViewData["AddingPersonSortParm"] = sortOrder == "AddingPerson" ? "addingPerson_desc" : "AddingPerson";
+            ViewData["ConfirmingPersonSortParm"] = sortOrder == "ConfirmingPerson" ? "confirmingPerson_desc" : "ConfirmingPerson";
+            if (searchString != null)
             {
-                return View(await _context.Event.ToListAsync());
+                page = 1;
             }
             else
             {
-                return View(await _context.Event.Where(e => e.AddingPerson == user.Id).ToListAsync());
+                searchString = currentFilter;
             }
-        }
 
+            ViewData["CurrentFilter"] = searchString;
+
+            var user = await _userManager.GetUserAsync(User);
+            if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+            {
+                 events = _context.Event.Where(e => e != null);
+            }
+            else
+            {
+                 events = _context.Event.Where(e => e.AddingPerson == user.Id);
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                events = events.Where(e => e.Title.Contains(searchString)
+                                       || e.AddingPerson.Contains(searchString) || e.ConfirmingPerson.Contains(searchString)); 
+            }
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    events = events.OrderByDescending(e => e.Title);
+                    break;
+                case "AdditionTime":
+                    events = events.OrderBy(e => e.AdditionTime);
+                    break;
+                case "additionTime_desc":
+                    events = events.OrderByDescending(e => e.AdditionTime);
+                    break;
+                case "AddingPerson":
+                    events = events.OrderBy(e => e.AddingPerson);
+                    break;
+                case "addingPerson_desc":
+                    events = events.OrderByDescending(e => e.AddingPerson);
+                    break;
+                case "ConfirmingPerson":
+                    events = events.OrderBy(e => e.ConfirmingPerson);
+                    break;
+                case "confirmingPerson_desc":
+                    events = events.OrderByDescending(e => e.ConfirmingPerson);
+                    break;
+                default:
+                    events = events.OrderBy(e => e.Title);
+                    break;
+            }
+            int pageSize = 7;
+            return View(await PaginatedList<Event>.CreateAsync(events.AsNoTracking(), page ?? 1, pageSize));
+        }
         // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -53,7 +53,16 @@ donten run
 ```
 > The application will compile if everything is okey, it will display the domain of the site, e.g. https://localhost:5001.
 
-##### 6. Getting to know the roles.
+7. Starting the service of e-mails
+    soon...
+***
+#### Features
+Site for regular users
+- displaying events
+- filtering events
+- information about the application and other minor things
+Dashboard to manage the application
+- event management, reports for authentication users by role
 In the Application, we have already created users with roles
 
 | Role          | Login                  | Password        |
@@ -66,18 +75,6 @@ In the Application, we have already created users with roles
 | Author        | Author@gmai.com        | Author!1        |
 | Editor        | Editor@gmai.com        | Editor!1        |
 | Administrator | Administrator@gmai.com | Administrator!1 |
-
-7. Starting the service of e-mails
-    soon...
-***
-#### Features
-Site for regular users
-- displaying events
-- filtering events
-- information about the application and other minor things
-Dashboard to manage the application
-- event management, reports for authentication users by role
-
 The user roles are available in the application
 ###### User
 - może wejść w dashboard
@@ -115,3 +112,4 @@ More important things to do
 - management of user account
 - adding IsDeleted to events and reports for archiving
 - statistics from raprots and events
+- division of the project into: web aplication, core, services, view model.
