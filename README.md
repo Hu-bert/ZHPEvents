@@ -112,4 +112,4 @@ More important things to do
 - management of user account
 - adding IsDeleted to events and reports for archiving
 - statistics from raprots and events
-- division of the project into: web aplication, core, services, view model.
+- solutions with separate projects for entities, data access, and website functionality.

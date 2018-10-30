@@ -2,9 +2,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ZHPEvents.Models.Identity
+namespace ZHPEvents.Core.Identity
 {
-    public class ZHPEventsUser : IdentityUser
+    public class AppUser : IdentityUser
     {
         [PersonalData]
         public string FristName { get; set; }

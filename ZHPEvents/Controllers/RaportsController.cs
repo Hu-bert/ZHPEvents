@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ZHPEvents.Data;
-using ZHPEvents.Models;
+using ZHPEvents.Core;
+using ZHPEvents.Core.Entities;
 
 namespace ZHPEvents
 {
     [Authorize(Roles = "Administrator, Editor, Author, EventEditor, EventAuthor")]
     public class RaportsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Context _context;
 
-        public RaportsController(ApplicationDbContext context)
+        public RaportsController(Context context)
         {
             _context = context;
         }

@@ -1,7 +1,7 @@
-﻿@using ZHPEvents.Models.Identity;
+﻿@using ZHPEvents.Core.Identity;
 @using Microsoft.AspNetCore.Identity;
-@inject UserManager<ZHPEventsUser> ZHPEventsUser;
-@model ZHPEventsUser
+@inject UserManager<AppUser> ZHPEventsUser;
+@model AppUser
 
 @{
     ViewData["Title"] = "Edit";

@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ZHPEvents.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using System;
+using System.Threading.Tasks;
 using ZHPEvents.Areas.Identity.Services;
-using ZHPEvents.Models.Identity;
+using ZHPEvents.Core;
+using ZHPEvents.Core.Identity;
 
 namespace ZHPEvents
 {
@@ -37,16 +34,16 @@ namespace ZHPEvents
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<Context>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ZHPEventsUser, IdentityRole>(config =>
+            services.AddIdentity<AppUser, IdentityRole>(config =>
                 {
                     config.SignIn.RequireConfirmedEmail = true;
                 })
                 .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<Context>();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -119,7 +116,7 @@ namespace ZHPEvents
         {
             //initializing custom roles   
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ZHPEventsUser>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
             string[] roleNames = { "Administrator", "Editor", "Author", "EventEditor", "EventAuthor", "RaportEditor", "RaportAuthor", "User" };
             IdentityResult roleResult;
 
@@ -133,11 +130,11 @@ namespace ZHPEvents
                 }
             }
 
-            ZHPEventsUser administrator = await UserManager.FindByEmailAsync("administrator@gmail.com");
+            AppUser administrator = await UserManager.FindByEmailAsync("administrator@gmail.com");
 
             if (administrator == null)
             {
-                administrator = new ZHPEventsUser()
+                administrator = new AppUser()
                 {
                     UserName = "administrator@gmail.com",
                     Email = "administrator@gmail.com",
@@ -148,11 +145,11 @@ namespace ZHPEvents
             }
             await UserManager.AddToRoleAsync(administrator, "Administrator");
 
-            ZHPEventsUser editor = await UserManager.FindByEmailAsync("editor@gmail.com");
+            AppUser editor = await UserManager.FindByEmailAsync("editor@gmail.com");
 
             if (editor == null)
             {
-                editor = new ZHPEventsUser()
+                editor = new AppUser()
                 {
                     UserName = "editor@gmail.com",
                     Email = "editor@gmail.com",
@@ -163,11 +160,11 @@ namespace ZHPEvents
             }
             await UserManager.AddToRoleAsync(editor, "Editor");
 
-            ZHPEventsUser author = await UserManager.FindByEmailAsync("author@gmail.com");
+            AppUser author = await UserManager.FindByEmailAsync("author@gmail.com");
 
             if (author == null)
             {
-                author = new ZHPEventsUser()
+                author = new AppUser()
                 {
                     UserName = "author@gmail.com",
                     Email = "author@gmail.com",
@@ -178,11 +175,11 @@ namespace ZHPEvents
             }
             await UserManager.AddToRoleAsync(author, "Author");
 
-            ZHPEventsUser eventEditor = await UserManager.FindByEmailAsync("eventEditor@gmail.com");
+            AppUser eventEditor = await UserManager.FindByEmailAsync("eventEditor@gmail.com");
 
             if (eventEditor == null)
             {
-                eventEditor = new ZHPEventsUser()
+                eventEditor = new AppUser()
                 {
                     UserName = "eventEditor@gmail.com",
                     Email = "eventEditor@gmail.com",
@@ -193,11 +190,11 @@ namespace ZHPEvents
             }
             await UserManager.AddToRoleAsync(eventEditor, "EventEditor");
 
-            ZHPEventsUser eventAuthor = await UserManager.FindByEmailAsync("eventAuthor@gmail.com");
+            AppUser eventAuthor = await UserManager.FindByEmailAsync("eventAuthor@gmail.com");
 
             if (eventAuthor == null)
             {
-                eventAuthor = new ZHPEventsUser()
+                eventAuthor = new AppUser()
                 {
                     UserName = "eventAuthor@gmail.com",
                     Email = "eventAuthor@gmail.com",
@@ -208,11 +205,11 @@ namespace ZHPEvents
             }
             await UserManager.AddToRoleAsync(eventAuthor, "EventAuthor");
 
-            ZHPEventsUser raportEditor = await UserManager.FindByEmailAsync("raportEditor@gmail.com");
+            AppUser raportEditor = await UserManager.FindByEmailAsync("raportEditor@gmail.com");
 
             if (raportEditor == null)
             {
-                raportEditor = new ZHPEventsUser()
+                raportEditor = new AppUser()
                 {
                     UserName = "raportEditor@gmail.com",
                     Email = "raportEditor@gmail.com",
@@ -223,11 +220,11 @@ namespace ZHPEvents
             }
             await UserManager.AddToRoleAsync(raportEditor, "RaportEditor");
 
-            ZHPEventsUser raportAuthor = await UserManager.FindByEmailAsync("raportAuthor@gmail.com");
+            AppUser raportAuthor = await UserManager.FindByEmailAsync("raportAuthor@gmail.com");
 
             if (raportAuthor == null)
             {
-                raportAuthor = new ZHPEventsUser()
+                raportAuthor = new AppUser()
                 {
                     UserName = "raportAuthor@gmail.com",
                     Email = "raportAuthor@gmail.com",
@@ -238,11 +235,11 @@ namespace ZHPEvents
             }
             await UserManager.AddToRoleAsync(raportAuthor, "RaportAuthor");
 
-            ZHPEventsUser user = await UserManager.FindByEmailAsync("user@gmail.com");
+            AppUser user = await UserManager.FindByEmailAsync("user@gmail.com");
 
             if (user == null)
             {
-                user = new ZHPEventsUser()
+                user = new AppUser()
                 {
                     UserName = "user@gmail.com",
                     Email = "user@gmail.com",

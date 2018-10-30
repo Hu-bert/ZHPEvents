@@ -1,10 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using ZHPEvents.Models.Identity
+@using ZHPEvents.Core.Identity
 
-@inject SignInManager<ZHPEventsUser> SignInManager
-@inject UserManager<ZHPEventsUser> UserManager
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 
-@model ZHPEvents.Models.Event
+@model ZHPEvents.Core.Entities.Event
 
 @{
     ViewData["Title"] = "Home Page";

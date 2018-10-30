@@ -1,59 +1,61 @@
-using System;
+ï»¿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace ZHPEvents.Models
+namespace ZHPEvents.Core.Entities
 {
     public class Event
     {
         public int Id { get; set; }
 
-        [Display(Name = "Tytu³")]
+        [Display(Name = "TytuÅ‚")]
         [StringLength(60, MinimumLength = 3)]
-        [Required(ErrorMessage ="Proszê podaæ tytu³.")]
+        [Required(ErrorMessage = "ProszÄ™ podaÄ‡ tytuÅ‚.")]
         public string Title { get; set; }
 
         //[Display(Name = "Kategoria")]
-        //[Required(ErrorMessage = "Proszê podaæ pierwsz¹ kategoriê.")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ pierwszÄ… kategoriÄ™.")]
         //public EventType Type { get; set; }
 
         //[Display(Name = "Pod kategoria")]
-        //[Required(ErrorMessage = "Proszê podaæ drug¹ kategoriê.")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ drugÄ… kategoriÄ™.")]
         //public EventCategory Category { get; set; }
 
         //[Display(Name = "Data wydarzenia")]
-        //[Required(ErrorMessage = "Proszê podaæ datê wydarzenia.")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ datÄ™ wydarzenia.")]
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         //public DateTime Date { get; set; }
 
-        //[Display(Name = "Data zapisów")]
-        //[Required(ErrorMessage = "Proszê podaæ datê koñca zapisów.")]
+        //[Display(Name = "Data zapisÃ³w")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ datÄ™ koÅ„ca zapisÃ³w.")]
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         //public DateTime LastDayOfEntries { get; set; }
 
         //[Display(Name = "Opis")]
-        //[Required(ErrorMessage = "Proszê podaæ opis.")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ opis.")]
         //[StringLength(60, MinimumLength = 3)]
         //public string Description { get; set; }
 
         //[Display(Name = "Liczba miejsc")]
         //[Range(0, 999)]
-        //[Required(ErrorMessage = "Proszê podaæ liczbe miejsc.")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ liczbe miejsc.")]
         //public int NumberOfSeats { get; set; }
 
         //[Display(Name = "Kontakt")]
-        //[Required(ErrorMessage = "Proszê podaæ mail kontaktowy.")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ mail kontaktowy.")]
         //public string Contact { get; set; }
 
         //[Display(Name = "Mail rejestracji")]
-        //[Required(ErrorMessage = "Proszê podaæ mail rejestarcji.")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ mail rejestarcji.")]
         //public string RegistrationMail { get; set; }
 
         //[Display(Name = "Organizator")]
-        //[Required(ErrorMessage = "Proszê podaæ osobê/ jednostkê, która orgfanizuje wydarzenie.")]
+        //[Required(ErrorMessage = "ProszÄ™ podaÄ‡ osobÄ™/ jednostkÄ™, ktÃ³ra orgfanizuje wydarzenie.")]
         //public string Organizaer { get; set; }
 
         //[Display(Name = "Dla kogo")]
-        //[Required(ErrorMessage ="Proszê podaæ dla kogo jest przeznaczone wydarzezenie")]
+        //[Required(ErrorMessage ="ProszÄ™ podaÄ‡ dla kogo jest przeznaczone wydarzezenie")]
         //public string ForWhom { get; set; }
 
         //[Display(Name = "Miniaturka")]
@@ -65,10 +67,10 @@ namespace ZHPEvents.Models
         [Display(Name = "Czas dodania")]
         public DateTime AdditionTime { get; set; }
 
-        [Display(Name = "Osoba dodaj¹ca")]
+        [Display(Name = "Osoba dodajÄ…ca")]
         public string AddingPerson { get; set; }
 
-        [Display(Name = "Osoba potwierdzaj¹ca")]
+        [Display(Name = "Osoba potwierdzajÄ…ca")]
         public string ConfirmingPerson { get; set; }
 
         public EventStatus Status { get; set; }
@@ -82,7 +84,7 @@ namespace ZHPEvents.Models
 
     public enum EventType
     {
-        [Display(Name = "Obóz")]
+        [Display(Name = "ObÃ³z")]
         oboz,
         [Display(Name = "Kurs")]
         kurs,
@@ -100,7 +102,7 @@ namespace ZHPEvents.Models
     {
         [Display(Name = "Przewodnikowski")]
         przewodnikowski,
-        [Display(Name = "Dru¿ynowych Zuchowych")]
+        [Display(Name = "DruÅ¼ynowych Zuchowych")]
         druzynowychZuchowych
     }
 }

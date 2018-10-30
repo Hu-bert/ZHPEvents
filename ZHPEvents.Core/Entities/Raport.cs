@@ -1,25 +1,27 @@
-using System;
+ï»¿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace ZHPEvents.Models
+namespace ZHPEvents.Core.Entities
 {
     public class Raport
     {
         public int Id { get; set; }
 
-        [Display(Name = "Tytu³")]
+        [Display(Name = "TytuÅ‚")]
         [StringLength(60, MinimumLength = 3)]
-        [Required(ErrorMessage = "Proszê podaæ tytu³.")]
+        [Required(ErrorMessage = "ProszÄ™ podaÄ‡ tytuÅ‚.")]
         public string Title { get; set; }
 
 
         [Display(Name = "Czas dodania")]
         public DateTime AdditionTime { get; set; }
 
-        [Display(Name = "Osoba dodaj¹ca")]
+        [Display(Name = "Osoba dodajÄ…ca")]
         public string AddingPerson { get; set; }
 
-        [Display(Name = "Osoba potwierdzaj¹ca")]
+        [Display(Name = "Osoba potwierdzajÄ…ca")]
         public string ConfirmingPerson { get; set; }
 
         public RaportStatus Status { get; set; }
@@ -31,3 +33,4 @@ namespace ZHPEvents.Models
         Rejected
     }
 }
+

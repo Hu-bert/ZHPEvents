@@ -1,4 +1,5 @@
-﻿@model ZHPEvents.Models.Event
+﻿@using ZHPEvents.Core.Entities
+@model ZHPEvents.Core.Entities.Event
 
 @{
     ViewData["Title"] = "Details";
@@ -61,7 +62,7 @@
         @Html.DisplayNameFor(model => model.Status)
     </dt>
     <dd class="col-sm-9">
-        @if (Model.Status == EventStatus.Approved)
+        @if (Model.Status == ZHPEvents.Core.Entities.EventStatus.Approved)
         {
             <span class="badge badge-pill badge-success">@Html.DisplayFor(model => model.Status)</span>
         }
@@ -90,10 +91,8 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
+                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
 
-                        <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="text-black-50">Edytuj</a>
-                        </button>
                     </div>
                 </div>
             </div>

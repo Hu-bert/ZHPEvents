@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ZHPEvents.Data;
-using ZHPEvents.Models;
-using ZHPEvents.Models.Identity;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using ZHPEvents.Core;
+using ZHPEvents.Core.Entities;
+using ZHPEvents.Core.Identity;
 
 namespace ZHPEvents
 {
@@ -15,10 +15,10 @@ namespace ZHPEvents
     [Authorize(Roles = "Administrator, Editor, Author, EventEditor, EventAuthor")]
     public class EventsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly UserManager<ZHPEventsUser> _userManager;
+        private readonly Context _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public EventsController(ApplicationDbContext context, UserManager<ZHPEventsUser> userManager)
+        public EventsController(Context context, UserManager<AppUser> userManager)
         {
             _context = context;
             _userManager = userManager;

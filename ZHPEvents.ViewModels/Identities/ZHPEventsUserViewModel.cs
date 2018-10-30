@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using ZHPEvents.Models.Identity;
+﻿using ZHPEvents.Core.Identity;
 
 namespace ZHPEvents.ViewModels.Identities
 {
@@ -15,7 +13,7 @@ namespace ZHPEvents.ViewModels.Identities
 
     public static class ZHPEventsUserExtension
     {
-        public static ZHPEventsUserViewModel GetViewModel(this ZHPEventsUser user)
+        public static ZHPEventsUserViewModel GetViewModel(this AppUser user)
         {
             return new ZHPEventsUserViewModel()
             {

@@ -2,22 +2,20 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ZHPEvents.Data;
-using ZHPEvents.Models.Identity;
-using ZHPEvents.ViewModels.Identities;
+using ZHPEvents.Core;
+using ZHPEvents.Core.Identity;
 
 namespace ZHPEvents
 {
     [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly UserManager<ZHPEventsUser> _userManager;
+        private readonly Context _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public UsersController(ApplicationDbContext context, UserManager<ZHPEventsUser> userManager)
+        public UsersController(Context context, UserManager<AppUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -71,7 +69,7 @@ namespace ZHPEvents
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,FristName,LastName")] ZHPEventsUser userFromForm, bool administrator, bool editor, bool author, bool eventEditor, bool eventAuthor, bool raportEditor, bool raportAuthor, bool user)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,FristName,LastName")] AppUser userFromForm, bool administrator, bool editor, bool author, bool eventEditor, bool eventAuthor, bool raportEditor, bool raportAuthor, bool user)
         {
             if (id != userFromForm.Id)
             {

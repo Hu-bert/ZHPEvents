@@ -1,10 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using ZHPEvents.Models.Identity
+@using ZHPEvents.Core.Identity
 
-@inject SignInManager<ZHPEventsUser> SignInManager
-@inject UserManager<ZHPEventsUser> UserManager
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 
-@model PaginatedList<ZHPEvents.Models.Event>
+@model PaginatedList<ZHPEvents.Core.Entities.Event>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -33,7 +33,7 @@
                 </p>
             </div>
         </form>
-        <div class="collapse" id="collapseExample">
+        <div class="collapse @ViewData["CollapseShow"]" id="collapseExample" >
             <div class="card card-body">
                 <a asp-action="Events" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                     Tytuł

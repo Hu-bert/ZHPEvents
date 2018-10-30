@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ZHPEvents.Data;
-using ZHPEvents.Models;
+using ZHPEvents.Core;
+using ZHPEvents.Core.Entities;
 
 namespace ZHPEvents.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Context _context;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(Context context)
         {
             _context = context;
         }
@@ -57,6 +56,7 @@ namespace ZHPEvents.Controllers
             ViewData["AdditionTimeSortParm"] = sortOrder == "AdditionTime" ? "additionTime_desc" : "AdditionTime";
             ViewData["AddingPersonSortParm"] = sortOrder == "AddingPerson" ? "addingPerson_desc" : "AddingPerson";
             ViewData["ConfirmingPersonSortParm"] = sortOrder == "ConfirmingPerson" ? "confirmingPerson_desc" : "ConfirmingPerson";
+            ViewData["CollapseShow"] = "";
             if (searchString != null)
             {
                 page = 1;
@@ -72,30 +72,38 @@ namespace ZHPEvents.Controllers
             {
                 events = events.Where(e => e.Title.Contains(searchString)
                                        || e.AddingPerson.Contains(searchString) || e.ConfirmingPerson.Contains(searchString));
+                ViewData["CollapseShow"] = " ";
             }
 
             switch (sortOrder)
             {
                 case "title_desc":
                     events = events.OrderByDescending(e => e.Title);
+                    ViewData["CollapseShow"] = "show";
                     break;
                 case "AdditionTime":
                     events = events.OrderBy(e => e.AdditionTime);
+                    ViewData["CollapseShow"] = "show";
                     break;
                 case "additionTime_desc":
                     events = events.OrderByDescending(e => e.AdditionTime);
+                    ViewData["CollapseShow"] = "show";
                     break;
                 case "AddingPerson":
                     events = events.OrderBy(e => e.AddingPerson);
+                    ViewData["CollapseShow"] = "show";
                     break;
                 case "addingPerson_desc":
                     events = events.OrderByDescending(e => e.AddingPerson);
+                    ViewData["CollapseShow"] = "show";
                     break;
                 case "ConfirmingPerson":
                     events = events.OrderBy(e => e.ConfirmingPerson);
+                    ViewData["CollapseShow"] = "show";
                     break;
                 case "confirmingPerson_desc":
                     events = events.OrderByDescending(e => e.ConfirmingPerson);
+                    ViewData["CollapseShow"] = "show";
                     break;
                 default:
                     events = events.OrderBy(e => e.Title);
@@ -110,10 +118,5 @@ namespace ZHPEvents.Controllers
             return View(await _context.Event.FirstOrDefaultAsync(m => m.Id == id));
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

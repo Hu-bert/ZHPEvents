@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using ZHPEvents.Models.Identity
+@using ZHPEvents.Core.Identity
 
-@inject SignInManager<ZHPEventsUser> SignInManager
-@inject UserManager<ZHPEventsUser> UserManager
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 @{
     var _controllerName = (this.ViewContext.RouteData.Values["controller"] != null) ? this.ViewContext.RouteData.Values["controller"].ToString(): "";
     var _actionName = (this.ViewContext.RouteData.Values["action"] != null) ? this.ViewContext.RouteData.Values["action"].ToString() : "";
