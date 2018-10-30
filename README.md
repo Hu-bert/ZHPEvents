@@ -77,7 +77,7 @@ In the Application, we have already created users with roles
 | Administrator | Administrator@gmai.com | Administrator!1 |
 The user roles are available in the application
 ###### User
-- może wejść w dashboard
+- can enter in dashboard
 ###### RaportAuthor
 - can create and edit your reports
 ###### RaportEditor

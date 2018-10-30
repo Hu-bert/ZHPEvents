@@ -1,8 +1,10 @@
-﻿using ZHPEvents.Core.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace ZHPEvents.ViewModels.Identities
+namespace ZHPEvents.ViewModels.Identities.AppUser
 {
-    public class ZHPEventsUserViewModel
+    public class AppUserViewModel
     {
         public string Id { get; set; }
         public string FirstName { get; set; }
@@ -11,11 +13,11 @@ namespace ZHPEvents.ViewModels.Identities
 
     }
 
-    public static class ZHPEventsUserExtension
+    public static class AppUserExtension
     {
-        public static ZHPEventsUserViewModel GetViewModel(this AppUser user)
+        public static AppUserViewModel GetViewModel(this Core.Identity.AppUser user)
         {
-            return new ZHPEventsUserViewModel()
+            return new AppUserViewModel()
             {
                 Id = user.Id,
                 FirstName = user.FristName,
