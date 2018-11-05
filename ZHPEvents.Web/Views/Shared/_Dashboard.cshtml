@@ -4,7 +4,7 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 @{
-    var _controllerName = (this.ViewContext.RouteData.Values["controller"] != null) ? this.ViewContext.RouteData.Values["controller"].ToString(): "";
+    var _controllerName = (this.ViewContext.RouteData.Values["controller"] != null) ? this.ViewContext.RouteData.Values["controller"].ToString() : "";
     var _actionName = (this.ViewContext.RouteData.Values["action"] != null) ? this.ViewContext.RouteData.Values["action"].ToString() : "";
 
     string controllerName = "";
@@ -45,140 +45,238 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="keyword" content="">
+    <title>DashBoard - ZHPEvents</title>
     <link rel="icon" href="~/favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
+    <link href="~/coreui/coreui-icons.min.css" rel="stylesheet" />
+    <link href="~/lib/Font-Awesome/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="~/coreui/simple-line-icons.css" rel="stylesheet" />
 
-    <!-- Bootstrap core CSS -->
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/Font-Awesome/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-    <link href="~/lib/semantic/dist/components/button.min.css" rel="stylesheet" />
-    <link href="~/css/dashboard.css" rel="stylesheet" />
+    <link href="~/coreui/style.css" rel="stylesheet" />
+    <link href="~/coreui/pace.min.css" rel="stylesheet" />
 </head>
 
-<body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand col-sm-3 col-md-2 mr-0">
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <header class="app-header navbar">
+        <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="navbar-brand">
             <i class="fas fa-campground"></i>&nbsp;&nbsp;
             <strong>ZHPEvents</strong>
         </a>
-        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <ul class="nav justify-content-end px-3">
-                <li>
-                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Ustawienia konta" class="btn btn-link btn-sm text-white">Czuwaj @UserManager.GetUserName(User)!</a>
-                </li>
-                <li>
-                    <button type="submit" class="btn btn-link btn-sm text-white">Logout</button>
-                </li>
-            </ul>
-        </form>
-    </nav>
-
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                <i class="fas fa-tachometer-alt"></i>
-                                Dashboard <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-
-                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("EventEditor") || User.IsInRole("EventAuthor"))
-                        {
-
-                            <li class="nav-item">
-                                <a asp-area="" asp-controller="Events" asp-action="Index" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    Wydarzenia
-                                </a>
-                                <ol class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a asp-area="" asp-controller="Events" asp-action="Create" class="nav-link">
-                                            &nbsp;&nbsp;&nbsp;
-                                            <i class="fas fa-calendar-alt"></i>
-                                            Dodaj nowe
-                                        </a>
-                                    </li>
-                                </ol>
-                            </li>
-                        }
-                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("RaportEditor") || User.IsInRole("RaportAuthor"))
-                        {
-                            <li class="nav-item">
-                                <a asp-area="" asp-controller="Raports" asp-action="Index" class="nav-link">
-                                    <i class="fas fa-chart-bar"></i>
-                                    Raporty
-                                </a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Administrator"))
-                        {
-                            <li class="nav-item">
-                                <a asp-area="" asp-controller="Users" asp-action="Index" class="nav-link">
-                                    <i class="fas fa-user-circle"></i>
-                                    Użytkownicy
-                                </a>
-                            </li>
-                        }
-                    </ul>
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    @*<img class="img-avatar" src="img/avatars/6.jpg" alt="admin@bootstrapmaster.com">*@
+                    Czuwaj @UserManager.GetUserName(User)!
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item">
+                        <i class="fa fa-user"></i> Profil
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="fa fa-question-circle"></i> Pomoc
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="fa fa-language"></i> Język
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="fa fa-lock"></i> Wyloguj
+                    </a>
                 </div>
-            </nav>
+            </li>
+        </ul>
+        <span>
+            &nbsp;&nbsp; &nbsp;&nbsp;
+        </span>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        @if (_controllerName == "Dashboard")
-                        {
-                            <li class="breadcrumb-item">
-                                <a asp-area="" asp-controller="Dashboard" asp-action="Index">
-                                    Dashboard
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="breadcrumb-item">
-                                <a asp-area="" asp-controller="Dashboard" asp-action="Index">
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a asp-area="" asp-controller=@_controllerName asp-action="Index">
-                                    @controllerName
-                                </a>
-                            </li>
-                            @if (_actionName != "Index")
-                            {
-                                <li class="breadcrumb-item">
-                                    <a asp-area="" asp-controller=@_controllerName asp-action=@_actionName>
-                                        @actionName
+    </header>
+    <div class="app-body">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-speedometer"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-title">Publikowanie</li>
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("EventEditor") || User.IsInRole("EventAuthor"))
+                    {
+                        <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#">
+                                <i class="nav-icon fas fa-calendar"></i> Wydarzenia
+                            </a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Events" asp-action="Create" class="nav-link">
+                                        <i class="nav-icon fas fa-calendar-plus"></i> Dodaj
                                     </a>
                                 </li>
-                            }
-                        }
-                    </ol>
-                </nav>
-                @RenderBody()
-            </main>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Events" asp-action="Index" class="nav-link">
+                                        <i class="nav-icon fas fa-calendar-alt"></i> Wszystkie
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Events" asp-action="" class="nav-link">
+                                        <i class="nav-icon fas fa-calendar-check"></i> Zakceptowane
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Events" asp-action="" class="nav-link">
+                                        <i class="nav-icon fas fa-calendar-minus"></i> Niezakceptowane
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Events" asp-action="" class="nav-link">
+                                        <i class="nav-icon fas fa-calendar-times"></i> Zarchiwizowane
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("RaportEditor") || User.IsInRole("RaportAuthor"))
+                    {
+                        <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#">
+                                <i class="nav-icon fas fa-file"></i> Raporty
+                            </a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Raports" asp-action="Index" class="nav-link">
+                                        <i class="nav-icon fas fa-file"></i> Dodaj
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Raports" asp-action="" class="nav-link">
+                                        <i class="nav-icon fas fa-copy"></i> Wszystkie
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Raports" asp-action="" class="nav-link">
+                                        <i class="nav-icon fas fa-file-alt"></i> Zakceptowane
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Raports" asp-action="" class="nav-link">
+                                        <i class="nav-icon fas fa-file-excel"></i> Niezakceptowane
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Raports" asp-action="" class="nav-link">
+                                        <i class="nav-icon fas fa-file-archive"></i> Zarchiwizowane
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="nav-divider"></li>
+                        <li class="nav-title">Administracja</li>
+                        <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#">
+                                <i class="nav-icon fas fa-users-cog"></i> Użytkownicy
+                            </a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Users" asp-action="Index" class="nav-link">
+                                        <i class="nav-icon fas fa-users"></i> Wszyscy
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    <li class="nav-divider"></li>
+                    <li class="nav-title">Użytkownik</li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon fas fa-user-cog"></i> Konto
+                        </a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link">
+                                    <i class="nav-icon fas fa-user-edit"></i> Wszyscy
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <button class="sidebar-minimizer brand-minimizer" type="button"></button>
         </div>
-    </div>
+        <main class="main">
+            <ol class="breadcrumb">
+                @if (_controllerName == "Dashboard")
+                {
+                    <li class="breadcrumb-item">
+                        <a asp-area="" asp-controller="Dashboard" asp-action="Index">
+                            Dashboard
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="breadcrumb-item">
+                        <a asp-area="" asp-controller="Dashboard" asp-action="Index">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-area="" asp-controller=@_controllerName asp-action="Index">
+                            @controllerName
+                        </a>
+                    </li>
+                    @if (_actionName != "Index")
+                    {
+                        <li class="breadcrumb-item">
+                            <a asp-area="" asp-controller=@_controllerName asp-action=@_actionName>
+                                @actionName
+                            </a>
+                        </li>
+                    }
+                }
+            </ol>
+            <div class="container-fluid">
+                <div id="ui-view">
+                    @RenderBody()
+                </div>
+            </div>
+        </main>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="~/vendor/popper.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/vendor/holder.min.js"></script>
+    </div>
+    <footer class="app-footer">
+        <div>
+            <a href="https://coreui.io/pro/">ZHPEvents</a>
+            <span>© 2018</span>
+        </div>
+        <div class="ml-auto">
+            <span>Powered by</span>
+            <a href="https://coreui.io/pro/">CoreUI Pro</a>
+        </div>
+    </footer>
+
+    <script src="~/coreui/jquery.min.js"></script>
+    <script src="~/coreui/popper.min.js"></script>
+    <script src="~/coreui/bootstrap.min.js"></script>
+    <script src="~/coreui/pace.min.js"></script>
+    <script src="~/coreui/perfect-scrollbar.min.js"></script>
+    <script src="~/coreui/coreui.min.js"></script>
+    <script>
+
+    </script>
     @RenderSection("Scripts", required: false)
 
 </body>

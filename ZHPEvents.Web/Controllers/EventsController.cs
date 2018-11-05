@@ -205,7 +205,7 @@ namespace ZHPEvents
             {
                 return NotFound();
             }
-            if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+            if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
             {
                 return View(@event);
             }
@@ -234,7 +234,7 @@ namespace ZHPEvents
                 return NotFound();
             }
 
-            if (!User.IsInRole("Admin") || !User.IsInRole("Editor"))
+            if (!User.IsInRole("Administrator") || !User.IsInRole("Editor"))
             {
                 if (singleEvent.AddingPerson != user.Id)
                 {
@@ -284,7 +284,7 @@ namespace ZHPEvents
                 return NotFound();
             }
 
-            if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+            if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
             {
                 return View(@event);
             }
@@ -306,7 +306,7 @@ namespace ZHPEvents
             var user = await _userManager.GetUserAsync(User);
             var @event = await _context.Event.FindAsync(id);
 
-            if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+            if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
             {
                 _context.Event.Remove(@event);
             }
