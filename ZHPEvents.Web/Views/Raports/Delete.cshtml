@@ -1,51 +1,66 @@
 ﻿@model ZHPEvents.Core.Entities.Raport
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = Model.Title + " - usuń";
     Layout = "_Dashboard";
 }
 
 
-<h5>Jesteś pewny, że chcesz usunąć ten raport?</h5>
-<div>
-    <h6>Usuwanie raportu o nazwie: <br />@Model.Title</h6>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AdditionTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AdditionTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AddingPerson)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AddingPerson)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ConfirmingPerson)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ConfirmingPerson)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-    </dl>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="row">
+    <div class="col-sm-12 col-md-9">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-calendar-minus"></i> Usuwanie raportu o nazwie: @Model.Title
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AdditionTime)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AdditionTime)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AddingPerson)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AddingPerson)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ConfirmingPerson)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ConfirmingPerson)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Status)
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Delete" class="btn btn-pill  btn-outline-danger" />
+                    <a asp-action="Index" class="btn btn-pill  btn-outline-secondary" role="button">Powrót do listy wydarzeń</a>
+                </form>
+            </div>
+        </div>
+    </div>
+<div class="col-sm-12 col-md-3">
+    <div class="card text-white bg-danger">
+        <div class="card-header">Usuwanie wydarzeń</div>
+        <div class="card-body">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
+            ex ea commodo consequat.
+        </div>
+    </div>
 </div>

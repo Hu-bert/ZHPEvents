@@ -101,7 +101,7 @@ namespace ZHPEvents
                     events = events.OrderBy(e => e.Title);
                     break;
             }
-            int pageSize = 7;
+            int pageSize = 5;
             return View(await PaginatedList<Event>.CreateAsync(events.AsNoTracking(), page ?? 1, pageSize));
         }
         // GET: Events/Details/5

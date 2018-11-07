@@ -7,31 +7,41 @@
 @model IEnumerable<ZHPEvents.Core.Entities.Event>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
     var user = await UserManager.GetUserAsync(User);
 }
 
-<section class="jumbotron text-center introduction">
-    <div class="container">
-        <h1 class="jumbotron-heading">Wydarzenia w ZHP</h1>
-        <p class="lead text-muted">Witamy na stronie z wydarzeniami harcerskimi. Możesz poniżej zoabczyć trzy najnowższe wydarzenia lub: </p>
-        <p>
-            <a asp-area="" asp-controller="Home" asp-action="Events" class="btn btn-primary my-2 button-white-space">Zobacz wszystkie wydarzenia</a>
-            <a href="#" class="btn btn-primary my-2 button-white-space">Dowiedz się jak opublikować wydarzenia</a>
-            <br />
-            @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("EventEditor") || User.IsInRole("EventAuthor") || User.IsInRole("User"))
-            {
-                <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="btn btn-success my-2 button-white-space">&nbsp;Dashboard - panel sterowania&nbsp;&nbsp;</a>
-            }
-            <br />
-            <a data-easing="linear" href="#events" class="btn btn-secondary my-2 button-white-space">Zobacz trzy ostatnie wydarzenia</a>
-        </p>
-    </div>
-</section>
+@section FilterMenu {
+    <span>
+        &nbsp;&nbsp; &nbsp;&nbsp;
+    </span>
+}
+    <section class="text-center introduction bg-white">
+        <div class="centered">
+            <div class="container ">
+                <h1 class="jumbotron-heading">Wydarzenia w ZHP</h1>
+                <p class="lead text-muted">Witamy na stronie z wydarzeniami harcerskimi. Możesz poniżej zoabczyć trzy najnowższe wydarzenia lub: </p>
+                <div class="d-block d-sm-none">
+                    <p class="justify-content-center">
+                        <a asp-area="" asp-controller="Home" asp-action="Events" class="btn btn-pill btn-outline-green" role="button">&nbsp;&nbsp;Wszystkie wydarzenia&nbsp;</a>
+                        <br /><br />
+                        <a href="#" class="btn btn-pill btn-outline-green" role="button">Publikowanie wydarzeń</a>
+                    </p>
+                </div>
+                <div class="d-none d-sm-block">
+                    <p class="justify-content-center ">
+                        <a asp-area="" asp-controller="Home" asp-action="Events" class="btn btn-pill btn-outline-green" role="button">&nbsp;Wszystkie wydarzenia&nbsp;</a>
+                        <a href="#" class="btn btn-pill btn-outline-green" role="button">Publikowanie wydarzeń</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+            <a data-easing="linear" href="#events" class="pulse _down btn btn-sm btn-outline-dark" role="button"> <i class="nav-icon fas fa-caret-down fa-2x"></i></a>
+    </section>
 
-<div class="album py-5 bg-light">
+<div class="album py-5 bg-light" id="events">
     <div class="container">
-        <div class="row" id="events">
+        <div class="row">
             @foreach (var item in Model)
             {
                 <div class="col-md-4">
@@ -44,14 +54,14 @@
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
+                                    <button type="button" class="btn btn-pill btn-sm btn-outline-secondary">Zobacz</button>
                                     @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
                                     {
-                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill btn-sm btn-outline-secondary" role="button">Edytuj</a>
                                     }
                                     else if (user != null && user.Id == item.AddingPerson)
                                     {
-                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
                                     }
                                 </div>
                                 <small class="text-muted">@item.AdditionTime.Date.ToString("dd.mm.yyyy")</small>
@@ -60,20 +70,20 @@
                     </div>
                 </div>
             }
+
         </div>
+        <br /><br /><br /><br />
     </div>
 </div>
 
 @section Scripts {
+    <script src="~/vendor/holder.min.js"></script>
     <script>
 
         var scroll = new SmoothScroll('a[href*="#"]:not([data-easing])');
 
         var linear = new SmoothScroll('[data-easing="linear"]', { easing: 'linear' });
 
-        document.addEventListener('scrollStart', logScrollEvent, false);
-        document.addEventListener('scrollStop', logScrollEvent, false);
-        document.addEventListener('scrollCancel', logScrollEvent, false);
     </script>
 
 }

@@ -1,52 +1,43 @@
 ﻿@model ZHPEvents.Core.Entities.Raport
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Stwórz raport";
     Layout = "_Dashboard";
 }
 
-<h6>Tworzenie nowego reportu</h6>
-<hr />
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    <div class="col-sm-12 col-md-9">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-calendar-plus"></i> Tworzenie nowego reportu
             </div>
-            <div class="form-group">
-                <label asp-for="AdditionTime" class="control-label"></label>
-                <input asp-for="AdditionTime" class="form-control" />
-                <span asp-validation-for="AdditionTime" class="text-danger"></span>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-pill  btn-outline-success" />
+                        <a asp-action="Index" class="btn btn-pill  btn-outline-secondary" role="button">Powrót do listy wydarzeń</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="AddingPerson" class="control-label"></label>
-                <input asp-for="AddingPerson" class="form-control" />
-                <span asp-validation-for="AddingPerson" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-header">Tworzenie raportu</div>
+            <div class="card-body">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
+                ex ea commodo consequat.
             </div>
-            <div class="form-group">
-                <label asp-for="ConfirmingPerson" class="control-label"></label>
-                <input asp-for="ConfirmingPerson" class="form-control" />
-                <span asp-validation-for="ConfirmingPerson" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

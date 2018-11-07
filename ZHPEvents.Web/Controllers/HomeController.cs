@@ -29,17 +29,9 @@ namespace ZHPEvents.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
 
         public IActionResult Privacy()
         {
@@ -80,36 +72,45 @@ namespace ZHPEvents.Controllers
                 case "title_desc":
                     events = events.OrderByDescending(e => e.Title);
                     ViewData["CollapseShow"] = "show";
+                    ViewData["Orderby"] = "title_desc";
                     break;
                 case "AdditionTime":
                     events = events.OrderBy(e => e.AdditionTime);
                     ViewData["CollapseShow"] = "show";
+                    ViewData["Orderby"] = "AdditionTime";
                     break;
                 case "additionTime_desc":
                     events = events.OrderByDescending(e => e.AdditionTime);
                     ViewData["CollapseShow"] = "show";
+                    ViewData["Orderby"] = "additionTime_desc";
                     break;
                 case "AddingPerson":
                     events = events.OrderBy(e => e.AddingPerson);
                     ViewData["CollapseShow"] = "show";
+                    ViewData["Orderby"] = "AddingPerson";
                     break;
                 case "addingPerson_desc":
                     events = events.OrderByDescending(e => e.AddingPerson);
                     ViewData["CollapseShow"] = "show";
+                    ViewData["Orderby"] = "addingPerson_desc";
                     break;
                 case "ConfirmingPerson":
                     events = events.OrderBy(e => e.ConfirmingPerson);
                     ViewData["CollapseShow"] = "show";
+                    ViewData["Orderby"] = "ConfirmingPerson";
                     break;
                 case "confirmingPerson_desc":
                     events = events.OrderByDescending(e => e.ConfirmingPerson);
                     ViewData["CollapseShow"] = "show";
+                    ViewData["Orderby"] = "confirmingPerson_desc";
                     break;
                 default:
                     events = events.OrderBy(e => e.Title);
+                    ViewData["Orderby"] = "";
+                    ViewData["CollapseShow"] = "show";
                     break;
             }
-            int pageSize = 4;
+            int pageSize = 6;
             return View(await PaginatedList<Event>.CreateAsync(events.AsNoTracking(), page ?? 1, pageSize));
         }
 

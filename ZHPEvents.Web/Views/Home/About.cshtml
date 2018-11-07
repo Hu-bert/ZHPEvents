@@ -1,12 +1,50 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Informacje";
 }
-<section>
-    <div class="container">
-        <h1 class="jumbotron-heading"><h2>@ViewData["Title"]</h2></h1>
-        <p>Use this area to provide additional information.</p>
+@section FilterMenu {
+    <span>
+        &nbsp;&nbsp; &nbsp;&nbsp;
+    </span>
+}
+<br />
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h4 class="card-title mb-0">O stronie</h4>
+                    <br />
+                    <dl class="row">
+                        <dt class="col-sm-3">Autor</dt>
+                        <dd class="col-sm-9">Description List</dd>
+
+                        <dt class="col-sm-3">Mail</dt>
+                        <dd class="col-sm-9">
+                            vestibulum@id.ligula
+                        </dd>
+
+                    </dl>
+                </div>
+                <div class="col">
+                    <h4 class="card-title mb-0">Opis</h4><br />
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas magna urna, sagittis non mi nec, sagittis viverra neque. Fusce vitae finibus ante. Vestibulum vel bibendum nulla. Suspendisse potenti. Curabitur condimentum leo sed mi vulputate, eu pellentesque diam ultrices. Donec quis tellus interdum, euismod massa quis, convallis ligula. Nunc nec facilisis sapien. In interdum viverra sapien, id elementum erat tincidunt a. Nam ornare pulvinar ex a hendrerit.
+                </div>
+                <div class="col">
+                    <h4 class="card-title mb-0">Strona stworza przy pomocy:</h4>
+                    <br />
+                    <ul>
+                        <li>
+                            <a href="https://coreui.io" class="text-black-50">Core Ui</a>
+                        </li>
+                        <li>
+                            <a href="https://fontawesome.com" class="text-black-50">Font Awesome</a>
+                        </li>
+                        <li>
+                            Grafika z strony domowej, pochodzi z portalu <a href="https://unsplash.com" class="text-black-50">unsplash</a>. Została wykona przez użytkownika <a href="https://unsplash.com/@@cmreflections" class="text-black-50">Clément M.</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
-
-
-
+</div>

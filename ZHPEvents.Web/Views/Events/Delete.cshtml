@@ -1,7 +1,7 @@
 ﻿@model ZHPEvents.Core.Entities.Event
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = Model.Title + " - usuń";
     Layout = "_Dashboard";
 }
 <div class="row">
@@ -41,8 +41,8 @@
 
                 <form asp-action="Delete">
                     <input type="hidden" asp-for="Id" />
-                    <input type="submit" value="Delete" class="btn btn-outline-danger" /> 
-                    <a asp-action="Index" class="btn btn-outline-secondary" role="button">Powrót do listy wydarzeń</a>
+                    <input type="submit" value="Delete" class="btn btn-pill  btn-outline-danger" /> 
+                    <a asp-action="Index" class="btn btn-pill  btn-outline-secondary" role="button">Powrót do listy wydarzeń</a>
                 </form>
             </div>
         </div>

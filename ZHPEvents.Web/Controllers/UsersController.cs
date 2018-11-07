@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ZHPEvents.Core;
@@ -22,15 +23,51 @@ namespace ZHPEvents
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             var user = await _userManager.GetUserAsync(User);
-            var users = _context.Users
-                .Where(u => u.Id != user.Id)
-                .ToList();
+            IQueryable<AppUser> users = _context.Users
+                    .Where(u => u.Id != user.Id);
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["FristNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "fristName_desc" : "";
+            ViewData["LastNameSortParm"] = sortOrder == "LastName" ? "lastName_desc" : "LastName";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-            return View(users);
+            ViewData["CurrentFilter"] = searchString;
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(u => u.FristName.Contains(searchString)
+                                       || u.LastName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "fristName_desc":
+                    users = users.OrderByDescending(u => u.FristName);
+                    break;
+                case "LastName":
+                    users = users.OrderBy(u => u.LastName);
+                    break;
+                case "lastName_desc":
+                    users = users.OrderByDescending(u => u.LastName);
+                    break;
+                default:
+                    users = users.OrderBy(u => u.FristName);
+                    break;
+            }
+            int pageSize = 5;
+            return View(await PaginatedList<AppUser>.CreateAsync(users.AsNoTracking(), page ?? 1, pageSize));
         }
+
         // GET: Raports/Details/5
         public async Task<IActionResult> Details(string id)
         {

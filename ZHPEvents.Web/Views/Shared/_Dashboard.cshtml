@@ -50,7 +50,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keyword" content="">
-    <title>DashBoard - ZHPEvents</title>
+    <title>@ViewData["Title"] - ZHPEvents</title>
     <link rel="icon" href="~/favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
@@ -60,43 +60,33 @@
 
     <link href="~/coreui/style.css" rel="stylesheet" />
     <link href="~/coreui/pace.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-    <header class="app-header navbar">
+    <header class="app-header navbar" id="top">
         <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="navbar-brand">
-            <i class="fas fa-campground"></i>&nbsp;&nbsp;
-            <strong>ZHPEvents</strong>
+        <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="navbar-brand text-green">
+            <span class="navbar-brand-full">
+                <i class="fas fa-campground"></i>&nbsp;&nbsp;
+                <strong>ZHPEvents</strong>
+            </span>
+            <span class="navbar-brand-minimized">
+                <i class="fas fa-campground"></i>
+            </span>
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    @*<img class="img-avatar" src="img/avatars/6.jpg" alt="admin@bootstrapmaster.com">*@
-                    Czuwaj @UserManager.GetUserName(User)!
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item">
-                        <i class="fa fa-user"></i> Profil
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fa fa-question-circle"></i> Pomoc
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fa fa-language"></i> Język
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fa fa-lock"></i> Wyloguj
-                    </a>
-                </div>
+        <ul class="nav navbar-nav d-md-down-none">
+            <li class="nav-item px-3">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Strona główna</a>
             </li>
         </ul>
+
+        <partial name="_LoginPartial" />
         <span>
             &nbsp;&nbsp; &nbsp;&nbsp;
         </span>
@@ -108,7 +98,7 @@
                 <ul class="nav">
                     <li class="nav-item">
                         <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="nav-link">
-                            <i class="nav-icon fas fa-speedometer"></i> Dashboard
+                            <i class="nav-icon fas fa-tachometer-alt"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-title">Publikowanie</li>
@@ -155,12 +145,12 @@
                             </a>
                             <ul class="nav-dropdown-items">
                                 <li class="nav-item">
-                                    <a asp-area="" asp-controller="Raports" asp-action="Index" class="nav-link">
+                                    <a asp-area="" asp-controller="Raports" asp-action="Create" class="nav-link">
                                         <i class="nav-icon fas fa-file"></i> Dodaj
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-area="" asp-controller="Raports" asp-action="" class="nav-link">
+                                    <a asp-area="" asp-controller="Raports" asp-action="Index" class="nav-link">
                                         <i class="nav-icon fas fa-copy"></i> Wszystkie
                                     </a>
                                 </li>
@@ -218,11 +208,11 @@
             <button class="sidebar-minimizer brand-minimizer" type="button"></button>
         </div>
         <main class="main">
-            <ol class="breadcrumb">
-                @if (_controllerName == "Dashboard")
+            <ol class="breadcrumb ">
+                @if (_controllerName == "Dashboard" && _controllerName != "")
                 {
                     <li class="breadcrumb-item">
-                        <a asp-area="" asp-controller="Dashboard" asp-action="Index">
+                        <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="text-green">
                             Dashboard
                         </a>
                     </li>
@@ -230,19 +220,19 @@
                 else
                 {
                     <li class="breadcrumb-item">
-                        <a asp-area="" asp-controller="Dashboard" asp-action="Index">
+                        <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="text-green">
                             Dashboard
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a asp-area="" asp-controller=@_controllerName asp-action="Index">
+                        <a asp-area="" asp-controller=@_controllerName asp-action="Index" class="text-green">
                             @controllerName
                         </a>
                     </li>
-                    @if (_actionName != "Index")
+                    @if (_actionName != "Index" && _actionName != "")
                     {
                         <li class="breadcrumb-item">
-                            <a asp-area="" asp-controller=@_controllerName asp-action=@_actionName>
+                            <a asp-area="" asp-controller=@_controllerName asp-action=@_actionName class="text-green">
                                 @actionName
                             </a>
                         </li>
@@ -274,9 +264,7 @@
     <script src="~/coreui/pace.min.js"></script>
     <script src="~/coreui/perfect-scrollbar.min.js"></script>
     <script src="~/coreui/coreui.min.js"></script>
-    <script>
 
-    </script>
     @RenderSection("Scripts", required: false)
 
 </body>

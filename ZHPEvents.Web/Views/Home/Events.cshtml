@@ -7,135 +7,315 @@
 @model PaginatedList<ZHPEvents.Core.Entities.Event>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Wydarzenia";
     var user = await UserManager.GetUserAsync(User);
+
 }
 
-<div class="album py-5 bg-light">
-    <div class="container">
-
-        <form asp-action="Events" method="get">
-            <div class="form-actions no-color">
-                <p>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Szukaj" name="SearchString" value="@ViewData["currentFilter"]">
-                        <div class="input-group-append" id="button-addon4">
-                            <button class="btn btn-outline-secondary" type="submit" value="Search">Szukaj</button>
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                Filtry
-                            </button>
-                            <a asp-action="Events" class="btn btn-outline-secondary" role="button">Wszystkie</a>
-                        </div>
-                    </div>
-                </p>
-            </div>
-        </form>
-        <div class="collapse @ViewData["CollapseShow"]" id="collapseExample" >
-            <div class="card card-body">
-                <a asp-action="Events" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    Tytuł
-                </a>
-                    <a asp-action="Events" asp-route-sortOrder="@ViewData["AdditionTimeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                        Czas dodania
-                    </a>
-            </div>
-        </div>
-        <br />
-        <div class="row" id="events">
-            <div class="row mb-2">
-
-                @foreach (var item in Model)
-                {
-                    <div class="col-md-6">
-                        <div class="card flex-md-row mb-4 shadow-sm h-md-250">
-                            <div class="card-body d-flex flex-column align-items-start">
-                                <strong class="d-inline-block mb-2 text-primary">Kategoria</strong>
-                                <h3 class="mb-0">
-                                    <a class="text-dark" href="#">@item.Title</a>
-                                </h3>
-                                <div class="mb-1 text-muted">@item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
-                                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a asp-action="Event" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Zobacz</a>
-                                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
-                                        {
-                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
-                                        }
-                                        else if (user != null && user.Id == item.AddingPerson)
-                                        {
-                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
-                                        }
-                                    </div>
+@section FilterMenu {
+    <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+}
+@if (Model.Count <= 0)
+{
+    <div class="centered">
+        <div class="card text-white bg-primary text-center">
+            <div class="card-body">
+                <blockquote class="card-bodyquote">
+                    <p>Brak wydarzeń dla zapytania. Wpisz inne zapytanie:</p>
+                </blockquote>
+                <form asp-action="Events" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text input-left-radius"><i class="fas fa-search"></i></span>
                                 </div>
+                                <input type="text" class="form-control input-right-radius" placeholder="Szukaj" name="SearchString" value="@ViewData["currentFilter"]">
                             </div>
-                            <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                        </div>
+                            <button class="btn btn-pill btn-secondary" type="submit" value="Search">Szukaj</button>
+
+                        </p>
                     </div>
-                }
+                </form>
             </div>
         </div>
     </div>
-</div>
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-<nav>
-    <ul class="pagination justify-content-center">
-        <li class="page-item  @prevDisabled">
-            <a asp-action="Index"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-page="@(Model.PageIndex - 1)"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="page-link">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-            </a>
-        </li>
-        @for (var i = 1; i <= Model.TotalPages; i++)
-        {
-            if (Model.PageIndex == i)
-            {
-                <li class="page-item active">
-                    <a asp-action="Events"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-page="@i"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="page-link">
-                        @i
-                    </a>
-                </li>
-            }
-            else
-            {
-                <li class="page-item ">
-                    <a asp-action="Events"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-page="@i"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="page-link">
-                        @i
-                    </a>
-                </li>
-            }
-        }
-        <li class="page-item @nextDisabled">
-            <a asp-action="Events"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-page="@(Model.PageIndex + 1)"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="page-link">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+else
+{
+    <br />
+    <div class="container-fluid">
+        <div id="ui-view">
+            <div>
+                <div class="animated fadeIn">
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <ul class="nav nav-tabs card-header-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href=@("#home"+item.Id) role="tab" aria-controls="home" aria-selected="false">
+                                                    <span class="d-block d-sm-none"><i class="fas fa-info-circle"></i></span>
+                                                    <span class="d-none d-sm-block"><i class="fas fa-info-circle"></i>&nbsp;Informacje</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href=@("#profile"+item.Id) role="tab" aria-controls="profile" aria-selected="false">
+                                                    <span class="d-block d-sm-none"><i class="fas fa-align-left"></i></span>
+                                                    <span class="d-none d-sm-block"><i class="fas fa-align-left"></i>&nbsp;Opis</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href=@("#messages"+item.Id) role="tab" aria-controls="messages" aria-selected="true">
+                                                    <span class="d-block d-sm-none"><i class="fas fa-envelope"></i></span>
+                                                    <span class="d-none d-sm-block"><i class="far fa-envelope"></i>&nbsp;Kontakt</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body-event  event">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active show" id="@("home"+item.Id)" role="tabpanel">
+                                                <strong class="d-inline-block mb-2 text-primary">Kategoria</strong>
+                                                <h3 class="mb-0">
+                                                    <a class="text-dark" href="#">@item.Title</a>
+                                                </h3>
+                                                <div class="mb-1 text-muted">Data publikacji: @item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
+                                                <div class="mb-1 text-muted">Data wydarzenia: @item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
+                                                <div class="mb-1 text-muted">Mijesce wydarzenia: @item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
+                                                <div class="mb-1 text-muted">Zapisy do: @item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="btn-group">
+                                                        <a asp-action="Event" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Czytaj więcej</a>
+                                                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
+                                                        {
+                                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                                        }
+                                                        else if (user != null && user.Id == item.AddingPerson)
+                                                        {
+                                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id=@("profile"+item.Id) role="tabpanel">
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                                                irure dolor in reprehenderit in voluptate velit esse cillum...<br /> <br />
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="btn-group">
+                                                        <a asp-action="Event" asp-route-id="@item.Id" class="btn btn-pill btn-sm btn-outline-secondary" role="button">Czytaj więcej</a>
+                                                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
+                                                        {
+                                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                                        }
+                                                        else if (user != null && user.Id == item.AddingPerson)
+                                                        {
+                                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id=@("messages"+item.Id) role="tabpanel">
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">Autor</dt>
+                                                    <dd class="col-sm-9">Description List</dd>
+
+                                                    <dt class="col-sm-3">Mail</dt>
+                                                    <dd class="col-sm-9">
+                                                        vestibulum@id.ligula
+                                                    </dd>
+
+                                                    <dt class="col-sm-3">Telefon</dt>
+                                                    <dd class="col-sm-9">
+                                                        vestibulum@id.ligula
+                                                    </dd>
+                                                    <dt class="col-sm-3">Telefon</dt>
+                                                    <dd class="col-sm-9">
+                                                        vestibulum@id.ligula
+                                                    </dd>
+                                                    <dt class="col-sm-3">Telefon</dt>
+                                                    <dd class="col-sm-9">
+                                                        vestibulum@id.ligula
+                                                    </dd>
+
+                                                </dl>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="btn-group">
+                                                        <a asp-action="Event" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Czytaj więcej</a>
+                                                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
+                                                        {
+                                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                                        }
+                                                        else if (user != null && user.Id == item.AddingPerson)
+                                                        {
+                                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                        }
+                    </div>
+                    @{
+                        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                    }
+                    <nav>
+                        <ul class="pagination justify-content-center ">
+                            <li class="page-item   @prevDisabled">
+                                <a asp-action="Index"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-page="@(Model.PageIndex - 1)"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                   class="page-link ">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            @for (var i = 1; i <= Model.TotalPages; i++)
+                            {
+                                if (Model.PageIndex == i)
+                                {
+                                    <li class="page-item active">
+                                        <a asp-action="Events"
+                                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                           asp-route-page="@i"
+                                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                           class="page-link">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="page-item ">
+                                        <a asp-action="Events"
+                                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                           asp-route-page="@i"
+                                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                           class="page-link">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+                            }
+                            <li class="page-item @nextDisabled">
+                                <a asp-action="Events"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-page="@(Model.PageIndex + 1)"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                   class="page-link">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section AsideMenu {
+    <aside class="aside-menu">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show d-block d-sm-none" data-toggle="tab" href="#search" role="tab" aria-selected="false">
+                    <i class="fas fa-filter"></i>
+                </a>
+                <a class="nav-link active show d-sm-block" data-toggle="tab" href="#search" role="tab" aria-selected="false">
+                    <i class="fas fa-filter"></i>&nbsp;Filtry
+                </a>
+            </li>
+            @*<li class="nav-item">
+                <a class="nav-link d-block d-sm-none" data-toggle="tab" href="#type" role="tab">
+                    <i class="fas fa-check-square"></i>
+                </a>
+                <a class="nav-link d-sm-block" data-toggle="tab" href="#type" role="tab">
+                    <i class="fas fa-check-square"></i>&nbsp;Typ
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-block d-sm-none" data-toggle="tab" href="#sort" role="tab" aria-selected="true">
+                    <i class="fas fa-sort"></i>
+                </a>
+                <a class="nav-link d-sm-block" data-toggle="tab" href="#sort" role="tab" aria-selected="true">
+                    <i class="fas fa-sort"></i>&nbsp;Sortuj
+                </a>
+            </li>*@
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="search" role="tabpanel">
+                <div class="list-group list-group-accent">
+                    <div class="list-group-item bg-light text-center font-weight-bold text-muted text-uppercase small">Szukaj</div>
+                    <div class="list-group-item list-group-item-divider">
+                        <form asp-action="Events" method="get">
+                            <div class="form-actions no-color">
+                                <p>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-left-radius"><i class="fas fa-search"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control input-right-radius" placeholder="Szukaj" name="SearchString" value="@ViewData["currentFilter"]">
+                                    </div>
+                                    <button class="btn btn-pill  btn-block btn-outline-primary" type="submit" value="Search">Szukaj</button>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="list-group-item">
+                        <a asp-action="Events" class="btn btn-pill  btn-block btn-outline-success" role="button">Wszystkie</a>
+
+                    </div>
+                
+                <div class="list-group-item bg-light text-center font-weight-bold text-muted text-uppercase small">Filtry</div>
+                <div class="list-group-item  list-group-item-divider">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                            <a asp-action="Events" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                Tytuł
+                            </a>
+                            @if (@ViewData["Orderby"].ToString() == "")
+                            {
+                                <span class="badge badge-pill"><i class="fas fa-ssort-alpha-up"></i></span>
+                            }
+                            else if (@ViewData["Orderby"].ToString() == "title_desc")
+                            {
+                                <span class="badge badge-pill"><i class="fas fa-sort-alpha-down"></i></span>
+                            }
+                        </li>
+                        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                            <a asp-action="Events" asp-route-sortOrder="@ViewData["AdditionTimeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                Czas dodania
+                            </a>
+                            @if (@ViewData["Orderby"].ToString() == "AdditionTime")
+                            {
+                                <span class="badge badge-pill"><i class="fas fa-sort-numeric-up"></i></span>
+                            }
+                            else if (@ViewData["Orderby"].ToString() == "additionTime_desc")
+                            {
+                                <span class="badge badge-pill"><i class="fas fa-sort-numeric-down"></i></span>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+    </aside>
+}
 @section Scripts {
-    <script>
-    </script>
+    <script src="~/vendor/holder.min.js"></script>
 }

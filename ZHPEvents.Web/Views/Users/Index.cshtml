@@ -1,40 +1,122 @@
 ﻿@using ZHPEvents.Core.Identity;
-@model IEnumerable<AppUser>
 
+@model PaginatedList<AppUser>
 @{
     ViewData["Title"] = "Index";
     Layout = "_Dashboard";
 
 }
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-calendar-alt"></i> Spis wydarzeń
+    </div>
+    <div class="card-body">
+        <form asp-action="Index" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Szukaj" name="SearchString" value="@ViewData["currentFilter"]">
+                        <div class="input-group-append" id="button-addon4">
+                            <button class="btn btn-outline-secondary" type="submit" value="Search">Szukaj</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary" role="button">Pokaż wszystkich</a>
+                        </div>
+                    </div>
+                </p>
+            </div>
+        </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FristName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FristName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+        <table class="table table-responsive-lg table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["FristNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                            Imie
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                            Nazwisko
+                        </a>
+                    </th>
+                    <th>Opcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FristName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
         }
-    </tbody>
-</table>
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item  @prevDisabled">
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-page="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                @for (var i = 1; i <= Model.TotalPages; i++)
+                {
+                    if (Model.PageIndex == i)
+                    {
+                        <li class="page-item active">
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-page="@i"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                               class="page-link">
+                                @i
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item ">
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-page="@i"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                               class="page-link">
+                                @i
+                            </a>
+                        </li>
+                    }
+                }
+                <li class="page-item @nextDisabled">
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-page="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="page-link">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

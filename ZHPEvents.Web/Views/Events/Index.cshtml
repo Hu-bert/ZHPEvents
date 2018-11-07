@@ -3,7 +3,7 @@
 @model PaginatedList<ZHPEvents.Core.Entities.Event>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Wydarzenia";
     Layout = "_Dashboard";
 
 }
@@ -22,8 +22,8 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Szukaj" name="SearchString" value="@ViewData["currentFilter"]">
                         <div class="input-group-append" id="button-addon4">
-                            <button class="btn btn-secondary" type="submit" value="Search">Szukaj</button>
-                            <a asp-action="Index" class="btn btn-secondary" role="button">Pokaż wszystkie</a>
+                            <button class="btn btn-pill  btn-outline-secondary" type="submit" value="Search">Szukaj</button>
+                            <a asp-action="Index" class="btn btn-pill  btn-outline-secondary" role="button">Pokaż wszystkie</a>
                         </div>
                     </div>
                 </p>
@@ -84,7 +84,7 @@
                             }
                         </td>
 
-                        <td class="">
+                        <td>
                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                             <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                             <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -151,3 +151,6 @@
     </div>
 </div>
 
+@section Scripts {
+
+}

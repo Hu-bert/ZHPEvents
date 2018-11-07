@@ -2,7 +2,7 @@
 @model ZHPEvents.Core.Entities.Event
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Title + " - szczegóły";
     Layout = "_Dashboard";
 }
 
@@ -96,8 +96,8 @@
                                 <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
-                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                        <button type="button" class="btn btn-pill  btn-sm btn-outline-secondary">Zobacz</button>
+                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
 
                                     </div>
                                 </div>
@@ -108,10 +108,10 @@
                     <div class="col-md">
                         <div class="row">
                             <div class="col-6">
-                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-block btn-outline-info" role="button">Edytuj wydarzenie</a>
+                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-pill  btn-block btn-outline-info" role="button">Edytuj wydarzenie</a>
                             </div>
                             <div class="col-6">
-                                <a asp-action="Index" class="btn btn-block btn-outline-secondary" role="button">Lista wydarzeń</a>
+                                <a asp-action="Index" class="btn btn-pill  btn-block btn-outline-secondary" role="button">Lista wydarzeń</a>
                             </div>
                         </div>
                         <br /><br /><br />
@@ -124,14 +124,14 @@
                                 <form asp-action="Details">
                                     <input type="hidden" asp-for="Id" />
                                     <input type="hidden" class="custom-control-input" id="Status" name="Status" value="false">
-                                    <button type="submit" class="btn btn-block btn-outline-secondary" @rejectedDisabled>Odrzuć wydarzenie</button>
+                                    <button type="submit" class="btn btn-pill  btn-block btn-outline-secondary" @rejectedDisabled>Odrzuć wydarzenie</button>
                                 </form>
                             </div>
                             <div class="col-6">
                                 <form asp-action="Details">
                                     <input type="hidden" asp-for="Id" />
                                     <input type="hidden" class="custom-control-input" id="Status" name="Status" value="true">
-                                    <button type="submit" class="btn btn-block btn-outline-success" @approvedDisabled>Zatwierdź wydarzenie</button>
+                                    <button type="submit" class="btn btn-pill  btn-block btn-outline-success" @approvedDisabled>Zatwierdź wydarzenie</button>
                                 </form>
                             </div>
                         </div>
