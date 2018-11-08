@@ -4,7 +4,7 @@
 @model AppUser
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edycja użytkownika";
     Layout = "_Dashboard";
     bool administrator = await ZHPEventsUser.IsInRoleAsync(Model, "Administrator");
     bool editor = await ZHPEventsUser.IsInRoleAsync(Model, "Editor");
@@ -16,122 +16,131 @@
     bool user = await ZHPEventsUser.IsInRoleAsync(Model, "User");
 
 }
-<h6>Edycja danych użytkownika: <br />@Model.FristName @Model.LastName</h6>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="FristName" class="control-label"></label>
-                <input asp-for="FristName" class="form-control" placeholder="@Model.FristName" />
-                <span asp-validation-for="FristName" class="text-danger"></span>
+    <div class="col-sm-12 col-md-9">
+        <div class="card">
+            <div class="card-header"><i class="nav-icon fas fa-user-cog"></i> Edycja danych użytkownika: @Model.FristName @Model.LastName</div>
+            <form asp-action="Edit">
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="FristName" class="control-label"></label>
+                        <input asp-for="FristName" class="form-control" placeholder="@Model.FristName" />
+                        <span asp-validation-for="FristName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" placeholder="@Model.LastName" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @if (administrator)
+                        {
+                            <input type="checkbox" class="custom-control-input" id="Administrator" name="Administrator" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="custom-control-input" id="Administrator" name="Administrator" value="true">
+                        }
+                        <label class="custom-control-label" for="Administrator">Administrator</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @if (editor)
+                        {
+                            <input type="checkbox" class="custom-control-input" id="Editor" name="Editor" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="custom-control-input" id="Editor" name="Editor" value="true">
+                        }
+                        <label class="custom-control-label" for="Editor">Edytor</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @if (author)
+                        {
+                            <input type="checkbox" class="custom-control-input" id="Author" name="Author" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="custom-control-input" id="Author" name="Author" value="true">
+                        }
+                        <label class="custom-control-label" for="Author">Autor</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @if (eventEditor)
+                        {
+                            <input type="checkbox" class="custom-control-input" id="EventEditor" name="EventEditor" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="custom-control-input" id="EventEditor" name="EventEditor" value="true">
+                        }
+                        <label class="custom-control-label" for="EventEditor">Edytor wydarzeń</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @if (eventAuthor)
+                        {
+                            <input type="checkbox" class="custom-control-input" id="EventAuthor" name="EventAuthor" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="custom-control-input" id="EventAuthor" name="EventAuthor" value="true">
+                        }
+                        <label class="custom-control-label" for="EventAuthor">Autor wydarzeń</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @if (raportEditor)
+                        {
+                            <input type="checkbox" class="custom-control-input" id="RaportEditor" name="RaportEditor" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="custom-control-input" id="RaportEditor" name="RaportEditor" value="true">
+                        }
+                        <label class="custom-control-label" for="RaportEditor">Edytor raportów</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @if (raportAuthor)
+                        {
+                            <input type="checkbox" class="custom-control-input" id="RaportAuthor" name="RaportAuthor" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="custom-control-input" id="RaportAuthor" name="RaportAuthor" value="true">
+                        }
+                        <label class="custom-control-label" for="RaportAuthor">Autor raportów</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @if (user)
+                        {
+                            <input type="checkbox" class="custom-control-input" id="User" name="User" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="custom-control-input" id="User" name="User" value="true">
+                        }
+                        <label class="custom-control-label" for="User">Zwykły użytkownik</label>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <input type="submit" value="Save" class="btn btn-pill  btn-outline-success" />
+                    <a asp-action="Index" role="button" class="btn btn-pill  btn-outline-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-header">Edycja użytkownika</div>
+            <div class="card-body">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
+                ex ea commodo consequat.
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" placeholder="@Model.LastName" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="custom-control custom-checkbox">
-                @if (administrator)
-                {
-                    <input type="checkbox" class="custom-control-input" id="Administrator" name="Administrator" value="true" checked>
-                }
-                else
-                {
-                    <input type="checkbox" class="custom-control-input" id="Administrator" name="Administrator" value="true">
-                }
-                <label class="custom-control-label" for="Administrator">Administrator</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                @if (editor)
-                {
-                    <input type="checkbox" class="custom-control-input" id="Editor" name="Editor" value="true" checked>
-                }
-                else
-                {
-                    <input type="checkbox" class="custom-control-input" id="Editor" name="Editor" value="true">
-                }
-                <label class="custom-control-label" for="Editor">Edytor</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                @if (author)
-                {
-                    <input type="checkbox" class="custom-control-input" id="Author" name="Author" value="true" checked>
-                }
-                else
-                {
-                    <input type="checkbox" class="custom-control-input" id="Author" name="Author" value="true">
-                }
-                <label class="custom-control-label" for="Author">Autor</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                @if (eventEditor)
-                {
-                    <input type="checkbox" class="custom-control-input" id="EventEditor" name="EventEditor" value="true" checked>
-                }
-                else
-                {
-                    <input type="checkbox" class="custom-control-input" id="EventEditor" name="EventEditor" value="true">
-                }
-                <label class="custom-control-label" for="EventEditor">Edytor wydarzeń</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                @if (eventAuthor)
-                {
-                    <input type="checkbox" class="custom-control-input" id="EventAuthor" name="EventAuthor" value="true" checked>
-                }
-                else
-                {
-                    <input type="checkbox" class="custom-control-input" id="EventAuthor" name="EventAuthor" value="true">
-                }
-                <label class="custom-control-label" for="EventAuthor">Autor wydarzeń</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                @if (raportEditor)
-                {
-                    <input type="checkbox" class="custom-control-input" id="RaportEditor" name="RaportEditor" value="true" checked>
-                }
-                else
-                {
-                    <input type="checkbox" class="custom-control-input" id="RaportEditor" name="RaportEditor" value="true">
-                }
-                <label class="custom-control-label" for="RaportEditor">Edytor raportów</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                @if (raportAuthor)
-                {
-                    <input type="checkbox" class="custom-control-input" id="RaportAuthor" name="RaportAuthor" value="true" checked>
-                }
-                else
-                {
-                    <input type="checkbox" class="custom-control-input" id="RaportAuthor" name="RaportAuthor" value="true">
-                }
-                <label class="custom-control-label" for="RaportAuthor">Autor raportów</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                @if (user)
-                {
-                    <input type="checkbox" class="custom-control-input" id="User" name="User" value="true" checked>
-                }
-                else
-                {
-                    <input type="checkbox" class="custom-control-input" id="User" name="User" value="true">
-                }
-                <label class="custom-control-label" for="User">Zwykły użytkownik</label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

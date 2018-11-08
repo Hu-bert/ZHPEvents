@@ -5,66 +5,59 @@
     Layout = "_Dashboard";
 }
 
-    <div class="row">
-        <div class="col-sm-12 col-md-9">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-calendar-minus"></i> Szczegóły raportu o nazwie: @Model.Title
-                </div>
-                <div class="card-body">
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Title)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Title)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.AdditionTime)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.AdditionTime)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.AddingPerson)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.AddingPerson)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.ConfirmingPerson)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.ConfirmingPerson)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Status)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Status)
-                        </dd>
-                    </dl>
-
-                    <div>
-                        <div class="row">
-                            <div class="col-6">
-                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-pill  btn-block btn-outline-info" role="button">Edytuj wydarzenie</a>
-                            </div>
-                            <div class="col-6">
-                                <a asp-action="Index" class="btn btn-pill  btn-block btn-outline-secondary" role="button">Lista wydarzeń</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-sm-12 col-md-9">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-calendar-minus"></i> Szczegóły raportu o nazwie: @Model.Title
             </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="card text-white bg-info">
-                <div class="card-header">Szczegóły wydarzeń</div>
-                <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
-                    ex ea commodo consequat.
-                </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AdditionTime)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AdditionTime)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AddingPerson)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AddingPerson)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ConfirmingPerson)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ConfirmingPerson)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Status)
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer text-muted">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-pill btn-outline-info" role="button">Edytuj wydarzenie</a>
+                <a asp-action="Index" class="btn btn-pill btn-outline-secondary" role="button">Lista wydarzeń</a>
             </div>
         </div>
     </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-header">Szczegóły wydarzeń</div>
+            <div class="card-body">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
+                ex ea commodo consequat.
+            </div>
+        </div>
+    </div>
+</div>

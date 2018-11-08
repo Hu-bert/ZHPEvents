@@ -3,23 +3,37 @@
 
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Dane użytkownika";
     Layout = "_Dashboard";
 }
 
-<div>
-    <h6>Dane użytkownika: <br />@Model.FristName @Model.LastName</h6>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FristName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-sm-12 col-md-9">
+        <div class="card">
+            <div class="card-header"><i class="nav-icon fas fa-user-edit"></i> Dane użytkownika: <br />@Model.FristName @Model.LastName</div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FristName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LastName)
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer text-muted">
+                <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-pill  btn-outline-success">Edit</a>
+                <a asp-action="Index" role="button" class="btn btn-pill  btn-outline-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-header">Dane  użytkownika</div>
+            <div class="card-body">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
+                ex ea commodo consequat.
+            </div>
+        </div>
+    </div>
 </div>

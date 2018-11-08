@@ -38,10 +38,11 @@
                         @Html.DisplayFor(model => model.ConfirmingPerson)
                     </dd>
                 </dl>
-
+            </div>
+            <div class="card-footer text-muted">
                 <form asp-action="Delete">
                     <input type="hidden" asp-for="Id" />
-                    <input type="submit" value="Delete" class="btn btn-pill  btn-outline-danger" /> 
+                    <input type="submit" value="Delete" class="btn btn-pill  btn-outline-danger" />
                     <a asp-action="Index" class="btn btn-pill  btn-outline-secondary" role="button">Powrót do listy wydarzeń</a>
                 </form>
             </div>
