@@ -60,10 +60,11 @@ else
                                 <div class="card">
                                     <div class="card-header">
                                         <ul class="nav nav-tabs card-header-tabs">
-                                            <li class="nav-item">
+                                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Inforcmacje">
                                                 <a class="nav-link active" data-toggle="tab" href=@("#home"+item.Id) role="tab" aria-controls="home" aria-selected="false">
-                                                    <span class="d-block d-sm-none"><i class="fas fa-info-circle"></i></span>
-                                                    <span class="d-none d-sm-block"><i class="fas fa-info-circle"></i>&nbsp;Informacje</span>
+                                                    &nbsp;&nbsp;<i class="fas fa-info-circle"></i>&nbsp;&nbsp;
+                                                    @*<span class="d-block d-sm-none"><i class="fas fa-info-circle"></i></span>
+        <span class="d-none d-sm-block"><i class="fas fa-info-circle" ></i>&nbsp;Informacje</span>*@
                                                 </a>
                                             </li>
                                             <li class="nav-item">
@@ -253,8 +254,8 @@ else
 
                     </div>
 
-                    <div class="list-group-item bg-light text-center font-weight-bold text-muted text-uppercase small">Filtry</div>
-                    <div class="list-group-item  list-group-item-divider">
+                    <div class="list-group-item bg-light text-center font-weight-bold text-muted text-uppercase small">Sortowanie</div>
+                    <div class="list-group-item ">
                         <ul class="list-group">
                             <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
                                 <a asp-action="Events" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
@@ -291,4 +292,5 @@ else
 }
 @section Scripts {
     <script src="~/vendor/holder.min.js"></script>
+
 }

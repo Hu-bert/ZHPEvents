@@ -1,5 +1,12 @@
 ﻿
-
+.body-img {
+    background: url('../images/header.jpg') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: relative;
+}
 .button-white-space {
     white-space: normal;
 }
@@ -155,6 +162,46 @@ bg-green {
         .btn-outline-green:not(:disabled):not(.disabled):active:focus, .btn-outline-green:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-green.dropdown-toggle:focus {
             box-shadow: 0 0 0 .2rem rgba(131,163,17,.5)
         }
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #96ba13 !important;
+}
+a {
+    color: #83a311;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+    a:hover {
+        color: #4b5e0a;
+        text-decoration: underline
+    }
+.page-link {
+    color: #83a311;
+}
+.form-control:focus {
+    border-color: rgba(155,181,64, 0.8);
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(155,181,64,.25)
+}
+.page-link:focus {
+    z-index: 2;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(155,181,64,.25)
+}
+.page-item.active .page-link {
+    background-color: #83a311;
+    border-color: #83a311;
+}
+.page-link:hover {
+    color: #475808;
+    background-color: #e4e7ea;
+}
+.sidebar-minimized .sidebar .nav-item:hover > .nav-link {
+    background: #83a311;
+}
 /* fixed card in home>events*/
 .event > .tab-content {
     margin-top: -1px;
@@ -170,11 +217,24 @@ bg-green {
 }
 /* input radius for forms*/
 .input-left-radius {
-    border-bottom-left-radius: 50rem;
-    border-top-left-radius: 50rem;
+    border-bottom-left-radius: 50rem !important;
+    border-top-left-radius: 50rem !important;
 }
 
 .input-right-radius {
-    border-top-right-radius: 50rem;
-    border-bottom-right-radius: 50rem;
+    border-top-right-radius: 50rem !important;
+    border-bottom-right-radius: 50rem !important;
+}
+.input-group-text {
+background-color: #ffffff;
+    border: 1px solid #e4e7ea;
+    border-radius: 50rem;
+}
+
+.ul-nav {
+    margin-top: 0;
+    margin-bottom: 0rem !important;
+}
+td {
+    white-space: nowrap;
 }

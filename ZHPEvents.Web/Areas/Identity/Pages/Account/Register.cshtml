@@ -24,6 +24,7 @@
 
     <link href="~/coreui/style.css" rel="stylesheet" />
     <link href="~/coreui/pace.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body class="app flex-row align-items-center">
     <div class="container">
@@ -47,7 +48,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@@</span>
                                 </div>
-                                <input asp-for="Input.Email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                                <input asp-for="Input.Email" type="email" id="inputEmail" class="form-control input-right-radius" placeholder="Email address" required autofocus>
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="input-group mb-3">
@@ -56,7 +57,7 @@
                                         <i class="fas fa-lock"></i>
                                     </span>
                                 </div>
-                                <input asp-for="Input.Password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                <input asp-for="Input.Password" type="password" id="inputPassword" class="form-control input-right-radius" placeholder="Password" required>
                                 <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
                             <div class="input-group mb-4">
@@ -65,7 +66,7 @@
                                         <i class="fas fa-lock"></i>
                                     </span>
                                 </div>
-                                <input asp-for="Input.ConfirmPassword" type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm Password" required>
+                                <input asp-for="Input.ConfirmPassword" type="password" id="inputConfirmPassword" class="form-control input-right-radius" placeholder="Confirm Password" required>
                                 <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
                             <button class="btn btn-pill  btn-block btn-success" type="submit">Stwórz konto</button>

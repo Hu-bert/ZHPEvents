@@ -97,7 +97,9 @@
         </div>
         <main class="main">
             <div id="ui-view">
-                @RenderBody()
+                <div class="animated fadeIn">
+                    @RenderBody()
+                </div>
             </div>
         </main>
         @RenderSection("AsideMenu", required: false)
@@ -108,7 +110,8 @@
             <span>© 2018</span>
         </div>
         <div class="ml-auto">
-            <a href="#top" class="btn btn-sm btn-outline-dark" role="button"><i class="nav-icon fas fa-angle-up fa-2x"></i></a>
+
+            <a href="#top" class="btn btn-sm btn-outline-dark" role="button" data-toggle="tooltip" data-placement="top" title="Do góry!"><i class="nav-icon fas fa-angle-up fa-2x"></i></a>
         </div>
     </footer>
 
@@ -119,10 +122,22 @@
     <script src="~/coreui/perfect-scrollbar.min.js"></script>
     <script src="~/coreui/coreui.min.js"></script>
     <script src="~/js/smooth-scroll.polyfills.min.js"></script>
+
     <script>
+
         $(window).on('load', function () {
             $('#exampleModal').modal('show');
         });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+
+        var scroll = new SmoothScroll('a[href*="#"]:not([data-easing])');
+
+        var linear = new SmoothScroll('[data-easing="linear"]', { easing: 'linear' });
+
     </script>
     @RenderSection("Scripts", required: false)
 

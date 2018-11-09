@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-            <a data-easing="linear" href="#events" class="pulse _down btn btn-sm btn-outline-dark" role="button"> <i class="nav-icon fas fa-caret-down fa-2x"></i></a>
+            <a data-easing="linear" href="#events" class="pulse _down btn btn-sm btn-outline-dark" data-toggle="tooltip" data-placement="top" title="Na dół!"> <i class="nav-icon fas fa-caret-down fa-2x"></i></a>
     </section>
 
 <div class="album py-5 bg-light" id="events">
@@ -78,12 +78,5 @@
 
 @section Scripts {
     <script src="~/vendor/holder.min.js"></script>
-    <script>
-
-        var scroll = new SmoothScroll('a[href*="#"]:not([data-easing])');
-
-        var linear = new SmoothScroll('[data-easing="linear"]', { easing: 'linear' });
-
-    </script>
 
 }
