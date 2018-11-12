@@ -33,7 +33,7 @@ namespace ZHPEvents.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public RegisterViewModel Input { get; set; }
+        public RegisterViewModel.InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
