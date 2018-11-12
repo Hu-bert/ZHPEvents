@@ -60,25 +60,40 @@ else
                                 <div class="card">
                                     <div class="card-header">
                                         <ul class="nav nav-tabs card-header-tabs">
-                                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Inforcmacje">
-                                                <a class="nav-link active" data-toggle="tab" href=@("#home"+item.Id) role="tab" aria-controls="home" aria-selected="false">
+                                            <li class="nav-item " data-toggle="tooltip" data-placement="top" title="Informacje">
+                                                <a class="nav-link nav-link-event active" data-toggle="tab" href=@("#home"+item.Id) role="tab" aria-controls="home" aria-selected="false">
                                                     &nbsp;&nbsp;<i class="fas fa-info-circle"></i>&nbsp;&nbsp;
-                                                    @*<span class="d-block d-sm-none"><i class="fas fa-info-circle"></i></span>
-        <span class="d-none d-sm-block"><i class="fas fa-info-circle" ></i>&nbsp;Informacje</span>*@
                                                 </a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href=@("#profile"+item.Id) role="tab" aria-controls="profile" aria-selected="false">
-                                                    <span class="d-block d-sm-none"><i class="fas fa-align-left"></i></span>
-                                                    <span class="d-none d-sm-block"><i class="fas fa-align-left"></i>&nbsp;Opis</span>
+                                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Opis">
+                                                <a class="nav-link nav-link-event" data-toggle="tab" href=@("#profile"+item.Id) role="tab" aria-controls="profile" aria-selected="false">
+                                                    &nbsp;&nbsp;<i class="fas fa-align-left"></i>&nbsp;&nbsp;
                                                 </a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href=@("#messages"+item.Id) role="tab" aria-controls="messages" aria-selected="true">
-                                                    <span class="d-block d-sm-none"><i class="fas fa-envelope"></i></span>
-                                                    <span class="d-none d-sm-block"><i class="far fa-envelope"></i>&nbsp;Kontakt</span>
+                                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Zoabcz więcej">
+                                                <a class="nav-link nav-link-event" data-toggle="tab" href=@("#messages"+item.Id) role="tab" aria-controls="messages" aria-selected="true">
+                                                    &nbsp;&nbsp;<i class="fas fa-envelope"></i>&nbsp;&nbsp;
                                                 </a>
                                             </li>
+                                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Czytaj więcej">
+                                                <a asp-action="Event" asp-route-id="@item.Id" class="nav-link nav-link-event">
+                                                    &nbsp;&nbsp;<i class="fas fa-ellipsis-h"></i>&nbsp;&nbsp;
+                                                </a>
+                                            </li>
+                                            @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
+                                            {
+                                                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Edytuj">
+                                                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="nav-link nav-link-event">
+                                                        &nbsp;&nbsp;<i class="fas fa-edit"></i>&nbsp;&nbsp;
+                                                    </a>
+                                                </li>}
+                                            else if (user != null && user.Id == item.AddingPerson)
+                                            {
+                                                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Edytuj">
+                                                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="nav-link nav-link-event">
+                                                        &nbsp;&nbsp;<i class="fas fa-edit"></i>&nbsp;&nbsp;
+                                                    </a>
+                                                </li>}
                                         </ul>
                                     </div>
                                     <div class="card-body-event  event">
@@ -121,23 +136,7 @@ else
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-muted">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                                <a asp-action="Event" asp-route-id="@item.Id" class="btn btn-pill btn-sm btn-outline-secondary" role="button">Czytaj więcej</a>
-                                                @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
-                                                {
-                                                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
-                                                }
-                                                else if (user != null && user.Id == item.AddingPerson)
-                                                {
-                                                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill btn-sm btn-outline-secondary" role="button">Edytuj</a>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-
                             </div>
                         }
                     </div>
@@ -205,27 +204,24 @@ else
     <aside class="aside-menu">
 
         <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active show d-block d-sm-none" data-toggle="tab" href="#search" role="tab" aria-selected="false">
-                    <i class="fas fa-filter"></i>
-                </a>
-                <a class="nav-link active show d-sm-block" data-toggle="tab" href="#search" role="tab" aria-selected="false">
-                    <i class="fas fa-filter"></i>&nbsp;Filtry
+            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Szukanie">
+                <a class="nav-link active show text-black-50" data-toggle="tab" href="#search" role="tab" aria-selected="false">
+                    <i class="fas fa-search"></i>
                 </a>
             </li>
-            @*<li class="nav-item">
-                    <a class="nav-link d-block d-sm-none" data-toggle="tab" href="#type" role="tab">
-                        <i class="fas fa-check-square"></i>
+            @*
+                <li class="nav-item"  data-toggle="tooltip" data-placement="top" title="Filtry">
+                    <a class="nav-link active show text-black-50" data-toggle="tab" href="#search" role="tab" aria-selected="false">
+                        <i class="fas fa-filter"></i>
                     </a>
-                    <a class="nav-link d-sm-block" data-toggle="tab" href="#type" role="tab">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#type" role="tab"  data-toggle="tooltip" data-placement="top" title="Rodzaje">
                         <i class="fas fa-check-square"></i>&nbsp;Typ
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-block d-sm-none" data-toggle="tab" href="#sort" role="tab" aria-selected="true">
-                        <i class="fas fa-sort"></i>
-                    </a>
-                    <a class="nav-link d-sm-block" data-toggle="tab" href="#sort" role="tab" aria-selected="true">
+                    <a class="nav-link data-toggle="tab" href="#sort" role="tab"  data-toggle="tooltip" data-placement="top" title="Sortowanie">
                         <i class="fas fa-sort"></i>&nbsp;Sortuj
                     </a>
                 </li>*@

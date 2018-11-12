@@ -20,6 +20,9 @@
         case "Users":
             controllerName = ("Użytkownicy");
             break;
+        case "Identity":
+            controllerName = ("Zarządzanie kontem");
+            break;
         default:
             break;
     }
@@ -92,6 +95,7 @@
         </span>
 
     </header>
+
     <div class="app-body">
         <div class="sidebar">
             <nav class="sidebar-nav">
@@ -101,9 +105,9 @@
                             <i class="nav-icon fas fa-tachometer-alt"></i> Dashboard
                         </a>
                     </li>
-                    <li class="nav-title">Publikowanie</li>
                     @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Author") || User.IsInRole("EventEditor") || User.IsInRole("EventAuthor"))
                     {
+                        <li class="nav-title">Publikowanie</li>
                         <li class="nav-item nav-dropdown">
                             <a class="nav-link nav-dropdown-toggle" href="#">
                                 <i class="nav-icon fas fa-calendar"></i> Wydarzenia
@@ -247,7 +251,6 @@
                 </div>
             </div>
         </main>
-
     </div>
     <footer class="app-footer">
         <div>

@@ -43,8 +43,8 @@
                                             <i class="fas fa-at"></i>
                                         </span>
                                     </div>
-                                    <input asp-for="Input.Email" type="email" id="inputEmail" class="form-control input-right-radius" placeholder="Email address" required autofocus>
-                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    <input asp-for="Email" type="email" id="inputEmail" class="form-control input-right-radius" placeholder="Email address" required autofocus>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
@@ -52,15 +52,15 @@
                                             <i class="fas fa-lock"></i>
                                         </span>
                                     </div>
-                                    <input asp-for="Input.Password" type="password" id="inputPassword" class="form-control input-right-radius" placeholder="Password" required>
-                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    <input asp-for="Password" type="password" id="inputPassword" class="form-control input-right-radius" placeholder="Password" required>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <div class="checkbox mb-3">
 
-                                        <label asp-for="Input.RememberMe">
-                                            <input asp-for="Input.RememberMe" />
-                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                        <label asp-for="RememberMe">
+                                            <input asp-for="RememberMe" />
+                                            @Html.DisplayNameFor(m => m.RememberMe)
                                         </label>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                             <div>
                                 <h2>Sign up</h2>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" role="button" class="btn btn-pill btn-outline-light  mt-3">Zarejestruj się</a>
+                                <a asp-page="./Register" role="button" class="btn btn-pill btn-outline-light  mt-3">Zarejestruj się</a>
                             </div>
                         </div>
                     </div>

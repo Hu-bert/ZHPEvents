@@ -16,67 +16,68 @@
         &nbsp;&nbsp; &nbsp;&nbsp;
     </span>
 }
-    <section class="text-center introduction bg-white">
-        <div class="centered">
-            <div class="container ">
-                <h1 class="jumbotron-heading">Wydarzenia w ZHP</h1>
-                <p class="lead text-muted">Witamy na stronie z wydarzeniami harcerskimi. Możesz poniżej zoabczyć trzy najnowższe wydarzenia lub: </p>
-                <div class="d-block d-sm-none">
-                    <p class="justify-content-center">
-                        <a asp-area="" asp-controller="Home" asp-action="Events" class="btn btn-pill btn-outline-green" role="button">&nbsp;&nbsp;Wszystkie wydarzenia&nbsp;</a>
-                        <br /><br />
-                        <a href="#" class="btn btn-pill btn-outline-green" role="button">Publikowanie wydarzeń</a>
-                    </p>
-                </div>
-                <div class="d-none d-sm-block">
-                    <p class="justify-content-center ">
-                        <a asp-area="" asp-controller="Home" asp-action="Events" class="btn btn-pill btn-outline-green" role="button">&nbsp;Wszystkie wydarzenia&nbsp;</a>
-                        <a href="#" class="btn btn-pill btn-outline-green" role="button">Publikowanie wydarzeń</a>
-                    </p>
-                </div>
+<section class="text-center introduction bg-white">
+    <div class="centered">
+        <div class="container ">
+            <h1 class="jumbotron-heading">Wydarzenia w ZHP</h1>
+            <p class="lead text-muted">Witamy na stronie z wydarzeniami harcerskimi. Możesz poniżej zobaczyć trzy najnowsze wydarzenia lub: </p>
+            <div class="d-block d-sm-none">
+                <p class="justify-content-center">
+                    <a asp-area="" asp-controller="Home" asp-action="Events" class="btn btn-pill btn-outline-green" role="button">&nbsp;&nbsp;Wszystkie wydarzenia&nbsp;</a>
+                    <br /><br />
+                    <a href="#" class="btn btn-pill btn-outline-green" role="button">Publikowanie wydarzeń</a>
+                </p>
+            </div>
+            <div class="d-none d-sm-block">
+                <p class="justify-content-center ">
+                    <a asp-area="" asp-controller="Home" asp-action="Events" class="btn btn-pill btn-outline-green" role="button">&nbsp;Wszystkie wydarzenia&nbsp;</a>
+                    <a href="#" class="btn btn-pill btn-outline-green" role="button">Publikowanie wydarzeń</a>
+                </p>
             </div>
         </div>
-            <a data-easing="linear" href="#events" class="pulse _down btn btn-sm btn-outline-dark" data-toggle="tooltip" data-placement="top" title="Na dół!"> <i class="nav-icon fas fa-caret-down fa-2x"></i></a>
-    </section>
-
-<div class="album py-5 bg-light" id="events">
-    <div class="container">
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <h4>@item.Title</h4>
-                                This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-pill btn-sm btn-outline-secondary">Zobacz</button>
-                                    @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
-                                    {
-                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill btn-sm btn-outline-secondary" role="button">Edytuj</a>
-                                    }
-                                    else if (user != null && user.Id == item.AddingPerson)
-                                    {
-                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
-                                    }
+    </div>
+    <a data-easing="linear" href="#events" class="pulse _down btn btn-sm btn-outline-dark" data-toggle="tooltip" data-placement="top" title="Na dół!"> <i class="nav-icon fas fa-caret-down fa-2x"></i></a>
+</section>
+@if(Model.Count() > 0)
+{
+    <div class="album py-5 bg-light" id="events">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <h4>@item.Title</h4>
+                                    This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-pill btn-sm btn-outline-secondary">Zobacz</button>
+                                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("EventEditor"))
+                                        {
+                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                        }
+                                        else if (user != null && user.Id == item.AddingPerson)
+                                        {
+                                            <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
+                                        }
+                                    </div>
+                                    <small class="text-muted">@item.AdditionTime.Date.ToString("dd.mm.yyyy")</small>
                                 </div>
-                                <small class="text-muted">@item.AdditionTime.Date.ToString("dd.mm.yyyy")</small>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
 
+            </div>
+            <br /><br /><br /><br />
         </div>
-        <br /><br /><br /><br />
     </div>
-</div>
+    }
+    @section Scripts {
+        <script src="~/vendor/holder.min.js"></script>
 
-@section Scripts {
-    <script src="~/vendor/holder.min.js"></script>
-
-}
+    }

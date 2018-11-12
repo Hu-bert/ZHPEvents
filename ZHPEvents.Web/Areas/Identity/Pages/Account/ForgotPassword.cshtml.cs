@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using ZHPEvents.Core.Identity;
+using ZHPEvents.ViewModels.Account;
 
 namespace ZHPEvents.Areas.Identity.Pages.Account
 {
@@ -23,14 +24,7 @@ namespace ZHPEvents.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
-
-        public class InputModel
-        {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-        }
+        public ForgotPasswordViewModel Input { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {

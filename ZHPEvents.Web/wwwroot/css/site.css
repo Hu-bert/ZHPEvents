@@ -238,3 +238,6 @@ background-color: #ffffff;
 td {
     white-space: nowrap;
 }
+.nav-link-event {
+    padding: .25rem .225rem !important;
+}
