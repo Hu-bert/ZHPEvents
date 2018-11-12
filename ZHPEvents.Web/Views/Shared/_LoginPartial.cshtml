@@ -6,45 +6,12 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-
+        
 <ul class="nav navbar-nav ml-auto">
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm">
         <li class="nav-item dropdown">
             <a class="nav-link nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <span class="d-block d-sm-none">
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        <i class="fas fa-user-astronaut fa-2x"></i>
-                    }
-                        else if (User.IsInRole("Editor"))
-                    {
-                        <i class="fas fa-user-md fa-2x"></i>
-                    }
-                    else if (User.IsInRole("Author"))
-                    {
-                        <i class="fas fa-user-graduate fa-2x"></i>
-                    }
-                    else if (User.IsInRole("EventEditor"))
-                    {
-                        <i class="fas fa-user-clock fa-2x"></i>
-                    }
-                    else if (User.IsInRole("EventAuthor"))
-                    {
-                        <i class="fas fa-user-tag fa-2x"></i>
-                    }
-                    else if (User.IsInRole("RaportEditor"))
-                    {
-                        <i class="fas fa-user-tie fa-2x"></i>
-                    }
-                    else if (User.IsInRole("RaportAuthor"))
-                    {
-                        <i class="fas fa-user-lock fa-2x"></i>
-                    }
-                    else
-                    {
-                        <i class="fas fa-user-circle fa-2x"></i>
-                    }
-                </span>
+                <span class="d-block d-sm-none"><i class="fas fa-user-circle fa-2x"></i></span>
                 <span class="d-none d-sm-block">Czuwaj @UserManager.GetUserName(User)!&nbsp;<i class="fas fa-caret-down"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">

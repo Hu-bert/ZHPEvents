@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sendgrid" Version="9.10.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ZHPEvents.Core\ZHPEvents.Core.csproj" />
     <ProjectReference Include="..\ZHPEvents.ViewModels\ZHPEvents.ViewModels.csproj" />
   </ItemGroup>

@@ -17,10 +17,9 @@ namespace ZHPEvents
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -37,7 +36,7 @@ namespace ZHPEvents
 
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(
-                    _configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<AppUser, IdentityRole>(config =>
                 {
@@ -79,7 +78,7 @@ namespace ZHPEvents
             });
 
             services.AddSingleton<IEmailSender, EmailSender>();
-            services.Configure<AuthMessageSenderOptions>(_configuration);
+            services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

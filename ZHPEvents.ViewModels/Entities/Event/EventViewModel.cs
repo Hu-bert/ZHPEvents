@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ZHPEvents.ViewModels.Entities.Event
 {
-    public class EventViewModel
+    class EventViewModel
     {
     }
 }
