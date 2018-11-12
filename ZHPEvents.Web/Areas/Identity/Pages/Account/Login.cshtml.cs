@@ -1,25 +1,25 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using ZHPEvents.Core.Identity;
-using ZHPEvents.ViewModels.Account;
 
-namespace ZHPEvents.Areas.Identity.Pages.Account
+namespace ZHPEvents.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly ILogger<LoginViewModel> _logger;
+        private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginViewModel> logger)
+        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -27,6 +27,13 @@ namespace ZHPEvents.Areas.Identity.Pages.Account
 
         [BindProperty]
         public InputModel Input { get; set; }
+
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+        public string ReturnUrl { get; set; }
+
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         public class InputModel
         {
@@ -41,12 +48,6 @@ namespace ZHPEvents.Areas.Identity.Pages.Account
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        public string ReturnUrl { get; set; }
-
-        [TempData]
-        public string ErrorMessage { get; set; }
 
         public async Task OnGetAsync(string returnUrl = null)
         {

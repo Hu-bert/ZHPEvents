@@ -1,7 +1,15 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using ZHPEvents.Core;
+using ZHPEvents.Core.Identity;
 
-[assembly: HostingStartup(typeof(ZHPEvents.Areas.Identity.IdentityHostingStartup))]
-namespace ZHPEvents.Areas.Identity
+[assembly: HostingStartup(typeof(ZHPEvents.Web.Areas.Identity.IdentityHostingStartup))]
+namespace ZHPEvents.Web.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {

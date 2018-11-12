@@ -1,183 +1,37 @@
-﻿
-
-.button-white-space {
-    white-space: normal;
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
 }
 
-padding-top-0 {
-    padding-top: 0px !important;
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-.card-img-right {
-    height: 100%;
-    border-radius: 0 3px 3px 0;
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
 }
 
-.flex-auto {
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto;
-}
-
-.centered {
-    display: flex;
-    height: 80vh;
-    justify-content: center;
-    align-items: center;
-}
-/* div on full screen witch picture*/
-.introduction {
-    height: 100vh;
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
     width: 100%;
-    background: url('../images/header.jpg') no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    position: relative;
-}
-/* down elemnt on home page*/
-._down {
-    visibility: visible;
-    position: absolute;
-    z-index: 3;
-    bottom: 15%;
-    left: 50%;
-    margin-left: -14px;
 }
 
-.pulse {
-    cursor: pointer;
-    box-shadow: 0 0 0 rgba(204,169,44, 0.4);
-    animation: pulse 2s infinite;
+/* QR code generator */
+#qrCode {
+    margin: 15px;
 }
 
-    .pulse:hover {
-        animation: none;
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
     }
-
-@-webkit-keyframes pulse {
-    0% {
-        -webkit-box-shadow: 0 0 0 0 rgb(47, 53, 58);
-    }
-
-    70% {
-        -webkit-box-shadow: 0 0 0 10px rgb(47, 53, 58);
-    }
-
-    100% {
-        -webkit-box-shadow: 0 0 0 0 rgb(47, 53, 58);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        -moz-box-shadow: 0 0 0 0 rgba(47, 53, 58, 0.4);
-        box-shadow: 0 0 0 0 rgba(47, 53, 58, 0.4);
-    }
-
-    70% {
-        -moz-box-shadow: 0 0 0 10px rgba(47, 53, 58, 0);
-        box-shadow: 0 0 0 10px rgba(47, 53, 58, 0);
-    }
-
-    100% {
-        -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-        box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-    }
-}
-/* green elements, green = #83a311*/
-bg-green {
-    border-color: #83a311 !important;
-}
-
-.text-green {
-    color: #83a311 !important;
-}
-
-.btn-green {
-    color: #fff;
-    background-color: #83a311;
-    border-color: #83a311
-}
-
-    .btn-green:hover {
-        color: #fff;
-        background-color: #76930e;
-        border-color: #7a9616
-    }
-
-    .btn-green:focus, .btn-green.focus {
-        box-shadow: 0 0 0 .2rem rgba(131,163,17,.5)
-    }
-
-    .btn-green.disabled, .btn-green:disabled {
-        color: #fff;
-        background-color: #83a311;
-        border-color: #83a311
-    }
-
-    .btn-green:not(:disabled):not(.disabled):active, .btn-green:not(:disabled):not(.disabled).active, .show > .btn-green.dropdown-toggle {
-        color: #fff;
-        background-color: #1985ac;
-        border-color: #187da0
-    }
-
-        .btn-green:not(:disabled):not(.disabled):active:focus, .btn-green:not(:disabled):not(.disabled).active:focus, .show > .btn-green.dropdown-toggle:focus {
-            box-shadow: 0 0 0 .2rem rgba(131,163,17,.5)
-        }
-
-
-.btn-outline-green {
-    color: #83a311;
-    background-color: transparent;
-    background-image: none;
-    border-color: #83a311 !important;
-}
-    .btn-outline-green:hover {
-        color: #fff;
-        background-color: #83a311;
-        border-color: #83a311
-    }
-    .btn-outline-green:focus{
-        box-shadow: 0 0 0 .2rem rgba(131,163,17,.5)
-    }
-    .btn-outline-green.disabled, .btn-outline-green:disabled {
-        color: #83a311 !important;
-        background-color: transparent
-    }
-
-    .btn-outline-green:not(:disabled):not(.disabled):active, .btn-outline-green:not(:disabled):not(.disabled).active, .show > .btn-outline-green.dropdown-toggle {
-        color: #fff;
-        background-color: #83a311 !important;
-        border-color: #83a311 !important;
-    }
-
-        .btn-outline-green:not(:disabled):not(.disabled):active:focus, .btn-outline-green:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-green.dropdown-toggle:focus {
-            box-shadow: 0 0 0 .2rem rgba(131,163,17,.5)
-        }
-/* fixed card in home>events*/
-.event > .tab-content {
-    margin-top: -1px;
-    background: #fff;
-    border: 0px !important;
-    border-radius: 0px !important;
-}
-
-.card-body-event {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 0rem !important;
-}
-/* input radius for forms*/
-.input-left-radius {
-    border-bottom-left-radius: 50rem;
-    border-top-left-radius: 50rem;
-}
-
-.input-right-radius {
-    border-top-right-radius: 50rem;
-    border-bottom-right-radius: 50rem;
-}
-.nav-link-event {
-    padding: .25rem .225rem !important;
 }
