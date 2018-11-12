@@ -1,5 +1,6 @@
 ﻿@page
-@model RegisterModel
+@using ZHPEvents.ViewModels.Account
+@model RegisterViewModel
 
 @{
     ViewData["Title"] = "Rejestracja";
@@ -48,8 +49,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@@</span>
                                 </div>
-                                <input asp-for="Input.Email" type="email" id="inputEmail" class="form-control input-right-radius" placeholder="Email address" required autofocus>
-                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                <input asp-for="Email" type="email" id="inputEmail" class="form-control input-right-radius" placeholder="Email address" required autofocus>
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -57,8 +58,8 @@
                                         <i class="fas fa-lock"></i>
                                     </span>
                                 </div>
-                                <input asp-for="Input.Password" type="password" id="inputPassword" class="form-control input-right-radius" placeholder="Password" required>
-                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                <input asp-for="Password" type="password" id="inputPassword" class="form-control input-right-radius" placeholder="Password" required>
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
@@ -66,8 +67,8 @@
                                         <i class="fas fa-lock"></i>
                                     </span>
                                 </div>
-                                <input asp-for="Input.ConfirmPassword" type="password" id="inputConfirmPassword" class="form-control input-right-radius" placeholder="Confirm Password" required>
-                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                <input asp-for="ConfirmPassword" type="password" id="inputConfirmPassword" class="form-control input-right-radius" placeholder="Confirm Password" required>
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <button class="btn btn-pill  btn-block btn-success" type="submit">Stwórz konto</button>
                         </div>
