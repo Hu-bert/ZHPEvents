@@ -5,7 +5,8 @@
 
 @{
     ViewData["Title"] = "Edycja użytkownika";
-    Layout = "_Dashboard";
+    Layout = "_DashboardLayout";
+
     bool administrator = await ZHPEventsUser.IsInRoleAsync(Model, "Administrator");
     bool editor = await ZHPEventsUser.IsInRoleAsync(Model, "Editor");
     bool author = await ZHPEventsUser.IsInRoleAsync(Model, "Author");

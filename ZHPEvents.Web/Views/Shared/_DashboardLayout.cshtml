@@ -201,8 +201,13 @@
                         </a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link">
+                                <a asp-controller="Account" asp-action="Profile" class="nav-link">
                                     <i class="nav-icon fas fa-user-edit"></i> Profil
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Account" asp-action="ChangePassword" class="nav-link">
+                                    <i class="nav-icon fas fa-lock"></i> Zmiana hasła
                                 </a>
                             </li>
                         </ul>

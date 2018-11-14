@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ZHPEvents.ViewModels.Account
 {
-    public class LoginViewModel
+    public class LoginViewModel 
     {
         [Required]
         [EmailAddress]

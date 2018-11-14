@@ -1,0 +1,71 @@
+@using ZHPEvents.ViewModels.Account
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Rejestracja";
+    Layout = "_AccountLayout";
+}
+<div class="col-md-6">
+    <div class="card mx-4">
+        <form method="post">
+            <div class="card-body p-4">
+                <h1>Rejestracja</h1>
+                <p class="text-muted">Stwórz swoje konto</p>
+                <p><div asp-validation-summary="All" class="text-danger"></div></p>
+                @*<div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="icon-user"></i>
+                </span>
+            </div>
+            <input class="form-control" type="text" placeholder="Username">
+        </div>*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@@</span>
+                    </div>
+                    <input asp-for="Email" type="email" id="inputEmail" class="form-control input-right-radius" placeholder="Email address" required autofocus>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                    <input asp-for="Password" type="password" id="inputPassword" class="form-control input-right-radius" placeholder="Password" required>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                    <input asp-for="ConfirmPassword" type="password" id="inputConfirmPassword" class="form-control input-right-radius" placeholder="Confirm Password" required>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="privacyAccept">
+                        <input asp-for="PrivacyAccept"type="checkbox" id="privacyAccept" required>Akceptacja prywatności.
+                    </label>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button class="btn btn-pill  btn-block btn-success" type="submit">Stwórz konto</button>
+            </div>
+        </form>
+        <div class="card-footer p-4">
+            <div class="row">
+                <div class="col-6">
+                    <a asp-page="" role="button" class="btn btn-pill  btn-block btn-success">
+                        <span>Zaloguj sie!</span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a asp-page="" role="button" class="btn btn-pill  btn-block btn-primary">
+                        <span>Zapomniałeś hasła?</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

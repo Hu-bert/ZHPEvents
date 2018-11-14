@@ -1,12 +1,4 @@
-﻿@page
-@model ConfirmEmailModel
-
-@{
-    ViewData["Title"] = "Confirm email";
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -25,22 +17,12 @@
 
     <link href="~/coreui/style.css" rel="stylesheet" />
     <link href="~/coreui/pace.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
-<body class="app flex-row align-items-center">
+<body class="app flex-row align-items-center body-img">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card-group">
-                    <div class="card text-white bg-success py-5 d-md-down-none" style="width:44%">
-                        <div class="card-body text-center">
-                            <div>
-                                <h2>Thank you for confirming your email.</h2>
-                                <a asp-page="./Login" role="button" class="btn btn-pill btn-primary active mt-3">Zaloguj się</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @RenderBody()
         </div>
     </div>
 
