@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ZHPEvents.ViewModels.Entities.Event;
+using ZHPEvents.ViewModels.Events;
 
 namespace ZHPEvents.Services.EventService
 {

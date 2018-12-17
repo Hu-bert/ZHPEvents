@@ -8,8 +8,4 @@
     <ProjectReference Include="..\ZHPEvents.Core\ZHPEvents.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\Raport\" />
-  </ItemGroup>
-
 </Project>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ZHPEvents.Core;
 using ZHPEvents.Core.Entities;
+using ZHPEvents.ViewModels.Home;
 
 namespace ZHPEvents.Controllers
 {
@@ -21,6 +22,7 @@ namespace ZHPEvents.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Event
+                .Where(e => e.IsDeleted != Deleted.Yes)
                 .Where(e => e.Status == EventStatus.Approved)
                 .OrderByDescending(e => e.AdditionTime)
                 .Take(3)
@@ -40,9 +42,14 @@ namespace ZHPEvents.Controllers
 
         public async Task<IActionResult> Events(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            var users = _context.Users;
+
             IQueryable<Event> events = _context.Event
+                    .Where(e => e.IsDeleted != Deleted.Yes)
                     .Where(e => e.Status == EventStatus.Approved)
+                    .Include(e => e.AddingPerson)
                     .OrderByDescending(e => e.AdditionTime);
+
             ViewData["CurrentSort"] = sortOrder;
             ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewData["AdditionTimeSortParm"] = sortOrder == "AdditionTime" ? "additionTime_desc" : "AdditionTime";
@@ -63,7 +70,7 @@ namespace ZHPEvents.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 events = events.Where(e => e.Title.Contains(searchString)
-                                       || e.AddingPerson.Contains(searchString) || e.ConfirmingPerson.Contains(searchString));
+                                       || e.AddingPerson.FristName.Contains(searchString) || e.ConfirmingPerson.FristName.Contains(searchString));
                 ViewData["CollapseShow"] = " ";
             }
 
@@ -116,7 +123,7 @@ namespace ZHPEvents.Controllers
 
         public async Task<IActionResult> Event(int? id)
         {
-            return View(await _context.Event.FirstOrDefaultAsync(m => m.Id == id));
+            return View(await _context.Event.Include(e => e.AddingPerson).FirstOrDefaultAsync(m => m.Id == id));
         }
 
     }

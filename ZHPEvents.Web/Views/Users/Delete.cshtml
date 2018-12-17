@@ -5,9 +5,9 @@
     ViewData["Title"] = "Delete";
     Layout = "_DashboardLayout";
 }
-
-
-
+@section BreadcrumbItem {
+    <li class="breadcrumb-item active">@Model.StopienInstruktorski @Model.FristName @Model.LastName</li>
+}
 <div class="row">
     <div class="col-sm-12 col-md-9">
         <div class="card">

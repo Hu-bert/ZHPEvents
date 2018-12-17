@@ -60,7 +60,7 @@
                                         {
                                             <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill btn-sm btn-outline-secondary" role="button">Edytuj</a>
                                         }
-                                        else if (user != null && user.Id == item.AddingPerson)
+                                        else if (user != null && user.Id == item.AddingPersonId)
                                         {
                                             <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
                                         }

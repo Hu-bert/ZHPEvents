@@ -8,10 +8,14 @@ namespace ZHPEvents.Core
 {
     public class Context: IdentityDbContext<AppUser, IdentityRole, string>
     {
-        public Context(DbContextOptions<Context> options) : base(options) {}
+        private readonly DbContextOptions<Context> _options;
 
-        public virtual DbSet<Event> Event { get; set; }
-        public virtual DbSet<Raport> Raport { get; set; }
+
+        public  DbSet<Event> Event { get; set; }
+        public  DbSet<Raport> Raport { get; set; }
+
+        public Context(DbContextOptions<Context> _options) : base(_options) { }
+
 
     }
 }

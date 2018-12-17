@@ -424,100 +424,11 @@ namespace ZHPEvents
         }
 
         #endregion
-        
-        //#region AboutMe
 
-        //[Authorize]
-        //public async Task<IActionResult> AboutMe()
-        //{
-
-        //}
-
-        //[Authorize]
-        //[HttpPost]
-        //public async Task<IActionResult> ChangeData(string pass, string firstName, string surname)
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
-        //    var passwordVerificationResult = await _signInManager.CheckPasswordSignInAsync(user, pass, false);
-
-        //    if (passwordVerificationResult.Succeeded)
-        //    {
-        //        if (user.FirstName != firstName)
-        //        {
-        //            logger.Info($"User changed its FirstName: {user.FirstName} -> {firstName}");
-        //            user.FirstName = firstName;
-        //        }
-        //        if (user.Surname != surname)
-        //        {
-        //            logger.Info($"User changed its Surname: {user.Surname} -> {surname}");
-        //            user.Surname = surname;
-        //        }
-
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    else
-        //    {
-        //        ModelState.AddModelError(string.Empty, _localizer["badPassword"]);
-        //    }
-
-        //    var viewModel = user.GetViewModel();
-        //    viewModel.Company = _context.Companies.Where(c => c.Id == user.CompanyId).FirstOrDefault();
-
-        //    return View("AboutMe", viewModel);
-        //}
-
-        //[Authorize]
-        //[HttpPost]
-        //public async Task<IActionResult> ChangePass(string oldPass, string pass, string pass2)
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
-        //    var passwordVerificationResult = await _signInManager.CheckPasswordSignInAsync(user, oldPass, false);
-
-        //    if (passwordVerificationResult.Succeeded)
-        //    {
-        //        if (pass == pass2)
-        //        {
-        //            await _userManager.ChangePasswordAsync(user, oldPass, pass);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError(string.Empty, _localizer["differentPass"]);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ModelState.AddModelError(string.Empty, _localizer["badPassword"]);
-        //    }
-
-        //    var viewModel = user.GetViewModel();
-        //    viewModel.Company = _context.Companies.Where(c => c.Id == user.CompanyId).FirstOrDefault();
-
-        //    return View("AboutMe", viewModel);
-        //}
-
-        //[Authorize]
-        //[HttpPost]
-        //public async Task<IActionResult> RemoveAccount(string pass)
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
-
-        //    logger.Info($"User with email {user.Email} removed itself");
-
-        //    _context.Users.Remove(user);
-        //    _context.SaveChanges();
-
-        //    try
-        //    {
-        //        await _signInManager.SignOutAsync();
-        //    }
-        //    catch { }
-
-        //    return Redirect("~/");
-        //}
+        #region Remove
 
 
-        //#endregion
 
-
+        #endregion
     }
 }

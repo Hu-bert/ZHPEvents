@@ -19,9 +19,26 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">@Model.Title</h5>
-            <p class="card-text"><small class="text-muted">@Model.AdditionTime.Date.ToString("dd.mm.yyyy")</small></p>
-            <p class="card-text">It's a broader card with text below as a natural lead-in to extra content. This content is a little longer.</p>
+            <p class="card-text"><small class="text-muted">@Model.Type > @Model.Category</small><small class="text-muted float-right">@Model.AdditionTime.Date.ToString("dd.mm.yyyy")</small></p>
+            <h4 class="card-title">@Model.Title</h4>
+            <p class="card-text"></p>
+            <p class="card-text">@Model.Description</p>
+            <dl class="row">
+                <dt class="col-sm-2">Autor</dt>
+                <dd class="col-sm-4">@Model.AddingPerson.StopienInstruktorski @Model.AddingPerson.FristName @Model.AddingPerson.LastName</dd>
+                <dt class="col-sm-2">Organizator</dt>
+                <dd class="col-sm-4">@Model.Organizaer</dd>
+
+                <dt class="col-sm-2">Data wydarzenia</dt>
+                <dd class="col-sm-4">@Model.Date</dd>
+                <dt class="col-sm-2">Miejsce wydarzenia</dt>
+                <dd class="col-sm-4">@Model.Place</dd>
+
+                <dt class="col-sm-2">Data zapisów</dt>
+                <dd class="col-sm-4">@Model.LastDayOfEntries</dd>
+                <dt class="col-sm-2">Zapisy</dt>
+                <dd class="col-sm-4">@Model.RegistrationMail</dd>
+            </dl>
         </div>
         <div class="card-footer text-muted">
             <div class="d-flex justify-content-center align-items-center">
@@ -31,7 +48,7 @@
                     {
                         <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
                     }
-                    else if (user != null && user.Id == Model.AddingPerson)
+                    else if (user != null && user.Id == Model.AddingPersonId)
                     {
                         <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
                     }

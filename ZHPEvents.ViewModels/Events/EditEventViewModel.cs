@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZHPEvents.ViewModels.Entities.Event
+namespace ZHPEvents.ViewModels.Events
 {
-    public class AddEventViewModel
+    public class EditEventViewModel
     {
     }
 }

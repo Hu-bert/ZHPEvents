@@ -22,7 +22,7 @@
 }
 @if (Model.Count <= 0)
 {
-    <div class="centered">
+    <div class="centered card-columns">
         <div class="card text-white bg-primary text-center">
             <div class="card-body">
                 <blockquote class="card-bodyquote">
@@ -87,7 +87,7 @@ else
                                                         &nbsp;&nbsp;<i class="fas fa-edit"></i>&nbsp;&nbsp;
                                                     </a>
                                                 </li>}
-                                            else if (user != null && user.Id == item.AddingPerson)
+                                            else if (user != null && user.Id == item.AddingPersonId)
                                             {
                                                 <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Edytuj">
                                                     <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id" class="nav-link nav-link-event">
@@ -99,40 +99,23 @@ else
                                     <div class="card-body-event  event">
                                         <div class="tab-content">
                                             <div class="tab-pane active show" id="@("home"+item.Id)" role="tabpanel">
-                                                <strong class="d-inline-block mb-2 text-primary">Kategoria</strong>
-                                                <h3 class="mb-0">
+                                                <strong class=" mb-2 text-primary">@item.Type > @item.Category</strong>
+                                                <h4 class="mb-0">
                                                     <a class="text-dark" href="#">@item.Title</a>
-                                                </h3>
+                                                </h4>
                                                 <div class="mb-1 text-muted">Data publikacji: @item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
-                                                <div class="mb-1 text-muted">Data wydarzenia: @item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
-                                                <div class="mb-1 text-muted">Mijesce wydarzenia: @item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
-                                                <div class="mb-1 text-muted">Zapisy do: @item.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
+                                                <div class="mb-1 text-muted">Data wydarzenia: @item.Date.Date.ToString("dd.mm.yyyy")</div>
+                                                <div class="mb-1 text-muted">Mijesce wydarzenia: @item.Place</div>
+                                                <div class="mb-1 text-muted">Zapisy do: @item.LastDayOfEntries.Date.ToString("dd.mm.yyyy")</div>
                                             </div>
                                             <div class="tab-pane" id=@("profile"+item.Id) role="tabpanel">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                                irure dolor in reprehenderit in voluptate velit esse cillum...
+                                                @item.Description
                                             </div>
                                             <div class="tab-pane" id=@("messages"+item.Id) role="tabpanel">
-                                                <dl class="row">
-                                                    <dt class="col-sm-3">Autor</dt>
-                                                    <dd class="col-sm-9">Description List</dd>
-                                                    <dt class="col-sm-3">Mail</dt>
-                                                    <dd class="col-sm-9">
-                                                        vestibulum@id.ligula
-                                                    </dd>
-                                                    <dt class="col-sm-3">Telefon</dt>
-                                                    <dd class="col-sm-9">
-                                                        vestibulum@id.ligula
-                                                    </dd>
-                                                    <dt class="col-sm-3">Telefon</dt>
-                                                    <dd class="col-sm-9">
-                                                        vestibulum@id.ligula
-                                                    </dd>
-                                                    <dt class="col-sm-3">Telefon</dt>
-                                                    <dd class="col-sm-9">
-                                                        vestibulum@id.ligula
-                                                    </dd>
-                                                </dl>
+                                                <div class="mb-1 text-muted">Autor: @item.AddingPerson.StopienInstruktorski @item.AddingPerson.FristName @item.AddingPerson.LastName</div>
+                                                <div class="mb-1 text-muted">Kontakt: @item.Contact</div>
+                                                <div class="mb-1 text-muted">Rejestracja: @item.RegistrationMail</div>
+                                                <div class="mb-1 text-muted">Organizator: @item.Organizaer</div>
                                             </div>
                                         </div>
                                     </div>
@@ -288,5 +271,4 @@ else
 }
 @section Scripts {
     <script src="~/vendor/holder.min.js"></script>
-
 }

@@ -267,7 +267,8 @@ namespace ZHPEvents
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RaportExists(int id)
+
+            private bool RaportExists(int id)
         {
             return _context.Raport.Any(e => e.Id == id);
         }

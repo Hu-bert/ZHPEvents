@@ -1,7 +1,7 @@
 ﻿@model ZHPEvents.Core.Entities.Event
 
 @{
-    ViewData["Title"] = Model.Title + " - usuń";
+    ViewData["Title"] = Model.Title + " - archiwizuj";
     Layout = "_DashboardLayout";
 }
 @section BreadcrumbItem {
@@ -42,14 +42,14 @@
             <div class="card-footer text-muted">
                 <form asp-action="Delete">
                     <input type="hidden" asp-for="Id" />
-                    <input type="submit" value="Delete" class="btn btn-pill  btn-outline-danger" />
+                    <input type="submit" value="Archiwizacja" class="btn btn-pill  btn-outline-dark" />
                     <a asp-action="Index" class="btn btn-pill  btn-outline-secondary" role="button">Powrót do listy wydarzeń</a>
                 </form>
             </div>
         </div>
     </div>
     <div class="col-sm-12 col-md-3">
-        <div class="card text-white bg-danger">
+        <div class="card text-white bg-dark">
             <div class="card-header">Usuwanie wydarzeń</div>
             <div class="card-body">
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip

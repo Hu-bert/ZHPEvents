@@ -1,255 +1,1387 @@
-﻿@{
+﻿@using ZHPEvents.ViewModels.Dashboard
+@using Microsoft.AspNetCore.Identity
+@using ZHPEvents.Core.Identity
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@model IndexViewModel
+
+
+@{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
+    var user = await UserManager.GetUserAsync(User);
 }
 
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header"><i class="fas fa-calculator"></i> Garść informacji</div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="callout callout-info">
-                                    <small class="text-muted">Ilość raportów</small>
-                                    <br>
-                                    <strong class="h4">9,123</strong>
-                                    <div class="chart-wrapper">
-                                        <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+        @if (Model.UserEmailConfirmed == false)
+        {
+            <div class="alert alert-danger" role="alert">
+                Proszę potwierdzić swój adres email.
+            </div>
+        }
+        @if (User.IsInRole("Administrator"))
+        {
+            <div class="card">
+                <div class="card-header"><i class="fas fa-database"></i> Garść informacji z apliakcji </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="callout callout-info">
+                                        <small class="text-muted">Ilość raportów</small>
+                                        <br>
+                                        <strong class="h4">@Model.Raports</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Ilość wydarzeń</small>
+                                        <br>
+                                        <strong class="h4">@Model.Events</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="callout callout-success">
-                                    <small class="text-muted">Ilość wydarzeń</small>
-                                    <br>
-                                    <strong class="h4">9,123</strong>
-                                    <div class="chart-wrapper">
-                                        <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file progress-group-icon"></i>
+                                    <div>Nowe raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.NewRaports</div>
+                                    <div class="text-muted small">(@Model.NewRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.NewRaportsPercent%" aria-valuenow=@Model.NewRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
+                                    <div>Zakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ApprovedRaports</div>
+                                    <div class="text-muted small">(@Model.ApprovedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars progress-group-icon">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ApprovedRaportsPercent%" aria-valuenow=@Model.ApprovedRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
+                                    <div>Niezakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.RejectedRaports</div>
+                                    <div class="text-muted small">(@Model.RejectedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.RejectedRaportsPercent%" aria-valuenow="@Model.RejectedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-archive progress-group-icon"></i>
+                                    <div>Zarchiwizowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ArchivedRaports</div>
+                                    <div class="text-muted small">(@Model.ArchivedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ArchivedRaportsPercent%" aria-valuenow="@Model.ArchivedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
+                                    <div>Nowe wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.NewEvents</div>
+                                    <div class="text-muted small">(@Model.NewEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.NewEventsPercent%" aria-valuenow=@Model.NewEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
+                                    <div>Zakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ApprovedEvents</div>
+                                    <div class="text-muted small">(@Model.ApprovedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ApprovedEventsPercent%" aria-valuenow=@Model.ApprovedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
+                                    <div>Niezakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.RejectedEvents</div>
+                                    <div class="text-muted small">(@Model.RejectedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.RejectedEventsPercent%" aria-valuenow=@Model.RejectedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-times progress-group-icon"></i>
+                                    <div>Zarchiwizowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ArchivedEvents</div>
+                                    <div class="text-muted small">(@Model.ArchivedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ArchivedEventsPercent%" aria-valuenow=@Model.ArchivedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="callout callout-warning">
+                                        <small class="text-muted">Nowi użytkownicy</small>
+                                        <br>
+                                        <strong class="h4">@Model.Users</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-3" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Użytkownicy z przydzieloną rolą</small>
+                                        <br>
+                                        <strong class="h4">@(Model.AllUsers - Model.Users)</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-4" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="fas fa-user-injured progress-group-icon"></i>
+                                    <div>Nowi użytkownicy</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.Users</div>
+                                    <div class="text-muted small">(@Model.UsersPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UsersPercent%" aria-valuenow=@Model.Users aria-valuemin="0" aria-valuemax=@Model.AllUsers></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="fas fa-user-lock progress-group-icon"></i>
+                                    <div>Z uprawnieniem do tworzenia raportów</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.RaportAuthors</div>
+                                    <div class="text-muted small">(@Model.RaportAuthorsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.RaportAuthorsPercent%" aria-valuenow=@Model.RaportAuthors aria-valuemin="0" aria-valuemax=@Model.AllUsers></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="fas fa-user-tie progress-group-icon"></i>
+                                    <div>Z uprawnieniem do edycji raportów</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.RaportEditors</div>
+                                    <div class="text-muted small">(@Model.RaportEditorsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.RaportEditorsPercent%" aria-valuenow=@Model.RaportEditors aria-valuemin="0" aria-valuemax=@Model.AllUsers></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="fas fa-user-tag progress-group-icon"></i>
+                                    <div>Z uprawnieniem do tworzenia wydarzeń</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.EventAuthors</div>
+                                    <div class="text-muted small">(@Model.EventAuthorsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.EventAuthorsPercent%" aria-valuenow=@Model.EventAuthors aria-valuemin="0" aria-valuemax=@Model.AllUsers></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="fas fa-user-clock progress-group-icon"></i>
+                                    <div>Z uprawnieniem do edycji wydarzeń </div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.EventEditors</div>
+                                    <div class="text-muted small">(@Model.EventEditorsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.EventEditorsPercent%" aria-valuenow=@Model.EventEditors aria-valuemin="0" aria-valuemax=@Model.AllUsers></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="fas fa-user-graduate progress-group-icon"></i>
+                                    <div>Z uprawnieniem do tworzenia wydarzeń i raportów</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.Authors</div>
+                                    <div class="text-muted small">(@Model.AuthorsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.AuthorsPercent%" aria-valuenow=@Model.Authors aria-valuemin="0" aria-valuemax=@Model.AllUsers></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="fas fa-user-md progress-group-icon"></i>
+                                    <div>Z uprawnieniem do edycji wydarzeń i raportów</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.Editors</div>
+                                    <div class="text-muted small">(@Model.EditorsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.EditorsPercent%" aria-valuenow=@Model.Editors aria-valuemin="0" aria-valuemax=@Model.AllUsers></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="fas fa-user-astronaut progress-group-icon"></i>
+                                    <div>Administratorzy</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.Administrators</div>
+                                    <div class="text-muted small">(@Model.AdministratorsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.AdministratorsPercent%" aria-valuenow=@Model.Administrators aria-valuemin="0" aria-valuemax=@Model.AllUsers></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <hr class="mt-0">
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="nav-icon fas fa-file progress-group-icon"></i>
-                                <div>Nowe raporty</div>
-                                <div class="ml-auto font-weight-bold mr-2">191.235</div>
-                                <div class="text-muted small">(56%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
-                                <div>Zakceptowane raporty</div>
-                                <div class="ml-auto font-weight-bold mr-2">51.223</div>
-                                <div class="text-muted small">(15%)</div>
-                            </div>
-                            <div class="progress-group-bars progress-group-icon">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
-                                <div>Niezakceptowane raporty</div>
-                                <div class="ml-auto font-weight-bold mr-2">37.564</div>
-                                <div class="text-muted small">(11%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 11%" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
-                                <div>Nowe wydarzenia</div>
-                                <div class="ml-auto font-weight-bold mr-2">191.235</div>
-                                <div class="text-muted small">(56%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
-                                <div>Zakceptowane wydarzenia</div>
-                                <div class="ml-auto font-weight-bold mr-2">51.223</div>
-                                <div class="text-muted small">(15%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
-                                <div>Niezakceptowane wydarzenia</div>
-                                <div class="ml-auto font-weight-bold mr-2">37.564</div>
-                                <div class="text-muted small">(11%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 11%" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="callout callout-warning">
-                                    <small class="text-muted">Nowi użytkownicy</small>
-                                    <br>
-                                    <strong class="h4">78,623</strong>
-                                    <div class="chart-wrapper">
-                                        <canvas id="sparkline-chart-3" width="100" height="30"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="callout callout-success">
-                                    <small class="text-muted">Użytkownicy z przydzieloną rolą</small>
-                                    <br>
-                                    <strong class="h4">49,123</strong>
-                                    <div class="chart-wrapper">
-                                        <canvas id="sparkline-chart-4" width="100" height="30"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <hr class="mt-0">
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="fas fa-user-injured progress-group-icon"></i>
-                                <div>Nowi użytkownicy</div>
-                                <div class="ml-auto font-weight-bold mr-2">191.235</div>
-                                <div class="text-muted small">(56%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="fas fa-user-lock progress-group-icon"></i>
-                                <div>Z uprawnieniem do tworzenia raportów</div>
-                                <div class="ml-auto font-weight-bold mr-2">51.223</div>
-                                <div class="text-muted small">(15%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="fas fa-user-tie progress-group-icon"></i>
-                                <div>Z uprawnieniem do edycji raportów</div>
-                                <div class="ml-auto font-weight-bold mr-2">37.564</div>
-                                <div class="text-muted small">(11%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 11%" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="fas fa-user-tag progress-group-icon"></i>
-                                <div>Z uprawnieniem do tworzenia wydarzeń</div>
-                                <div class="ml-auto font-weight-bold mr-2">27.319</div>
-                                <div class="text-muted small">(8%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="fas fa-user-clock progress-group-icon"></i>
-                                <div>Z uprawnieniem do edycji wydarzeń </div>
-                                <div class="ml-auto font-weight-bold mr-2">27.319</div>
-                                <div class="text-muted small">(8%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="fas fa-user-graduate progress-group-icon"></i>
-                                <div>Z uprawnieniem do tworzenia wydarzeń i raportów</div>
-                                <div class="ml-auto font-weight-bold mr-2">27.319</div>
-                                <div class="text-muted small">(8%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="fas fa-user-md progress-group-icon"></i>
-                                <div>Z uprawnieniem do edycji wydarzeń i raportów</div>
-                                <div class="ml-auto font-weight-bold mr-2">27.319</div>
-                                <div class="text-muted small">(8%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-group">
-                            <div class="progress-group-header align-items-end">
-                                <i class="fas fa-user-astronaut progress-group-icon"></i>
-                                <div>Administratorzy</div>
-                                <div class="ml-auto font-weight-bold mr-2">27.319</div>
-                                <div class="text-muted small">(8%)</div>
-                            </div>
-                            <div class="progress-group-bars">
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-        </div>
+            <div class="card">
+                <div class="card-header"><i class="fas fa-pen"></i> Garść informacji o Twojej twórczości </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-info">
+                                        <small class="text-muted">Ilość raportów</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserRaports</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file progress-group-icon"></i>
+                                    <div>Nowe raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewRaports</div>
+                                    <div class="text-muted small">(@Model.UserNewRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewRaportsPercent%" aria-valuenow=@Model.UserNewRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
+                                    <div>Zakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedRaports</div>
+                                    <div class="text-muted small">(@Model.UserApprovedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars progress-group-icon">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedRaportsPercent%" aria-valuenow=@Model.UserApprovedRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
+                                    <div>Niezakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedRaports</div>
+                                    <div class="text-muted small">(@Model.UserRejectedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedRaportsPercent%" aria-valuenow="@Model.UserRejectedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-archive progress-group-icon"></i>
+                                    <div>Zarchiwizowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedRaports</div>
+                                    <div class="text-muted small">(@Model.UserArchivedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedRaportsPercent%" aria-valuenow="@Model.UserArchivedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Ilość wydarzeń</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserEvents</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
+                                    <div>Nowe wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewEvents</div>
+                                    <div class="text-muted small">(@Model.UserNewEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewEventsPercent%" aria-valuenow=@Model.UserNewEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
+                                    <div>Zakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedEvents</div>
+                                    <div class="text-muted small">(@Model.UserApprovedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedEventsPercent%" aria-valuenow=@Model.UserApprovedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
+                                    <div>Niezakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedEvents</div>
+                                    <div class="text-muted small">(@Model.UserRejectedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedEventsPercent%" aria-valuenow=@Model.UserRejectedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-times progress-group-icon"></i>
+                                    <div>Zarchiwizowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedEvents</div>
+                                    <div class="text-muted small">(@Model.UserArchivedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedEventsPercent%" aria-valuenow=@Model.UserArchivedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("Editor"))
+        {
+            <div class="card">
+                <div class="card-header"><i class="fas fa-calculator"></i> Garść informacji z apliakcji </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-info">
+                                        <small class="text-muted">Ilość raportów</small>
+                                        <br>
+                                        <strong class="h4">@Model.Raports</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file progress-group-icon"></i>
+                                    <div>Nowe raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.NewRaports</div>
+                                    <div class="text-muted small">(@Model.NewRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.NewRaportsPercent%" aria-valuenow=@Model.NewRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
+                                    <div>Zakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ApprovedRaports</div>
+                                    <div class="text-muted small">(@Model.ApprovedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars progress-group-icon">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ApprovedRaportsPercent%" aria-valuenow=@Model.ApprovedRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
+                                    <div>Niezakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.RejectedRaports</div>
+                                    <div class="text-muted small">(@Model.RejectedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.RejectedRaportsPercent%" aria-valuenow="@Model.RejectedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-archive progress-group-icon"></i>
+                                    <div>Zarchiwizowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ArchivedRaports</div>
+                                    <div class="text-muted small">(@Model.ArchivedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ArchivedRaportsPercent%" aria-valuenow="@Model.ArchivedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Ilość wydarzeń</small>
+                                        <br>
+                                        <strong class="h4">@Model.Events</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
+                                    <div>Nowe wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.NewEvents</div>
+                                    <div class="text-muted small">(@Model.NewEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.NewEventsPercent%" aria-valuenow=@Model.NewEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
+                                    <div>Zakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ApprovedEvents</div>
+                                    <div class="text-muted small">(@Model.ApprovedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ApprovedEventsPercent%" aria-valuenow=@Model.ApprovedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
+                                    <div>Niezakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.RejectedEvents</div>
+                                    <div class="text-muted small">(@Model.RejectedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.RejectedEventsPercent%" aria-valuenow=@Model.RejectedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-times progress-group-icon"></i>
+                                    <div>Zarchiwizowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ArchivedEvents</div>
+                                    <div class="text-muted small">(@Model.ArchivedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ArchivedEventsPercent%" aria-valuenow=@Model.ArchivedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><i class="fas fa-pen"></i> Garść informacji o Twojej twórczości </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-info">
+                                        <small class="text-muted">Ilość raportów</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserRaports</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file progress-group-icon"></i>
+                                    <div>Nowe raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewRaports</div>
+                                    <div class="text-muted small">(@Model.UserNewRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewRaportsPercent%" aria-valuenow=@Model.UserNewRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
+                                    <div>Zakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedRaports</div>
+                                    <div class="text-muted small">(@Model.UserApprovedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars progress-group-icon">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedRaportsPercent%" aria-valuenow=@Model.UserApprovedRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
+                                    <div>Niezakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedRaports</div>
+                                    <div class="text-muted small">(@Model.UserRejectedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedRaportsPercent%" aria-valuenow="@Model.UserRejectedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-archive progress-group-icon"></i>
+                                    <div>Zarchiwizowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedRaports</div>
+                                    <div class="text-muted small">(@Model.UserArchivedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedRaportsPercent%" aria-valuenow="@Model.UserArchivedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Ilość wydarzeń</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserEvents</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
+                                    <div>Nowe wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewEvents</div>
+                                    <div class="text-muted small">(@Model.UserNewEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewEventsPercent%" aria-valuenow=@Model.UserNewEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
+                                    <div>Zakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedEvents</div>
+                                    <div class="text-muted small">(@Model.UserApprovedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedEventsPercent%" aria-valuenow=@Model.UserApprovedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
+                                    <div>Niezakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedEvents</div>
+                                    <div class="text-muted small">(@Model.UserRejectedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedEventsPercent%" aria-valuenow=@Model.UserRejectedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-times progress-group-icon"></i>
+                                    <div>Zarchiwizowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedEvents</div>
+                                    <div class="text-muted small">(@Model.UserArchivedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedEventsPercent%" aria-valuenow=@Model.UserArchivedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("Author"))
+        {
+            <div class="card">
+                <div class="card-header"><i class="fas fa-pen"></i> Garść informacji o Twojej twórczości </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-info">
+                                        <small class="text-muted">Ilość raportów</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserRaports</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file progress-group-icon"></i>
+                                    <div>Nowe raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewRaports</div>
+                                    <div class="text-muted small">(@Model.UserNewRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewRaportsPercent%" aria-valuenow=@Model.UserNewRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
+                                    <div>Zakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedRaports</div>
+                                    <div class="text-muted small">(@Model.UserApprovedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars progress-group-icon">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedRaportsPercent%" aria-valuenow=@Model.UserApprovedRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
+                                    <div>Niezakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedRaports</div>
+                                    <div class="text-muted small">(@Model.UserRejectedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedRaportsPercent%" aria-valuenow="@Model.UserRejectedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-archive progress-group-icon"></i>
+                                    <div>Zarchiwizowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedRaports</div>
+                                    <div class="text-muted small">(@Model.UserArchivedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedRaportsPercent%" aria-valuenow="@Model.UserArchivedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Ilość wydarzeń</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserEvents</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
+                                    <div>Nowe wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewEvents</div>
+                                    <div class="text-muted small">(@Model.UserNewEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewEventsPercent%" aria-valuenow=@Model.UserNewEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
+                                    <div>Zakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedEvents</div>
+                                    <div class="text-muted small">(@Model.UserApprovedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedEventsPercent%" aria-valuenow=@Model.UserApprovedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
+                                    <div>Niezakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedEvents</div>
+                                    <div class="text-muted small">(@Model.UserRejectedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedEventsPercent%" aria-valuenow=@Model.UserRejectedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-times progress-group-icon"></i>
+                                    <div>Zarchiwizowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedEvents</div>
+                                    <div class="text-muted small">(@Model.UserArchivedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedEventsPercent%" aria-valuenow=@Model.UserArchivedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("EventEditor"))
+        {
+            <div class="card">
+                <div class="card-header"><i class="fas fa-calculator"></i> Garść informacji z apliakcji </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Ilość wydarzeń</small>
+                                        <br>
+                                        <strong class="h4">@Model.Events</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
+                                    <div>Nowe wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.NewEvents</div>
+                                    <div class="text-muted small">(@Model.NewEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.NewEventsPercent%" aria-valuenow=@Model.NewEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
+                                    <div>Zakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ApprovedEvents</div>
+                                    <div class="text-muted small">(@Model.ApprovedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ApprovedEventsPercent%" aria-valuenow=@Model.ApprovedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
+                                    <div>Niezakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.RejectedEvents</div>
+                                    <div class="text-muted small">(@Model.RejectedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.RejectedEventsPercent%" aria-valuenow=@Model.RejectedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-times progress-group-icon"></i>
+                                    <div>Zarchiwizowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ArchivedEvents</div>
+                                    <div class="text-muted small">(@Model.ArchivedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ArchivedEventsPercent%" aria-valuenow=@Model.ArchivedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><i class="fas fa-pen"></i> Garść informacji o Twojej twórczości </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Ilość wydarzeń</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserEvents</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
+                                    <div>Nowe wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewEvents</div>
+                                    <div class="text-muted small">(@Model.UserNewEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewEventsPercent%" aria-valuenow=@Model.UserNewEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-times progress-group-icon"></i>
+                                    <div>Zarchiwizowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedEvents</div>
+                                    <div class="text-muted small">(@Model.UserArchivedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedEventsPercent%" aria-valuenow=@Model.UserArchivedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
+                                    <div>Zakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedEvents</div>
+                                    <div class="text-muted small">(@Model.UserApprovedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedEventsPercent%" aria-valuenow=@Model.UserApprovedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
+                                    <div>Niezakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedEvents</div>
+                                    <div class="text-muted small">(@Model.UserRejectedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedEventsPercent%" aria-valuenow=@Model.UserRejectedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("EventAuthor"))
+        {
+            <div class="card">
+                <div class="card-header"><i class="fas fa-pen"></i> Garść informacji o Twojej twórczości </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-success">
+                                        <small class="text-muted">Ilość wydarzeń</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserEvents</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-plus  progress-group-icon"></i>
+                                    <div>Nowe wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewEvents</div>
+                                    <div class="text-muted small">(@Model.UserNewEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewEventsPercent%" aria-valuenow=@Model.UserNewEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-times progress-group-icon"></i>
+                                    <div>Zarchiwizowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedEvents</div>
+                                    <div class="text-muted small">(@Model.UserArchivedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedEventsPercent%" aria-valuenow=@Model.UserArchivedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-check  progress-group-icon"></i>
+                                    <div>Zakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedEvents</div>
+                                    <div class="text-muted small">(@Model.UserApprovedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedEventsPercent%" aria-valuenow=@Model.UserApprovedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-calendar-minus  progress-group-icon"></i>
+                                    <div>Niezakceptowane wydarzenia</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedEvents</div>
+                                    <div class="text-muted small">(@Model.UserRejectedEventsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedEventsPercent%" aria-valuenow=@Model.UserRejectedEvents aria-valuemin="0" aria-valuemax=@Model.Events></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("RaportEditor"))
+        {
+            <div class="card">
+                <div class="card-header"><i class="fas fa-calculator"></i> Garść informacji z apliakcji </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-info">
+                                        <small class="text-muted">Ilość raportów</small>
+                                        <br>
+                                        <strong class="h4">@Model.Raports</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file progress-group-icon"></i>
+                                    <div>Nowe raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.NewRaports</div>
+                                    <div class="text-muted small">(@Model.NewRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.NewRaportsPercent%" aria-valuenow=@Model.NewRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
+                                    <div>Zakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ApprovedRaports</div>
+                                    <div class="text-muted small">(@Model.ApprovedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars progress-group-icon">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ApprovedRaportsPercent%" aria-valuenow=@Model.ApprovedRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
+                                    <div>Niezakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.RejectedRaports</div>
+                                    <div class="text-muted small">(@Model.RejectedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.RejectedRaportsPercent%" aria-valuenow="@Model.RejectedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-archive progress-group-icon"></i>
+                                    <div>Zarchiwizowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.ArchivedRaports</div>
+                                    <div class="text-muted small">(@Model.ArchivedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ArchivedRaportsPercent%" aria-valuenow="@Model.ArchivedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><i class="fas fa-pen"></i> Garść informacji o Twojej twórczości </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-info">
+                                        <small class="text-muted">Ilość raportów</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserRaports</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file progress-group-icon"></i>
+                                    <div>Nowe raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewRaports</div>
+                                    <div class="text-muted small">(@Model.UserNewRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewRaportsPercent%" aria-valuenow=@Model.UserNewRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-archive progress-group-icon"></i>
+                                    <div>Zarchiwizowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedRaports</div>
+                                    <div class="text-muted small">(@Model.UserArchivedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedRaportsPercent%" aria-valuenow="@Model.UserArchivedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
+                                    <div>Zakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedRaports</div>
+                                    <div class="text-muted small">(@Model.UserApprovedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars progress-group-icon">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedRaportsPercent%" aria-valuenow=@Model.UserApprovedRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
+                                    <div>Niezakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedRaports</div>
+                                    <div class="text-muted small">(@Model.UserRejectedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedRaportsPercent%" aria-valuenow="@Model.UserRejectedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        else if (User.IsInRole("RaportAuthor"))
+        {
+            <div class="card">
+                <div class="card-header"><i class="fas fa-pen"></i> Garść informacji o Twojej twórczości </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-info">
+                                        <small class="text-muted">Ilość raportów</small>
+                                        <br>
+                                        <strong class="h4">@Model.UserRaports</strong>
+                                        <div class="chart-wrapper">
+                                            <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file progress-group-icon"></i>
+                                    <div>Nowe raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserNewRaports</div>
+                                    <div class="text-muted small">(@Model.UserNewRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserNewRaportsPercent%" aria-valuenow=@Model.UserNewRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-archive progress-group-icon"></i>
+                                    <div>Zarchiwizowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserArchivedRaports</div>
+                                    <div class="text-muted small">(@Model.UserArchivedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserArchivedRaportsPercent%" aria-valuenow="@Model.UserArchivedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <hr class="mt-0">
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-alt progress-group-icon"></i>
+                                    <div>Zakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserApprovedRaports</div>
+                                    <div class="text-muted small">(@Model.UserApprovedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars progress-group-icon">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserApprovedRaportsPercent%" aria-valuenow=@Model.UserApprovedRaports aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <div class="progress-group-header align-items-end">
+                                    <i class="nav-icon fas fa-file-excel progress-group-icon"></i>
+                                    <div>Niezakceptowane raporty</div>
+                                    <div class="ml-auto font-weight-bold mr-2">@Model.UserRejectedRaports</div>
+                                    <div class="text-muted small">(@Model.UserRejectedRaportsPercent%)</div>
+                                </div>
+                                <div class="progress-group-bars">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.UserRejectedRaportsPercent%" aria-valuenow="@Model.UserRejectedRaports" aria-valuemin="0" aria-valuemax=@Model.Raports></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+
+        }
+
     </div>
 
 </div>

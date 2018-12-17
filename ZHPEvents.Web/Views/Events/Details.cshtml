@@ -5,7 +5,9 @@
     ViewData["Title"] = Model.Title + " - szczegóły";
     Layout = "_DashboardLayout";
 }
-
+@section BreadcrumbItem {
+    <li class="breadcrumb-item active">@Model.Title</li>
+}
 <div class="row">
     <div class="col-sm-12 col-md-9">
         <div class="card">
@@ -13,60 +15,34 @@
                 <i class="fas fa-calendar-minus"></i> Szczegóły wydarzenia o nazwie: @Model.Title
             </div>
             <div class="card-body">
-                <dl class="row">
-                    <dt> </dt>
-                    <dd class="col-sm-12">
-                        <dl class="row">
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Title)
-                            </dt>
-                            <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.Title)
-                            </dd>
+                <dl class="dl-horizontal row">
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Title)</dt>
+                    <dd class="col-sm-4">@Model.Title</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Organizaer)</dt>
+                    <dd class="col-sm-4">@Model.Organizaer</dd>
 
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.AdditionTime)
-                            </dt>
-                            <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.AdditionTime)
-                            </dd>
-                        </dl>
-                    </dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Date)</dt>
+                    <dd class="col-sm-4">@Model.Date</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Place)</dt>
+                    <dd class="col-sm-4">@Model.Place</dd>
 
-                    <dd class="col-sm-12">
-                        <dl class="row">
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.AddingPerson)
-                            </dt>
-                            <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.AddingPerson)
-                            </dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.LastDayOfEntries)</dt>
+                    <dd class="col-sm-4">@Model.LastDayOfEntries</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.RegistrationMail)</dt>
+                    <dd class="col-sm-4">@Model.RegistrationMail</dd>
 
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.ConfirmingPerson)
-                            </dt>
-                            <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.ConfirmingPerson)
-                            </dd>
-                        </dl>
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.AddingPerson)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.AddingPerson)
-                    </dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.AddingPerson)</dt>
+                    <dd class="col-sm-4">@Model.AddingPerson.StopienInstruktorski @Model.AddingPerson.FristName @Model.AddingPerson.LastName</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ConfirmingPerson)</dt>
+                    <dd class="col-sm-4">@Model.ConfirmingPerson.StopienInstruktorski @Model.ConfirmingPerson.FristName @Model.ConfirmingPerson.LastName</dd>
 
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.ConfirmingPerson)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.ConfirmingPerson)
-                    </dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Description)</dt>
+                    <dd class="col-sm-10">@Model.Description</dd>
 
                     <dt class="col-sm-3">
                         @Html.DisplayNameFor(model => model.Status)
                     </dt>
+
                     <dd class="col-sm-9">
                         @if (Model.Status == ZHPEvents.Core.Entities.EventStatus.Approved)
                         {
@@ -82,27 +58,59 @@
 
                 <div class="row">
                     <div class="col-md">
-                        <div class="card flex-md-row mb-4 shadow-sm h-md-250">
-                            <div class="card-body d-flex flex-column align-items-start">
-                                <strong class="d-inline-block mb-2 text-primary">Kategoria</strong>
-                                <h3 class="mb-0">
-                                    <a class="text-dark" href="#">
-                                        @Html.DisplayFor(model => model.Title)
-                                    </a>
-                                </h3>
-                                <div class="mb-1 text-muted">
-                                    @Model.AdditionTime.Date.ToString("dd.mm.yyyy")
-                                </div>
-                                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-pill  btn-sm btn-outline-secondary">Zobacz</button>
-                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-pill  btn-sm btn-outline-secondary" role="button">Edytuj</a>
-
+                        <div class="card">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs">
+                                    <li class="nav-item " data-toggle="tooltip" data-placement="top" title="Informacje">
+                                        <a class="nav-link nav-link-event active" data-toggle="tab" href=@("#home"+Model.Id) role="tab" aria-controls="home" aria-selected="true">
+                                            &nbsp;&nbsp;<i class="fas fa-info-circle"></i>&nbsp;&nbsp;
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Opis">
+                                        <a class="nav-link nav-link-event" data-toggle="tab" href=@("#profile"+Model.Id) role="tab" aria-controls="profile" aria-selected="false">
+                                            &nbsp;&nbsp;<i class="fas fa-align-left"></i>&nbsp;&nbsp;
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Zoabcz więcej">
+                                        <a class="nav-link nav-link-event" data-toggle="tab" href=@("#messages"+Model.Id) role="tab" aria-controls="messages" aria-selected="false">
+                                            &nbsp;&nbsp;<i class="fas fa-envelope"></i>&nbsp;&nbsp;
+                                        </a>
+                                    </li>
+                                    <li class="nav-item disabled" data-toggle="tooltip" data-placement="top" title="Czytaj więcej">
+                                        <a asp-controller="Home" asp-action="Event" asp-route-id="@Model.Id" class="nav-link nav-link-event ">
+                                            &nbsp;&nbsp;<i class="fas fa-ellipsis-h"></i>&nbsp;&nbsp;
+                                        </a>
+                                    </li>
+                                    <li class="nav-item disabled" data-toggle="tooltip" data-placement="top" title="Edytuj">
+                                        <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link nav-link-event disabled">
+                                            &nbsp;&nbsp;<i class="fas fa-edit"></i>&nbsp;&nbsp;
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body-event  event">
+                                <div class="tab-content">
+                                    <div class="tab-pane active show" id="@("home"+Model.Id)" role="tabpanel">
+                                        <strong class=" mb-2 text-green">@Model.Type > @Model.Category</strong>
+                                        <h4 class="mb-0">
+                                            <a class="text-dark" href="#">@Model.Title</a>
+                                        </h4>
+                                        <div class="mb-1 text-muted">Data publikacji: @Model.AdditionTime.Date.ToString("dd.mm.yyyy")</div>
+                                        <div class="mb-1 text-muted">Data wydarzenia: @Model.Date.Date.ToString("dd.mm.yyyy")</div>
+                                        <div class="mb-1 text-muted">Mijesce wydarzenia: @Model.Place</div>
+                                        <div class="mb-1 text-muted">Zapisy do: @Model.LastDayOfEntries.Date.ToString("dd.mm.yyyy")</div>
+                                    </div>
+                                    <div class="tab-pane" id=@("profile"+Model.Id) role="tabpanel">
+                                        @Model.Description
+                                    </div>
+                                    <div class="tab-pane" id=@("messages"+Model.Id) role="tabpanel">
+                                        <div class="mb-1 text-muted">Autor: @Model.AddingPerson.StopienInstruktorski @Model.AddingPerson.FristName @Model.AddingPerson.LastName</div>
+                                        <div class="mb-1 text-muted">Kontakt: @Model.Contact</div>
+                                        <div class="mb-1 text-muted">Rejestracja: @Model.RegistrationMail</div>
+                                        <div class="mb-1 text-muted">Organizator: @Model.Organizaer</div>
                                     </div>
                                 </div>
                             </div>
-                            <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
                         </div>
                     </div>
                     <div class="col-md">

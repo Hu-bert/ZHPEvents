@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DinkToPdf;
+using DinkToPdf.Contracts;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -80,6 +82,8 @@ namespace ZHPEvents
 
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(_configuration);
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -200,7 +204,7 @@ namespace ZHPEvents
                     UserName = "eventAuthor@gmail.com",
                     Email = "eventAuthor@gmail.com",
                     EmailConfirmed = true,
-                    FristName = "eventAuthor"
+                    FristName = "EventAuthor"
                 };
                 await UserManager.CreateAsync(eventAuthor, "EventAuthor!1");
             }

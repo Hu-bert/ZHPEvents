@@ -20,8 +20,8 @@
         case "Users":
             controllerName = ("Użytkownicy");
             break;
-        case "Identity":
-            controllerName = ("Zarządzanie kontem");
+        case "Account":
+            controllerName = ("Konto");
             break;
         default:
             break;
@@ -39,6 +39,21 @@
             break;
         case "Details":
             actionName = "Szczegóły";
+            break;
+        case "Profile":
+            actionName = "Profil";
+            break;
+        case "ChangePassword":
+            actionName = "Zmina hasła";
+            break;
+        case "Approved":
+            actionName = "Zaakceptowane wydarzenia";
+            break;
+        case "Rejected":
+            actionName = "Niezaakceptowane wydarzenia";
+            break;
+        case "Archived":
+            actionName = "Zarchiwizowane wydarzenia";
             break;
         default:
             break;
@@ -124,17 +139,17 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-area="" asp-controller="Events" asp-action="" class="nav-link">
+                                    <a asp-area="" asp-controller="Events" asp-action="Approved" class="nav-link">
                                         <i class="nav-icon fas fa-calendar-check"></i> Zakceptowane
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-area="" asp-controller="Events" asp-action="" class="nav-link">
+                                    <a asp-area="" asp-controller="Events" asp-action="Rejected" class="nav-link">
                                         <i class="nav-icon fas fa-calendar-minus"></i> Niezakceptowane
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-area="" asp-controller="Events" asp-action="" class="nav-link">
+                                    <a asp-area="" asp-controller="Events" asp-action="Archived" class="nav-link">
                                         <i class="nav-icon fas fa-calendar-times"></i> Zarchiwizowane
                                     </a>
                                 </li>
@@ -150,7 +165,7 @@
                             <ul class="nav-dropdown-items">
                                 <li class="nav-item">
                                     <a asp-area="" asp-controller="Raports" asp-action="Create" class="nav-link">
-                                        <i class="nav-icon fas fa-file"></i> Dodaj
+                                        <i class="nav-icon fas fa-file-medical"></i> Dodaj
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -240,12 +255,11 @@
                     </li>
                     @if (_actionName != "Index" && _actionName != "")
                     {
-                        <li class="breadcrumb-item">
-                            <a asp-area="" asp-controller=@_controllerName asp-action=@_actionName class="text-green">
+                        <li class="breadcrumb-item active">
                                 @actionName
-                            </a>
                         </li>
                     }
+                    @RenderSection("BreadcrumbItem", required: false)
                 }
             </ol>
             <div class="container-fluid">
@@ -274,7 +288,15 @@
     <script src="~/coreui/pace.min.js"></script>
     <script src="~/coreui/perfect-scrollbar.min.js"></script>
     <script src="~/coreui/coreui.min.js"></script>
+    <script>
 
+        $(window).on('load', function () {
+            $('#exampleModal').modal('show');
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
     @RenderSection("Scripts", required: false)
 
 </body>

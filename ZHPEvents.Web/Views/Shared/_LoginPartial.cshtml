@@ -6,7 +6,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-
+    var user = await UserManager.GetUserAsync(User);
 <ul class="nav navbar-nav ml-auto">
     <form  asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
         <li class="nav-item dropdown">
@@ -45,7 +45,7 @@
                         <i class="fas fa-user-circle fa-2x"></i>
                     }
                 </span>
-                <span class="d-none d-sm-block">Czuwaj @UserManager.GetUserName(User)!&nbsp;<i class="fas fa-caret-down"></i></span>
+                <span class="d-none d-sm-block">Czuwaj @user.FristName @user.LastName!&nbsp;<i class="fas fa-caret-down"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="dropdown-item">

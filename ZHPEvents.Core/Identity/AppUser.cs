@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using ZHPEvents.Core.Entities;
 
 namespace ZHPEvents.Core.Identity
 {
@@ -18,6 +21,13 @@ namespace ZHPEvents.Core.Identity
         public Hufce Hufiec { get; set; }
         [PersonalData]
         public Choragwie Choragiew { get; set; }
+
+        #region Relations
+
+        //[ForeignKey("AddingPersonId")]
+        //public ICollection<Event> Events{ get; set; }
+        
+        #endregion
     }
 
     public enum StopinieHarcerskie

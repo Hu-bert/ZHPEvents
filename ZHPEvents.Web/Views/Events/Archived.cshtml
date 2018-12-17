@@ -36,67 +36,26 @@
                     <th>
                         <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                             Tytuł
-                            @if (ViewData["CurrentSort"] == null)
-                            {
-                                <i class="fas fa-sort-up"></i>
-                            }
-                            else if (ViewData["CurrentSort"].ToString() == "title_desc")
-                            {
-                                <i class="fas fa-sort-down"></i>
-                            }
                         </a>
                     </th>
                     <th>
                         <a asp-action="Index" asp-route-sortOrder="@ViewData["AdditionTimeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                             Czas dodania
-                            @if (ViewData["CurrentSort"].ToString() == "AdditionTime")
-                            {
-                                <i class="fas fa-sort-up"></i>
-                            }
-                            else if (ViewData["CurrentSort"].ToString() == "additionTime_desc")
-                            {
-                                <i class="fas fa-sort-down"></i>
-                            }
                         </a>
                     </th>
                     <th>
                         <a asp-action="Index" asp-route-sortOrder="@ViewData["AddingPersonSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                             Osoba dodająca
-                            @if (ViewData["CurrentSort"].ToString() == "AddingPerson")
-                            {
-                                <i class="fas fa-sort-up"></i>
-                            }
-                            else if (ViewData["CurrentSort"].ToString() == "addingPerson_desc")
-                            {
-                                <i class="fas fa-sort-down"></i>
-                            }
                         </a>
                     </th>
                     <th>
                         <a asp-action="Index" asp-route-sortOrder="@ViewData["ConfirmingPersonSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                             Osoba potwierdzająca
-                            @if (ViewData["CurrentSort"].ToString() == "ConfirmingPerson")
-                            {
-                                <i class="fas fa-sort-up"></i>
-                            }
-                            else if (ViewData["CurrentSort"].ToString() == "confirmingPerson_desc")
-                            {
-                                <i class="fas fa-sort-down"></i>
-                            }
                         </a>
-
                     </th>
                     <th>
                         <a asp-action="Index" asp-route-sortOrder="@ViewData["StatusParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                             Status
-                            @if (ViewData["CurrentSort"].ToString() == "Status")
-                            {
-                                <i class="fas fa-sort-up"></i>
-                            }
-                            else if (ViewData["CurrentSort"].ToString() == "status_desc")
-                            {
-                                <i class="fas fa-sort-down"></i>
-                            }
                         </a>
                     </th>
                     <th>Opcje</th>
@@ -130,9 +89,8 @@
                         </td>
 
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edycja</a> |
                             <a asp-action="Details" asp-route-id="@item.Id" class="text-info">Szczegóły</a> |
-                            <a asp-action="Archive" asp-route-id="@item.Id" class="text-dark">Archiwizacja</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger">Usuwanie</a>
                         </td>
                     </tr>
                 }
