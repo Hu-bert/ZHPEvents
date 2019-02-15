@@ -36,7 +36,7 @@ namespace ZHPEvents.Core.Entities
 
         [Display(Name = "Opis")]
         //[Required(ErrorMessage = "Proszę podać opis.")]
-        [StringLength(60, MinimumLength = 3)]
+        [StringLength(500, MinimumLength = 3)]
         public string Description { get; set; }
 
         [Display(Name = "Miejsce wydarzenia")]
